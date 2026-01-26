@@ -1,13 +1,23 @@
-import MainLayout from "@/layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
-import { LoginPage } from "./lazyImports";
+import { DashboardHome, LoginPage } from "./lazyImports";
+import DashboardLayout from "@/layout/DashboardLayout";
+import AuthLayout from "@/layout/AuthLayout";
 
 export const routes = createBrowserRouter([
   {
-    element: <MainLayout />,
+    element: <DashboardLayout />,
     children: [
       {
         path: "/",
+        element: <DashboardHome />,
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
         element: <LoginPage />,
       },
     ],
