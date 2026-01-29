@@ -21,3 +21,18 @@ export interface CreateUserResponse {
   created_at: string;
   updated_at: string;
 }
+
+export interface UserChangeStateReq {
+  is_active: boolean;
+}
+
+export interface UserChangeStateRes {
+  id: number;
+  username: string;
+  full_name: string;
+  role: Role;
+  is_active: boolean;
+  phone: string;
+  created_at: string;
+  updated_at: string;
+}

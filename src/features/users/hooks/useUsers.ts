@@ -40,8 +40,34 @@ export const useUsers = () => {
     },
   });
 
+  const changeUserSate = useMutation({
+    mutationKey: ["change", "user", "state"],
+    mutationFn: usersService.changeUserState,
+    onSuccess: () => {
+      qryClient.invalidateQueries({ queryKey: ["users", "list"] });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error("Error al cambiar el estado", {
+          description: error.response?.data.message,
+        });
+      } else {
+        toast.error("Error al cambiar el estado", {
+          description: "Error desconcido al cambiar de estado",
+        });
+      }
+    },
+    onMutate: () => {
+      toast.loading("Cambiando de estado...", { id: "change-user-state" });
+    },
+    onSettled: () => {
+      toast.dismiss("change-user-state");
+    },
+  });
+
   return {
     users: listUsersQuery,
     createUser: createUserMutation,
+    changeUserSate,
   };
 };

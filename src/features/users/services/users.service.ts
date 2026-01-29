@@ -2,6 +2,8 @@ import http from "@/config/axios";
 import type { ApiResponse } from "@/interfaces/api-response.interface";
 import type {
   CreateUserResponse,
+  UserChangeStateReq,
+  UserChangeStateRes,
   UsersResponse,
 } from "../interfaces/users.interface";
 import type { CreateUserFormValues } from "../schemas/user.schema";
@@ -16,6 +18,17 @@ export const usersService = {
     const { data } = await http.post<ApiResponse<CreateUserResponse>>(
       "/users",
       values,
+    );
+    return data.data;
+  },
+
+  changeUserState: async (values: {
+    payload: UserChangeStateReq;
+    userId: string;
+  }) => {
+    const { data } = await http.patch<ApiResponse<UserChangeStateRes>>(
+      `/users/change-state/${values.userId}`,
+      values.payload,
     );
     return data.data;
   },

@@ -18,11 +18,11 @@ export const createUserSchema = z.object({
     .string()
     .min(6, "La contraseña debe tener al menos 6 caracteres."),
   full_name: z.string().min(1, "El nombre completo es obligatorio."),
-
   role: z.enum(userRoles),
-
-  phone: z.string().trim().optional(),
-  pin: z.string().optional(),
+  phone: z
+    .string()
+    .min(1, "El telefono es obligatorio.")
+    .max(9, "Maximo 9 caracteres."),
 });
 
 export type CreateUserFormValues = z.infer<typeof createUserSchema>;

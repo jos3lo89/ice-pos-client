@@ -11,7 +11,6 @@ import { UserPlus } from "lucide-react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -49,7 +48,6 @@ const CreateUserDialog = ({ open, onOpenChange }: CreateUserDialogProps) => {
       full_name: "",
       role: "mesero",
       phone: "",
-      pin: "",
     },
   });
 
@@ -181,38 +179,17 @@ const CreateUserDialog = ({ open, onOpenChange }: CreateUserDialogProps) => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Teléfono</FormLabel>
+                    <FormLabel className="text-slate-300">
+                      Teléfono <span className="text-red-400">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
+                        type="number"
                         placeholder="999 999 999"
                         className="bg-slate-900 border-slate-700"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="pin"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-slate-300">
-                      PIN de Acceso
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Solo números (6)"
-                        className="bg-slate-900 border-slate-700"
-                        {...field}
-                        maxLength={6}
-                      />
-                    </FormControl>
-                    <FormDescription className="text-xs text-slate-500">
-                      Usado para acceso rápido en caja/tablet.
-                    </FormDescription>
                     <FormMessage className="text-red-400" />
                   </FormItem>
                 )}
