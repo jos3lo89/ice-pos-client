@@ -1,5 +1,8 @@
-import { allNavItems } from "@/components/dashboard/NavItems";
+import AuthFallback from "@/components/common/AuthFallback";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
+import { allNavItems } from "@/features/dashboard/components/NavItems";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/auth.store";
 import {
   LogOut,
   Menu,
@@ -14,12 +17,19 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const user = { fullName: "Nicky", role: "admin" };
+  const { logout, user } = useAuthStore();
 
-  const navItems = allNavItems.filter((item) => item.roles.includes(user.role));
+  if (!user) {
+    return <AuthFallback />;
+  }
+
+  const navItems = allNavItems
+    .filter((item) => item.role === user.role)
+    .map((item) => item.children)
+    .flat();
 
   const handleLogout = () => {
-    console.log("logout");
+    logout();
   };
 
   return (
@@ -96,11 +106,11 @@ const DashboardLayout = () => {
             {!sidebarCollapsed && (
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold">
-                  {user.fullName.charAt(0)}
+                  {user.full_name.charAt(0)}
                 </div>
                 <div className="overflow-hidden">
                   <p className="text-sm font-medium text-white truncate">
-                    {user.fullName}
+                    {user.full_name}
                   </p>
                   <p className="text-xs text-gray-400 capitalize">
                     {user.role}
@@ -109,16 +119,23 @@ const DashboardLayout = () => {
               </div>
             )}
 
-            <Button
-              variant="outline"
-              className={`w-full bg-slate-700/50 border-slate-600 text-gray-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 ${
-                sidebarCollapsed ? "p-2 justify-center" : "justify-start gap-2"
-              }`}
-              onClick={handleLogout}
+            <ConfirmDialog
+              title="¿Confirmar cierre de sesión?"
+              confirmText="Cerrar Sesión"
+              onConfirm={handleLogout}
             >
-              <LogOut className="w-4 h-4" />
-              {!sidebarCollapsed && "Salir"}
-            </Button>
+              <Button
+                variant="outline"
+                className={`w-full bg-slate-700/50 border-slate-600 text-gray-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 ${
+                  sidebarCollapsed
+                    ? "p-2 justify-center"
+                    : "justify-start gap-2"
+                }`}
+              >
+                <LogOut className="w-4 h-4" />
+                {!sidebarCollapsed && "Salir"}
+              </Button>
+            </ConfirmDialog>
           </div>
         </div>
       </aside>
