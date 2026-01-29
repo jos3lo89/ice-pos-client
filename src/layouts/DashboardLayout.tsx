@@ -1,6 +1,6 @@
 import AuthFallback from "@/components/common/AuthFallback";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
-import { allNavItems } from "@/components/dashboard/NavItems";
+import { allNavItems } from "@/features/dashboard/components/NavItems";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth.store";
 import {

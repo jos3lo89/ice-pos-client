@@ -1,4 +1,4 @@
-import type { Role } from "@/types/roles";
+import type { Role } from "@/common/types/roles";
 
 export interface LoginRequest {
   userName: string;

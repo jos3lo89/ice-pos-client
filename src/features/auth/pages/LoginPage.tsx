@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/hooks/useAuth";
-import { loginSchema, type LoginT } from "@/schemas/auth.schema";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -13,6 +12,7 @@ import {
 import { UtensilsCrossed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { loginSchema, type LoginT } from "../schemas/auth.schema";
 
 const LoginPage = () => {
   const navigate = useNavigate();

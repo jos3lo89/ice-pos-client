@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { DashboardHome, LoginPage } from "./lazyImports";
+import { DashboardHome, LoginPage, UsersPage } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -15,6 +15,10 @@ export const routes = createBrowserRouter([
       {
         path: "/",
         element: <DashboardHome />,
+      },
+      {
+        path: "/usuarios",
+        element: <UsersPage />,
       },
     ],
   },

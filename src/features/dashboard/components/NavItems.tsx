@@ -1,9 +1,10 @@
-import type { Role } from "@/types/roles";
+import type { Role } from "@/common/types/roles";
 import {
   ChefHat,
   ClipboardList,
   LayoutDashboard,
   ShoppingCart,
+  UserRoundCogIcon,
   UtensilsCrossed,
   type LucideIcon,
 } from "lucide-react";
@@ -31,9 +32,9 @@ export const allNavItems: NavGroup[] = [
         exact: true,
       },
       {
-        to: "/dashboard/pos",
-        icon: ShoppingCart,
-        label: "POS",
+        to: "/usuarios",
+        icon: UserRoundCogIcon,
+        label: "Usuarios",
       },
     ],
   },
