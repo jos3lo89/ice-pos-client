@@ -127,3 +127,37 @@ code {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* Clase personalizada para el Scrollbar */
+  .custom-scrollbar {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent; /* Thumb (Slate 700) / Track (Transparent) */
+  }
+
+  /* Chrome, Edge, Safari */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Ancho vertical */
+    height: 6px; /* Alto horizontal */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* O puedes usar #0f172a (Slate 900) */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #334155; /* Slate 700 */
+    border-radius: 20px; /* Bordes totalmente redondeados */
+    border: 2px solid transparent; /* Espacio para que no se pegue al borde */
+    background-clip: content-box; /* Truco para que el borde transparente funcione */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #475569; /* Slate 600 (Más claro al pasar el mouse) */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

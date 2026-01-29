@@ -3,7 +3,6 @@ import type { Role } from "@/common/types/roles";
 export interface UserState {
   id: number;
   username: string;
-  pin: string;
   full_name: string;
   role: Role;
   is_active: boolean;

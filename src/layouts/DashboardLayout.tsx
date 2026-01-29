@@ -33,7 +33,8 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex text-slate-100 font-sans">
+    <div className="h-screen w-full bg-slate-900 flex text-slate-100 font-sans overflow-hidden">
+      {/* <div className="min-h-screen bg-slate-900 flex text-slate-100 font-sans"> */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -151,12 +152,17 @@ const DashboardLayout = () => {
 
           <div className="hidden lg:flex items-center gap-4">
             <span className="text-sm text-gray-400">
-              {new Date().toLocaleDateString("es-ES", { dateStyle: "full" })}
+              {new Date().toLocaleDateString("es-PE", { dateStyle: "full" })}
+              {/* <span> | </span>
+              {new Date().toLocaleTimeString("es-PE", {
+                hour12: true,
+                timeStyle: "short",
+              })} */}
             </span>
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto scroll-smooth p-4 lg:p-6 custom-scrollbar">
           <Outlet />
         </main>
       </div>
