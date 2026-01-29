@@ -20,16 +20,11 @@ Package Manager
 Commands
 
 - Install: `pnpm install`
-- Dev server: `pnpm dev`
-- Build: `pnpm build` (runs `tsc -b` then `vite build`)
-- Lint: `pnpm lint` (runs `eslint .`)
-- Preview build: `pnpm preview`
 
 Tests
 
-- No test runner or test files were found in this repo.
-- No single-test command is configured.
-- If tests are added later, update this section with the runner and a single-test example.
+- Do not run tests or any build/dev/preview commands.
+- Remind the user to run tests/build/dev/preview locally as needed.
 
 Environment
 
@@ -114,10 +109,45 @@ Routing
 - Lazy page components are imported through `src/routes/lazyImports.ts`.
 - Layout routes wrap child pages via `Outlet`.
 
-Linting
+Commit Message Conventions (Conventional Commits)
 
-- ESLint is configured via the default `eslint .` script.
-- Keep code lint-clean; respect unused variable/parameter rules.
+Format:
+
+text
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+
+Example:
+
+text
+chore: remove unused lucide-react imports
+
+- Elimina LogOut, Menu, PanelLeft, PanelLeftClose, UtensilsCrossed
+- Limpieza de código innecesario
+
+Types comunes:
+
+text
+feat: nueva feature (ej: add ConfirmDialog)
+fix: bug fix (ej: fix 404 auth)
+docs: documentación
+style: formato (sin lógica)
+refactor: reestructura código
+perf: optimización performance
+test: tests
+chore: mantenimiento (ej: remove unused imports)
+ci: CI/CD pipeline
+build: cambios build
+revert: revert commit
+
+Git and Commits (Agent Behavior)
+
+- Do not run any git commit commands.
+- If the user asks for a commit, respond with a suggested commit message and a short English description only.
+- Do not execute terminal commands even if asked for a commit; just provide the commit text and description.
 
 Build Notes
 

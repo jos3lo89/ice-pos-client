@@ -1,3 +1,4 @@
+import AuthFallback from "@/components/common/AuthFallback";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { allNavItems } from "@/components/dashboard/NavItems";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ const DashboardLayout = () => {
   const { logout, user } = useAuthStore();
 
   if (!user) {
-    return null;
+    return <AuthFallback />;
   }
 
   const navItems = allNavItems.filter((item) => item.roles.includes(user.role));
