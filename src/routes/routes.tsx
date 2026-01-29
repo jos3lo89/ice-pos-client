@@ -1,5 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { DashboardHome, LoginPage, UsersPage } from "./lazyImports";
+import {
+  CategoriesPage,
+  DashboardHome,
+  LoginPage,
+  UsersPage,
+} from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -20,6 +25,10 @@ export const routes = createBrowserRouter([
       {
         path: "/usuarios",
         element: <UsersPage />,
+      },
+      {
+        path: "/categorias",
+        element: <CategoriesPage />,
       },
     ],
   },
