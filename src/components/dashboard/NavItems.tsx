@@ -12,40 +12,60 @@ interface NavItem {
   to: string;
   icon: LucideIcon;
   label: string;
-  roles: Role[];
   exact?: boolean;
 }
 
-export const allNavItems: NavItem[] = [
+interface NavGroup {
+  role: Role;
+  children: NavItem[];
+}
+
+export const allNavItems: NavGroup[] = [
   {
-    to: "/",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-    roles: ["admin", "cajero"],
-    exact: true,
+    role: "admin",
+    children: [
+      {
+        to: "/",
+        icon: LayoutDashboard,
+        label: "Dashboard",
+        exact: true,
+      },
+      {
+        to: "/dashboard/pos",
+        icon: ShoppingCart,
+        label: "POS",
+      },
+    ],
   },
   {
-    to: "/dashboard/pos",
-    icon: ShoppingCart,
-    label: "POS",
-    roles: ["cajero"],
-  },
-  {
-    to: "/dashboard/kitchen",
-    icon: ChefHat,
-    label: "Kitchen",
-    roles: ["cocinero", "bartender"],
-  },
-  {
-    to: "/dashboard/orders",
-    icon: ClipboardList,
-    label: "Orders",
-    roles: ["cajero"],
-  },
-  {
-    to: "/dashboard/tables",
-    icon: UtensilsCrossed,
-    label: "Tables",
-    roles: ["cajero"],
+    role: "cajero",
+    children: [
+      {
+        to: "/",
+        icon: LayoutDashboard,
+        label: "Dashboard",
+        exact: true,
+      },
+      {
+        to: "/dashboard/pos",
+        icon: ShoppingCart,
+        label: "POS",
+      },
+      {
+        to: "/dashboard/kitchen",
+        icon: ChefHat,
+        label: "Kitchen",
+      },
+      {
+        to: "/dashboard/orders",
+        icon: ClipboardList,
+        label: "Orders",
+      },
+      {
+        to: "/dashboard/tables",
+        icon: UtensilsCrossed,
+        label: "Tables",
+      },
+    ],
   },
 ];

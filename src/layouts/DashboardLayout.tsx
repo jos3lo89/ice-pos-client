@@ -23,7 +23,10 @@ const DashboardLayout = () => {
     return <AuthFallback />;
   }
 
-  const navItems = allNavItems.filter((item) => item.roles.includes(user.role));
+  const navItems = allNavItems
+    .filter((item) => item.role === user.role)
+    .map((item) => item.children)
+    .flat();
 
   const handleLogout = () => {
     logout();
