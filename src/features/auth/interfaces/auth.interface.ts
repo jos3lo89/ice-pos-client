@@ -8,7 +8,6 @@ export interface LoginRequest {
 export interface LoginResponse {
   id: number;
   username: string;
-  pin: string;
   full_name: string;
   role: Role;
   is_active: boolean;
