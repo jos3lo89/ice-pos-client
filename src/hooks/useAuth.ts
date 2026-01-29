@@ -1,19 +1,21 @@
 import { authService } from "@/services/auth.service";
+import { useAuthStore } from "@/stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 export const useAuth = () => {
+  const { setUser } = useAuthStore();
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      console.log("login ok -> ", data);
+      setUser(data);
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
         toast.error(err.response?.data.message);
       } else {
-        console.error("login any error");
+        console.error(err);
       }
     },
   });
