@@ -1,3 +1,4 @@
+import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { allNavItems } from "@/components/dashboard/NavItems";
 import {
   AlertDialog,
@@ -125,37 +126,23 @@ const DashboardLayout = () => {
               </div>
             )}
 
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={`w-full bg-slate-700/50 border-slate-600 text-gray-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 ${
-                    sidebarCollapsed
-                      ? "p-2 justify-center"
-                      : "justify-start gap-2"
-                  }`}
-                >
-                  <LogOut className="w-4 h-4" />
-                  {!sidebarCollapsed && "Salir"}
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    ¿Confirmar cierre de sesión?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Perderás acceso a tu cuenta. ¿Estás seguro?
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleLogout}>
-                    Cerrar Sesión
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <ConfirmDialog
+              title="¿Confirmar cierre de sesión?"
+              confirmText="Cerrar Sesión"
+              onConfirm={handleLogout}
+            >
+              <Button
+                variant="outline"
+                className={`w-full bg-slate-700/50 border-slate-600 text-gray-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 ${
+                  sidebarCollapsed
+                    ? "p-2 justify-center"
+                    : "justify-start gap-2"
+                }`}
+              >
+                <LogOut className="w-4 h-4" />
+                {!sidebarCollapsed && "Salir"}
+              </Button>
+            </ConfirmDialog>
           </div>
         </div>
       </aside>
