@@ -1,4 +1,4 @@
-import type { RoleType } from "@/enums/roles.enum";
+import type { Role } from "@/types/roles";
 
 export interface LoginRequest {
   userName: string;
@@ -10,7 +10,7 @@ export interface LoginResponse {
   username: string;
   pin: string;
   full_name: string;
-  role: RoleType;
+  role: Role;
   is_active: boolean;
   phone: string;
   created_at: string;
