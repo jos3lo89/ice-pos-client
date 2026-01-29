@@ -1,3 +1,4 @@
+import { Role } from "@/enums/roles.enum";
 import {
   ChefHat,
   ClipboardList,
@@ -11,31 +12,31 @@ export const allNavItems = [
     to: "/",
     icon: LayoutDashboard,
     label: "Dashboard",
-    roles: ["admin", "manager"],
+    roles: [Role.ADMIN, Role.CAJERO],
     exact: true,
   },
   {
     to: "/dashboard/pos",
     icon: ShoppingCart,
     label: "POS",
-    roles: ["admin", "manager", "server", "counter"],
+    roles: [Role.ADMIN, Role.CAJERO],
   },
   {
     to: "/dashboard/kitchen",
     icon: ChefHat,
     label: "Kitchen",
-    roles: ["admin", "manager", "kitchen"],
+    roles: [Role.ADMIN, Role.CAJERO],
   },
   {
     to: "/dashboard/orders",
     icon: ClipboardList,
     label: "Orders",
-    roles: ["admin", "manager", "server", "counter"],
+    roles: [Role.ADMIN, Role.CAJERO],
   },
   {
     to: "/dashboard/tables",
     icon: UtensilsCrossed,
     label: "Tables",
-    roles: ["admin", "manager", "server"],
+    roles: [Role.ADMIN, Role.CAJERO],
   },
 ];
