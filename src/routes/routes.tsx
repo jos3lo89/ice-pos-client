@@ -3,6 +3,7 @@ import { DashboardHome, LoginPage, UsersPage } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
+import NotFound from "@/components/common/NotFound";
 
 export const routes = createBrowserRouter([
   {
@@ -30,5 +31,9 @@ export const routes = createBrowserRouter([
         element: <LoginPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
