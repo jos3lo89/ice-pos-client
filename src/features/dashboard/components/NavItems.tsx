@@ -7,14 +7,24 @@ import {
   Tags,
   UserRoundCogIcon,
   UtensilsCrossed,
+  Users2,
+  Package,
+  History,
+  Settings,
   type LucideIcon,
 } from "lucide-react";
 
-interface NavItem {
-  to: string;
+export interface NavItem {
+  to?: string;
   icon: LucideIcon;
   label: string;
   exact?: boolean;
+  children?: {
+    to: string;
+    icon: LucideIcon;
+    label: string;
+    exact?: boolean;
+  }[];
 }
 
 interface NavGroup {
@@ -33,14 +43,41 @@ export const allNavItems: NavGroup[] = [
         exact: true,
       },
       {
-        to: "/usuarios",
-        icon: UserRoundCogIcon,
-        label: "Usuarios",
+        label: "Gestión",
+        icon: Package,
+        children: [
+          {
+            to: "/productos",
+            icon: Package,
+            label: "Productos",
+          },
+          {
+            to: "/categorias",
+            icon: Tags,
+            label: "Categorías",
+          },
+        ],
       },
       {
-        to: "/categorias",
-        icon: Tags,
-        label: "Categorías",
+        label: "Administración",
+        icon: UserRoundCogIcon,
+        children: [
+          {
+            to: "/usuarios",
+            icon: Users2,
+            label: "Usuarios",
+          },
+          {
+            to: "/roles",
+            icon: Settings,
+            label: "Roles y Permisos",
+          },
+        ],
+      },
+      {
+        to: "/reportes",
+        icon: ClipboardList,
+        label: "Reportes",
       },
     ],
   },
@@ -54,24 +91,41 @@ export const allNavItems: NavGroup[] = [
         exact: true,
       },
       {
-        to: "/dashboard/pos",
+        label: "Operaciones",
         icon: ShoppingCart,
-        label: "POS",
+        children: [
+          {
+            to: "/dashboard/pos",
+            icon: ShoppingCart,
+            label: "Punto de Venta",
+          },
+          {
+            to: "/dashboard/kitchen",
+            icon: ChefHat,
+            label: "Cocina",
+          },
+        ],
       },
       {
-        to: "/dashboard/kitchen",
-        icon: ChefHat,
-        label: "Kitchen",
-      },
-      {
-        to: "/dashboard/orders",
-        icon: ClipboardList,
-        label: "Orders",
-      },
-      {
-        to: "/dashboard/tables",
+        label: "Atención",
         icon: UtensilsCrossed,
-        label: "Tables",
+        children: [
+          {
+            to: "/dashboard/tables",
+            icon: UtensilsCrossed,
+            label: "Mesas",
+          },
+          {
+            to: "/dashboard/orders",
+            icon: ClipboardList,
+            label: "Pedidos",
+          },
+        ],
+      },
+      {
+        to: "/history",
+        icon: History,
+        label: "Historial",
       },
     ],
   },

@@ -10,120 +10,129 @@ Repository Summary
 - Vite + React + TypeScript app.
 - Module system: ESM ("type": "module").
 - Styling: Tailwind CSS, tailwind-merge, tailwind-animations.
-- Data layer: Axios + TanStack Query.
-- State: Zustand stores.
+- Data: Axios + TanStack Query.
+- State: Zustand.
 - Forms: react-hook-form + zod.
 - Notifications: sonner.
 
 Package Manager
 
-- pnpm is in use (pnpm-lock.yaml present).
+- pnpm (pnpm-lock.yaml present).
 
 Commands (Do Not Run)
 
 - Install: pnpm install
 - Dev server: pnpm dev
-- Build: pnpm build (tsc -b then vite build)
+- Build: pnpm build (tsc -b && vite build)
 - Lint: pnpm lint (eslint .)
-- Preview build: pnpm preview
+- Preview: pnpm preview
 - Tests: no test script configured
-- Single test: not available; add a runner and document a command if tests are added
+- Single test: not available; add a test runner first
 
 Execution Policy
 
-- Do not run tests, lint, dev server, build, or preview commands.
-- Remind the user to run those commands locally as needed.
+- Do not run tests or start the dev server for any task.
+- Do not run lint/build/preview commands in this environment.
+- Tell the user to run these commands locally when needed.
 
 Environment
 
-- Example env file: .env.example.
-- Required var shown: VITE_API_BASE_URL.
-- Vite env access via import.meta.env.
+- Example env file: .env.example
+- Required var shown: VITE_API_BASE_URL
+- Vite env access via import.meta.env
 
 Project Structure (observed)
 
-- src/components/ UI and feature components.
+- src/components/ UI and shared components.
+- src/components/ui/ reusable primitives.
 - src/layouts/ layout wrappers.
-- src/pages/ route-level pages.
 - src/routes/ router setup and lazy imports.
-- src/features/ feature-specific modules and schemas.
-- src/config/ shared config (axios, query client).
+- src/features/*/pages for feature pages.
+- src/features/*/components, hooks, services, schemas, interfaces.
+- src/config/ axios and query client.
 - src/stores/ Zustand stores.
 - src/interfaces/ shared types/interfaces.
 - src/lib/utils.ts utilities (cn helper).
 
-TypeScript Configuration
+TypeScript + Tooling
 
-- Strict mode enabled ("strict": true).
-- noUnusedLocals, noUnusedParameters enabled.
+- Strict mode enabled.
+- noUnusedLocals and noUnusedParameters enabled.
 - Module resolution: bundler.
 - Path alias: @/* -> ./src/*.
 - JSX: react-jsx.
 
-Code Style: Formatting and Syntax
+Code Style: General
 
-- Mixed formatting exists. Follow the local file style you are editing.
-- src/main.tsx uses single quotes and semicolons omitted.
+- Mixed formatting exists; follow local file style.
+- src/main.tsx uses single quotes and no semicolons.
 - Many other files use double quotes and semicolons.
-- Keep import order consistent with nearby code.
-- Prefer explicit type-only imports using import type when applicable.
-- Avoid any types; use proper types, generics, unknown + narrowing, or zod inference.
+- Avoid mass reformatting unrelated to the change.
 
 Code Style: Imports
 
-- Use alias @/... for src/ imports where appropriate.
-- Keep external imports before local ones (match adjacent file style).
-- Group import type with related import or separate by convention in file.
+- Use @/ alias for src/ imports when appropriate.
+- Keep external imports before local ones (match local style).
+- Prefer import type for type-only imports.
+- Group type imports with related values or separate per file convention.
+
+Code Style: Types
+
+- Avoid any; use proper types or generics.
+- Prefer unknown + narrowing when types are uncertain.
+- Use zod inference for form/data types where schemas exist.
 
 Code Style: Naming
 
-- Components: PascalCase function names and file names.
+- Components: PascalCase function names and filenames.
 - Hooks: useX naming (useAuth).
-- Types: PascalCase for exported types and interfaces.
-- Local variables: camelCase.
+- Types/Interfaces: PascalCase.
+- Variables: camelCase.
 
 React Patterns
 
 - App entry: src/main.tsx creates root and renders App.
-- Router uses createBrowserRouter in src/routes/routes.tsx.
+- Router: createBrowserRouter in src/routes/routes.tsx.
 - Providers: ThemeProvider, QueryClientProvider, ReactQueryDevtools in src/App.tsx.
+- Layout routes wrap child pages via Outlet.
 
 Data Fetching
 
-- Axios instance in src/config/axios.ts with baseURL from env and withCredentials.
+- Axios instance in src/config/axios.ts (baseURL from env, withCredentials).
 - TanStack Query configured in src/config/tanstack-query.ts with defaults.
 
 Error Handling
 
-- Use AxiosError when handling API failures.
-- Prefer explicit error branches for known error types.
-- Do not swallow errors silently; log or surface them based on UI pattern.
+- Use AxiosError for API failures where applicable.
+- Prefer explicit branches for known error types.
+- Do not swallow errors silently; surface via UI/toasts when expected.
 
 Forms and Validation
 
-- Forms use react-hook-form and zod with zodResolver.
+- react-hook-form with zodResolver.
 - Define schemas near the form and infer types from schema.
-
-UI and Styling
-
-- Tailwind utilities are used heavily in JSX.
-- Use the cn helper from src/lib/utils.ts to merge class names.
-- Reuse UI primitives in src/components/ui/ when possible.
-- Icons via lucide-react.
-- When generating styles/components, use the existing dashboard/login palette only
-  (slate-900/800/700/600, gray-300/400, cyan-500/400, blue-600, red-500)
-  and avoid introducing new hues.
-
-Routing
-
-- Routes are defined as objects in src/routes/routes.tsx.
-- Lazy page components are imported through src/routes/lazyImports.ts.
-- Layout routes wrap child pages via Outlet.
 
 State Management
 
 - Zustand stores live in src/stores/.
 - Prefer selectors when reading store state to avoid extra renders.
+
+UI and Styling (Dashboard + Users reference)
+
+- Overall theme: dark slate surfaces (bg-slate-900/800/700) with gray text
+  (text-gray-300/400/500) and cyan accents (cyan-500/400).
+- Borders: border-slate-700; cards and tables often use bg-slate-800 or
+  bg-slate-800/50 with rounded-lg/rounded-xl and shadow-xl.
+- Accent colors in the UI: cyan-600/500 buttons, blue-600, red-500 for danger,
+  green-500 for success, and stat accents use green/blue/purple/orange.
+- Logo mark uses gradient (from-cyan-500 to-blue-600).
+- Interactive states: hover bg-slate-700, focus-visible ring cyan-500.
+- Page motion: animate-in fade-in duration-500 on main views.
+
+Routing
+
+- Routes are defined as objects in src/routes/routes.tsx.
+- Lazy page components are imported via src/routes/lazyImports.ts.
 
 Commit Message Conventions (Conventional Commits)
 
@@ -132,57 +141,21 @@ Format:
 text
 <type>[optional scope]: <description>
 
-[optional body]
-
-[optional footer(s)]
-
-Example:
-
-text
-chore: remove unused lucide-react imports
-
-- Elimina LogOut, Menu, PanelLeft, PanelLeftClose, UtensilsCrossed
-- Limpieza de codigo innecesario
-
-Types comunes:
-
-text
-feat: nueva feature (ej: add ConfirmDialog)
-fix: bug fix (ej: fix 404 auth)
-docs: documentacion
-style: formato (sin logica)
-refactor: reestructura codigo
-perf: optimizacion performance
-test: tests
-chore: mantenimiento (ej: remove unused imports)
-ci: CI/CD pipeline
-build: cambios build
-revert: revert commit
+Common types: feat, fix, docs, style, refactor, perf, test, chore, ci, build,
+revert.
 
 Git and Commits (Agent Behavior)
 
-- Do not run any git commit commands.
-- If the user asks for a commit, respond with a suggested commit message and
-  a short English description only.
-- Do not execute terminal commands even if asked for a commit.
-
-Build Notes
-
-- pnpm build performs a TypeScript project build then Vite build.
-- Do not add emit output in TS config; noEmit is true in app/node configs.
-
-File and Directory Conventions
-
-- Use src/ for all app code.
-- Keep layouts in src/layouts/.
-- Keep interfaces in src/interfaces/.
-- Keep feature-specific logic in src/features/.
+- Do not run git commit commands.
+- If the user asks for a commit, respond with a suggested commit message
+  and a short English description only.
+- Do not execute terminal commands for commits.
 
 Agent Guidance
 
 - Do not modify .env directly; use .env.example for documenting variables.
-- Follow existing conventions in each file; avoid mass reformatting.
 - Keep changes minimal and targeted unless refactoring is requested.
+- Never run tests or start the dev server as part of an edit task.
 
 Cursor/Copilot Rules
 
@@ -191,5 +164,6 @@ Cursor/Copilot Rules
 
 When Adding Tests (future)
 
-- Select a runner (Vitest/Jest) and update package.json scripts.
+- Select a runner (Vitest or Jest) and add scripts.
 - Include a single-test command example in this file.
+- Even then, do not run tests or start the dev server here; instruct the user.
