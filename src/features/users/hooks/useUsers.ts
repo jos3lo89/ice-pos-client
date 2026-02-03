@@ -6,10 +6,12 @@ import { toast } from "sonner";
 export const useUsers = () => {
   const qryClient = useQueryClient();
 
-  const listUsersQuery = useQuery({
-    queryFn: usersService.getAllUsers,
-    queryKey: ["users", "list"],
-  });
+  const listUsersQuery = (page: number, limit: number, search?: string) => {
+    return useQuery({
+      queryKey: ["users", "list", page, limit, search],
+      queryFn: () => usersService.getAllUsers(page, limit, search),
+    });
+  };
 
   const createUserMutation = useMutation({
     mutationKey: ["create", "user"],

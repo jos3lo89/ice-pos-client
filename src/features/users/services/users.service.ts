@@ -4,14 +4,24 @@ import type {
   CreateUserResponse,
   UserChangeStateReq,
   UserChangeStateRes,
+  UsersMetaPagination,
   UsersResponse,
 } from "../interfaces/users.interface";
 import type { CreateUserFormValues } from "../schemas/user.schema";
 
 export const usersService = {
-  getAllUsers: async () => {
-    const { data } = await http.get<ApiResponse<UsersResponse[]>>("/users");
-    return data.data;
+  getAllUsers: async (page: number = 1, limit: number = 5, search?: string) => {
+    const { data } = await http.get<ApiResponse<UsersResponse[], UsersMetaPagination>>("/users", {
+      params: {
+        page,
+        limit,
+        search,
+      },
+    });
+    return {
+      data: data.data,
+      meta: data.meta,
+    };
   },
 
   createUser: async (values: CreateUserFormValues) => {

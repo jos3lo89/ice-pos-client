@@ -11,6 +11,17 @@ export interface UsersResponse {
   updated_at: string;
 }
 
+export interface UsersMetaPagination {
+  total: number
+  page: number
+  lastPage: number
+  hasNext: boolean
+  hasPrev: boolean
+  nextPage: number | null
+  prevPage: number | null
+}
+
+
 export interface CreateUserResponse {
   id: number;
   username: string;
