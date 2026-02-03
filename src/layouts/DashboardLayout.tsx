@@ -1,6 +1,9 @@
 import AuthFallback from "@/components/common/AuthFallback";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
-import { allNavItems, type NavItem } from "@/features/dashboard/components/NavItems";
+import {
+  allNavItems,
+  type NavItem,
+} from "@/features/dashboard/components/NavItems";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/lib/utils";
 import {
@@ -65,9 +68,10 @@ const DashboardLayout = () => {
     const hasChildren = !!item.children;
     const isExpanded = expandedItems.includes(item.label);
     const isActive = item.to
-      ? item.exact 
+      ? item.exact
         ? location.pathname === item.to
-        : location.pathname.startsWith(item.to) && (item.to !== "/" || location.pathname === "/")
+        : location.pathname.startsWith(item.to) &&
+          (item.to !== "/" || location.pathname === "/")
       : item.children?.some((c) => location.pathname === c.to);
 
     if (hasChildren) {
@@ -80,16 +84,23 @@ const DashboardLayout = () => {
               isActive && !isExpanded
                 ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
                 : "text-gray-400 hover:text-white hover:bg-slate-700/50",
-              sidebarCollapsed && !isMobile && "justify-center"
+              sidebarCollapsed && !isMobile && "justify-center",
             )}
             title={sidebarCollapsed && !isMobile ? item.label : undefined}
           >
-            <div className={cn(
-              "shrink-0 flex items-center justify-center",
-              sidebarCollapsed && !isMobile ? "w-11 h-11" : "w-10 h-10"
-            )}>
+            <div
+              className={cn(
+                "shrink-0 flex items-center justify-center",
+                sidebarCollapsed && !isMobile ? "w-11 h-11" : "w-10 h-10",
+              )}
+            >
               <item.icon
-                className={cn("w-5 h-5", isActive ? "text-cyan-400" : "group-hover:scale-110 transition-transform")}
+                className={cn(
+                  "w-5 h-5",
+                  isActive
+                    ? "text-cyan-400"
+                    : "group-hover:scale-110 transition-transform",
+                )}
               />
             </div>
             {(isMobile || !sidebarCollapsed) && (
@@ -109,7 +120,7 @@ const DashboardLayout = () => {
           </button>
 
           {(isMobile || !sidebarCollapsed) && isExpanded && (
-            <div className="pl-6 space-y-1 border-l border-slate-700/50 ml-5 animate-in slide-in-from-top-2 duration-300">
+            <div className="pl-6 space-y-1 border-l border-slate-700/50 ml-5">
               {item.children?.map((child) => {
                 const isChildActive = location.pathname === child.to;
                 return (
@@ -144,14 +155,16 @@ const DashboardLayout = () => {
           isActive
             ? "bg-linear-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-900/20"
             : "text-gray-400 hover:text-white hover:bg-slate-700/50",
-          sidebarCollapsed && !isMobile && "justify-center"
+          sidebarCollapsed && !isMobile && "justify-center",
         )}
         title={sidebarCollapsed && !isMobile ? item.label : undefined}
       >
-        <div className={cn(
-          "shrink-0 flex items-center justify-center",
-          sidebarCollapsed && !isMobile ? "w-11 h-11" : "w-10 h-10"
-        )}>
+        <div
+          className={cn(
+            "shrink-0 flex items-center justify-center",
+            sidebarCollapsed && !isMobile ? "w-11 h-11" : "w-10 h-10",
+          )}
+        >
           <item.icon
             className={cn(
               "w-5 h-5",
@@ -188,7 +201,7 @@ const DashboardLayout = () => {
         className={cn(
           "fixed lg:static inset-y-0 left-0 z-50 bg-[#1e293b] border-r border-slate-700/50 transition-all duration-300 ease-in-out flex flex-col shadow-2xl",
           sidebarCollapsed ? "lg:w-20" : "w-64",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
         )}
       >
         {/* Sidebar Header */}
@@ -198,12 +211,16 @@ const DashboardLayout = () => {
           </div>
           {(!sidebarCollapsed || sidebarOpen) && (
             <div className="overflow-hidden animate-in fade-in slide-in-from-left-2 duration-500">
-              <h1 className="text-lg font-bold text-white leading-none">Ice POS</h1>
-              <p className="text-[10px] uppercase tracking-widest text-cyan-500 font-black mt-1">Gestión</p>
+              <h1 className="text-lg font-bold text-white leading-none">
+                Ice POS
+              </h1>
+              <p className="text-[10px] uppercase tracking-widest text-cyan-500 font-black mt-1">
+                Gestión
+              </p>
             </div>
           )}
           {sidebarOpen && (
-            <button 
+            <button
               onClick={() => setSidebarOpen(false)}
               className="ml-auto p-2 text-gray-400 hover:text-white lg:hidden"
             >
@@ -213,12 +230,18 @@ const DashboardLayout = () => {
         </div>
 
         {/* Navigation Items */}
-        <nav className={cn(
-          "flex-1 py-6 px-3 space-y-2 overflow-y-auto scrollbar-none",
-          sidebarCollapsed && !sidebarOpen && "px-2"
-        )}>
+        <nav
+          className={cn(
+            "flex-1 py-6 px-3 space-y-2 overflow-y-auto scrollbar-none",
+            sidebarCollapsed && !sidebarOpen && "px-2",
+          )}
+        >
           {navItems.map((item) => (
-            <NavLinkComponent key={item.label} item={item} isMobile={sidebarOpen} />
+            <NavLinkComponent
+              key={item.label}
+              item={item}
+              isMobile={sidebarOpen}
+            />
           ))}
         </nav>
 
@@ -240,7 +263,10 @@ const DashboardLayout = () => {
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner" title={user.full_name}>
+              <div
+                className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner"
+                title={user.full_name}
+              >
                 {user.full_name.charAt(0)}
               </div>
             </div>
@@ -255,7 +281,7 @@ const DashboardLayout = () => {
               <button
                 className={cn(
                   "flex items-center w-full h-10 rounded-xl text-red-400 hover:bg-red-400/10 transition-all group overflow-hidden",
-                  sidebarCollapsed && !sidebarOpen ? "justify-center" : "px-3"
+                  sidebarCollapsed && !sidebarOpen ? "justify-center" : "px-3",
                 )}
               >
                 <div className="shrink-0 flex items-center justify-center w-6 h-6">
@@ -294,18 +320,13 @@ const DashboardLayout = () => {
 
           <div className="flex items-center gap-4 ml-auto">
             <div className="hidden sm:flex flex-col text-right">
-              <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-wider">Hoy</span>
+              <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-wider">
+                Hoy
+              </span>
               <span className="text-xs text-gray-300 font-medium">
                 {new Date().toLocaleDateString("es-PE", { dateStyle: "full" })}
               </span>
             </div>
-            {/* <div className="w-px h-8 bg-slate-700/50 mx-2 hidden sm:block" /> */}
-            {/* <div className="p-2 rounded-full hover:bg-slate-800 text-gray-400 cursor-pointer relative">
-              <div className="absolute top-2 right-2 w-2 h-2 bg-cyan-500 rounded-full border-2 border-[#1e293b]" />
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </div> */}
           </div>
         </header>
 
