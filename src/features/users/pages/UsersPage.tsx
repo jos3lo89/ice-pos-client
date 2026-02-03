@@ -14,9 +14,6 @@ const UsersPage = () => {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Usuarios
           </h1>
-          <p className="text-slate-400 mt-1">
-            Gestiona el acceso y roles del personal del restaurante.
-          </p>
         </div>
         <Button
           onClick={() => setIsCreateOpen(true)}

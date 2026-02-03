@@ -12,6 +12,8 @@ import {
   History,
   Settings,
   type LucideIcon,
+  Plus,
+  List,
 } from "lucide-react";
 
 export interface NavItem {
@@ -42,22 +44,22 @@ export const allNavItems: NavGroup[] = [
         label: "Dashboard",
         exact: true,
       },
-      {
-        label: "Gestión",
-        icon: Package,
-        children: [
-          {
-            to: "/productos",
-            icon: Package,
-            label: "Productos",
-          },
-          {
-            to: "/categorias",
-            icon: Tags,
-            label: "Categorías",
-          },
-        ],
-      },
+      // {
+      //   label: "Gestión",
+      //   icon: Package,
+      //   children: [
+      //     {
+      //       to: "/productos",
+      //       icon: Package,
+      //       label: "Productos",
+      //     },
+      //     {
+      //       to: "/categorias",
+      //       icon: Tags,
+      //       label: "Categorías",
+      //     },
+      //   ],
+      // },
       {
         label: "Administración",
         icon: UserRoundCogIcon,
@@ -67,17 +69,33 @@ export const allNavItems: NavGroup[] = [
             icon: Users2,
             label: "Usuarios",
           },
-          {
-            to: "/roles",
-            icon: Settings,
-            label: "Roles y Permisos",
-          },
+          // {
+          //   to: "/roles",
+          //   icon: Settings,
+          //   label: "Roles y Permisos",
+          // },
         ],
       },
+      // {
+      //   to: "/reportes",
+      //   icon: ClipboardList,
+      //   label: "Reportes",
+      // },
       {
-        to: "/reportes",
-        icon: ClipboardList,
-        label: "Reportes",
+        label: "Categorías",
+        icon: Tags,
+        children: [
+          {
+            to: "/lista-categorias",
+            icon: List,
+            label: "Lista de Categorías",
+          },
+          {
+            to: "/crear-categoria",
+            icon: Plus,
+            label: "Crear Categoría",
+          },
+        ],
       },
     ],
   },

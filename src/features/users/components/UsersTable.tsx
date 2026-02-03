@@ -51,7 +51,7 @@ const UsersTable = () => {
   const allUsers = data?.data ?? [];
   const meta = data?.meta;
 
-  const { register, handleSubmit } = useForm<{ search: string }>({
+  const { register, handleSubmit, reset } = useForm<{ search: string }>({
     defaultValues: {
       search: "",
     },
@@ -102,10 +102,26 @@ const UsersTable = () => {
           </div>
           <Button 
             type="submit"
-            className="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold transition-all shadow-lg shadow-cyan-900/20"
+            className="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold transition-all shadow-lg shadow-cyan-900/20 px-6"
           >
             Buscar
           </Button>
+          {searchTerm && (
+            <Button 
+              type="button"
+              variant="ghost"
+              onClick={() => {
+                reset({ search: "" });
+                setSearchTerm("");
+                setPage(1);
+              }}
+              className="text-slate-400 hover:text-white hover:bg-slate-700/50 px-3"
+              title="Limpiar búsqueda"
+            >
+              <XCircle className="w-4 h-4 mr-2" />
+              Limpiar
+            </Button>
+          )}
         </form>
 
         <div className="text-sm text-slate-400 font-medium">
@@ -238,7 +254,7 @@ const UsersTable = () => {
               className="bg-slate-900/50 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-30 rounded-lg gap-1 px-3"
             >
               <ChevronLeft className="w-4 h-4" />
-              Anterior
+              {meta?.hasPrev ? "Anterior" : "Inicio"}
             </Button>
             
             <div className="flex items-center gap-1.5 px-3">
@@ -264,7 +280,7 @@ const UsersTable = () => {
               disabled={!meta?.hasNext}
               className="bg-slate-900/50 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-30 rounded-lg gap-1 px-3"
             >
-              Siguiente
+              {meta?.hasNext ? "Siguiente" : "Final"}
               <ChevronRight className="w-4 h-4" />
             </Button>
           </div>
