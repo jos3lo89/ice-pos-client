@@ -13,9 +13,6 @@ const CategoriesPage = () => {
           <h1 className="text-3xl font-bold tracking-tight text-white">
             Categorias
           </h1>
-          <p className="text-slate-400 mt-1">
-            Gestiona las categorias del sistema.
-          </p>
         </div>
         <Button
           onClick={() => setIsCreateOpen(true)}

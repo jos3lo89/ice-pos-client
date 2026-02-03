@@ -38,11 +38,10 @@ const ChangeStatusCatDialog = ({
     if (!categorie) return;
 
     changeState.mutate(
-      categorie.id.toString(),
-      // {
-      //   userId: user.id.toString(),
-      //   payload: { is_active: isActive },
-      // },
+      {
+        categorieId: categorie.id.toString(),
+        payload: { is_active: isActive },
+      },
       {
         onSuccess: () => {
           onOpenChange(false);

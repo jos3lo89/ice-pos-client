@@ -1,19 +1,25 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { categorieService } from "../services/categories.service";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 export const useCategorie = () => {
-  const getAllCategories = useQuery({
-    queryKey: ["categories", "list"],
-    queryFn: categorieService.getAllCategories,
-  });
+  const qryClient = useQueryClient();
+
+  const getAllCategories = (page: number, limit: number, search?: string) => {
+    return useQuery({
+      queryKey: ["categories", "list", page, limit, search],
+      queryFn: () => categorieService.getAllCategories(page, limit, search),
+    });
+  };
 
   const createCategorie = useMutation({
     mutationKey: ["create", "categorie"],
     mutationFn: categorieService.createCategorie,
     onSuccess: () => {
-      console.log("exito crear la categoria");
+      qryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
@@ -38,7 +44,9 @@ export const useCategorie = () => {
     mutationKey: ["cahnge", "state", "categorie"],
     mutationFn: categorieService.changeCategorieState,
     onSuccess: () => {
-      console.log("exito al cambiar el estado de la categoria");
+      qryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
