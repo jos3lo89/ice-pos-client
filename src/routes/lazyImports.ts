@@ -9,3 +9,6 @@ export const UsersPage = lazy(() => import("@/features/users/pages/UsersPage"));
 export const CategoriesPage = lazy(
   () => import("@/features/categories/pages/CategoriesPage"),
 );
+export const CreateCategoryPage = lazy(
+  () => import("@/features/categories/pages/CreateCategoryPage"),
+);

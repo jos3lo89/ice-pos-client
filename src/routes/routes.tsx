@@ -4,6 +4,7 @@ import {
   DashboardHome,
   LoginPage,
   UsersPage,
+  CreateCategoryPage,
 } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -29,6 +30,10 @@ export const routes = createBrowserRouter([
       {
         path: "/lista-categorias",
         element: <CategoriesPage />,
+      },
+      {
+        path: "/crear-categoria",
+        element: <CreateCategoryPage />,
       },
     ],
   },
