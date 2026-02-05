@@ -4,6 +4,7 @@ import {
   DashboardHome,
   LoginPage,
   UsersPage,
+  CreateUserPage,
   CreateCategoryPage,
 } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
@@ -24,8 +25,12 @@ export const routes = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
-        path: "/usuarios",
+        path: "/lista-empleados",
         element: <UsersPage />,
+      },
+      {
+        path: "/crear-empleado",
+        element: <CreateUserPage />,
       },
       {
         path: "/lista-categorias",

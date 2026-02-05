@@ -6,6 +6,9 @@ export const DashboardHome = lazy(
 );
 
 export const UsersPage = lazy(() => import("@/features/users/pages/UsersPage"));
+export const CreateUserPage = lazy(
+  () => import("@/features/users/pages/CreateUserPage"),
+);
 export const CategoriesPage = lazy(
   () => import("@/features/categories/pages/CategoriesPage"),
 );

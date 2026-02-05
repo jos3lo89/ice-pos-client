@@ -7,7 +7,6 @@ import {
   Tags,
   UserRoundCogIcon,
   UtensilsCrossed,
-  Users2,
   History,
   type LucideIcon,
   Plus,
@@ -59,19 +58,19 @@ export const allNavItems: NavGroup[] = [
       //   ],
       // },
       {
-        label: "Administración",
+        label: "Empleados",
         icon: UserRoundCogIcon,
         children: [
           {
-            to: "/usuarios",
-            icon: Users2,
-            label: "Usuarios",
+            to: "/lista-empleados",
+            icon: List,
+            label: "Lista de Empleados",
           },
-          // {
-          //   to: "/roles",
-          //   icon: Settings,
-          //   label: "Roles y Permisos",
-          // },
+          {
+            to: "/crear-empleado",
+            icon: Plus,
+            label: "Crear Empleado",
+          },
         ],
       },
       // {
