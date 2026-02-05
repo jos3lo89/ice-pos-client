@@ -18,6 +18,7 @@ Repository Summary
 Package Manager
 
 - pnpm (pnpm-lock.yaml present).
+- Use pnpm for installing packages.
 
 Commands (Do Not Run)
 

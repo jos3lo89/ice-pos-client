@@ -1,14 +1,10 @@
 import http from "@/config/axios";
-import type { LoginRequest, LoginResponse } from "../interfaces/auth.interface";
-import type { ApiResponse } from "@/interfaces/api-response.interface";
+import type { LoginRes } from "../interfaces/auth.interface";
+import type { LoginT } from "../schemas/auth.schema";
 
 export const authService = {
-  login: async (values: LoginRequest) => {
-    const { data } = await http.post<ApiResponse<LoginResponse>>(
-      "/auth/login",
-      values,
-    );
-
-    return data.data;
+  login: async (values: LoginT) => {
+    const { data } = await http.post<LoginRes>("/auth/login", values);
+    return data;
   },
 };

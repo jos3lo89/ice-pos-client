@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { AlertTriangle, Power, RefreshCcw } from "lucide-react";
-import type { GetAllCategoriesRes } from "../interfaces/categories.interface";
+import type { Category } from "../interfaces/categories.interface";
 import { useCategorie } from "../hooks/useCategorie";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 interface ChangeStatusDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  categorie: GetAllCategoriesRes | null;
+  categorie: Category | null;
 }
 
 const ChangeStatusCatDialog = ({

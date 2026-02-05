@@ -1,15 +1,10 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 
-export interface LoginRequest {
-  userName: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  id: number;
+export interface LoginRes {
+  id: string;
   username: string;
   full_name: string;
-  role: Role;
+  role: UserRole;
   is_active: boolean;
   phone: string;
   created_at: string;

@@ -1,10 +1,8 @@
 import http from "@/config/axios";
-import type { ApiResponse } from "@/interfaces/api-response.interface";
 import type {
   CreateCategorieRes,
-  GetAllCategoriesMeta,
   GetAllCategoriesRes,
-  UpdateStateCategorieRes,
+  UpdateStateCategoryRes,
 } from "../interfaces/categories.interface";
 import type { CreateCategorieT } from "../schemas/categorie.schema";
 
@@ -14,9 +12,7 @@ export const categorieService = {
     limit: number = 5,
     search?: string,
   ) => {
-    const { data } = await http.get<
-      ApiResponse<GetAllCategoriesRes[], GetAllCategoriesMeta>
-    >("/categories", {
+    const { data } = await http.get<GetAllCategoriesRes>("/categories", {
       params: {
         page,
         limit,
@@ -35,18 +31,15 @@ export const categorieService = {
       is_active: boolean;
     };
   }) => {
-    const { data } = await http.patch<ApiResponse<UpdateStateCategorieRes>>(
+    const { data } = await http.patch<UpdateStateCategoryRes>(
       `/categories/${values.categorieId}/status`,
       values.payload,
     );
-    return data.data;
+    return data;
   },
 
   createCategorie: async (values: CreateCategorieT) => {
-    const { data } = await http.post<ApiResponse<CreateCategorieRes>>(
-      "/categories",
-      values,
-    );
-    return data.data;
+    const { data } = await http.post<CreateCategorieRes>("/categories", values);
+    return data;
   },
 };
