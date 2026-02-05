@@ -1,32 +1,36 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 
-export interface UsersResponse {
-  id: number;
+// obtener todos los usuarios
+export interface User {
+  id: string;
   username: string;
   full_name: string;
-  role: Role;
+  role: UserRole;
   is_active: boolean;
   phone: string | null;
   created_at: string;
   updated_at: string;
 }
 
-export interface UsersMetaPagination {
-  total: number
-  page: number
-  lastPage: number
-  hasNext: boolean
-  hasPrev: boolean
-  nextPage: number | null
-  prevPage: number | null
+export interface GetAllUsersRes {
+  data: User[];
+  meta: {
+    total: number;
+    page: number;
+    lastPage: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+    nextPage: number | null;
+    prevPage: number | null;
+  };
 }
 
-
-export interface CreateUserResponse {
-  id: number;
+// crear usuario
+export interface CreateUserRes {
+  id: string;
   username: string;
   full_name: string;
-  role: Role;
+  role: UserRole;
   is_active: boolean;
   phone: string | null;
   created_at: string;
@@ -38,10 +42,10 @@ export interface UserChangeStateReq {
 }
 
 export interface UserChangeStateRes {
-  id: number;
+  id: string;
   username: string;
   full_name: string;
-  role: Role;
+  role: UserRole;
   is_active: boolean;
   phone: string;
   created_at: string;

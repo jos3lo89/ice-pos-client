@@ -1,7 +1,7 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 import z from "zod";
 
-export const userRoles: Role[] = [
+export const userRoles: UserRole[] = [
   "admin",
   "cajero",
   "mesero",
@@ -25,4 +25,4 @@ export const createUserSchema = z.object({
     .max(9, "Maximo 9 caracteres."),
 });
 
-export type CreateUserFormValues = z.infer<typeof createUserSchema>;
+export type CreateUserT = z.infer<typeof createUserSchema>;

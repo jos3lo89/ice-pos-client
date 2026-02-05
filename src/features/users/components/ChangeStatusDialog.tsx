@@ -12,12 +12,12 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCcw, Power, AlertTriangle } from "lucide-react";
 import { useUsers } from "../hooks/useUsers";
-import type { UsersResponse } from "../interfaces/users.interface";
+import type { User } from "../interfaces/users.interface";
 
 interface ChangeStatusDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user: UsersResponse | null;
+  user: User | null;
 }
 
 const ChangeStatusDialog = ({

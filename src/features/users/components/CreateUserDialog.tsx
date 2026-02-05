@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
 import {
   createUserSchema,
   userRoles,
-  type CreateUserFormValues,
+  type CreateUserT,
 } from "../schemas/user.schema";
 import { useUsers } from "../hooks/useUsers";
 
@@ -40,7 +40,7 @@ interface CreateUserDialogProps {
 const CreateUserDialog = ({ open, onOpenChange }: CreateUserDialogProps) => {
   const { createUser } = useUsers();
 
-  const form = useForm<CreateUserFormValues>({
+  const form = useForm<CreateUserT>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
       username: "",
@@ -51,7 +51,7 @@ const CreateUserDialog = ({ open, onOpenChange }: CreateUserDialogProps) => {
     },
   });
 
-  const onSubmit = async (values: CreateUserFormValues) => {
+  const onSubmit = async (values: CreateUserT) => {
     createUser.mutate(values, {
       onSuccess: () => {
         form.reset();

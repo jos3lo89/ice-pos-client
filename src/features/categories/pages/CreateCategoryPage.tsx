@@ -129,7 +129,7 @@ const CreateCategoryPage = () => {
                   name="slug"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 block flex items-center">
+                      <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
                         <LinkIcon className="w-3 h-3 mr-1.5 text-slate-500" />
                         URL Slug
                       </FormLabel>

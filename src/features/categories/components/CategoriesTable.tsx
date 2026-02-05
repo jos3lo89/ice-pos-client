@@ -1,8 +1,5 @@
 import { useState } from "react";
-import type {
-  Category,
-  GetAllCategoriesRes,
-} from "../interfaces/categories.interface";
+import type { Category } from "../interfaces/categories.interface";
 import { useCategorie } from "../hooks/useCategorie";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";

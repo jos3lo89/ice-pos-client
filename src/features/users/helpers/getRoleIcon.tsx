@@ -1,7 +1,7 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 import { Banknote, ChefHat, Coffee, Shield, Utensils } from "lucide-react";
 
-export const getRoleIcon = (role: Role) => {
+export const getRoleIcon = (role: UserRole) => {
   switch (role) {
     case "admin":
       return <Shield className="w-4 h-4 text-purple-400" />;

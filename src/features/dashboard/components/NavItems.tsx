@@ -1,4 +1,4 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 import {
   ChefHat,
   ClipboardList,
@@ -28,7 +28,7 @@ export interface NavItem {
 }
 
 interface NavGroup {
-  role: Role;
+  role: UserRole;
   children: NavItem[];
 }
 
