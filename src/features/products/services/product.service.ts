@@ -1,11 +1,16 @@
 import http from "@/config/axios";
 import type {
+  CreateModifierRes,
   CreateProductRes,
   CreateVariantRes,
   GetAllProductsRes,
   UpdateStatusProductRes,
 } from "../interfaces/product.interface";
-import type { CreateProductT, CreateVariantT } from "../schemas/product.schema";
+import type {
+  CreateModifierT,
+  CreateProductT,
+  CreateVariantT,
+} from "../schemas/product.schema";
 
 export const productService = {
   getAllProducts: async (
@@ -53,6 +58,14 @@ export const productService = {
     const { data } = await http.post<CreateVariantRes>(
       "/products/variants",
       variant,
+    );
+    return data;
+  },
+
+  createModifier: async (modifier: CreateModifierT) => {
+    const { data } = await http.post<CreateModifierRes>(
+      "/products/modifier",
+      modifier,
     );
     return data;
   },

@@ -100,3 +100,26 @@ export interface CreateVariantRes {
     updated_at: string;
   };
 }
+
+// crear modificador de producto
+export interface CreateModifierRes {
+  id: string;
+  product_id: string;
+  modifier_name: string;
+  additional_price: string;
+  is_active: boolean;
+  products: {
+    id: string;
+    name: string;
+    price: string;
+    category_id: string;
+    area_impresion: string;
+    description: string | null;
+    is_available: boolean;
+    codigo_sunat: string;
+    unidad_medida: string;
+    afec_igv_tipo: string;
+    created_at: string;
+    updated_at: string;
+  };
+}

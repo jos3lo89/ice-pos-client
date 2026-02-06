@@ -22,3 +22,14 @@ export const createVariantSchema = z.object({
 });
 
 export type CreateVariantT = z.infer<typeof createVariantSchema>;
+
+// crear modificador de producto
+export const createModifierSchema = z.object({
+  modifier_name: z
+    .string()
+    .min(3, "El nombre debe tener al menos 3 caracteres"),
+  additional_price: z.number().min(0, "El precio debe ser mayor o igual a 0"),
+  product_id: z.uuid("El producto debe ser un UUID válido"),
+});
+
+export type CreateModifierT = z.infer<typeof createModifierSchema>;

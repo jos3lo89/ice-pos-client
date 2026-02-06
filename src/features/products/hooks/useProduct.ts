@@ -85,10 +85,32 @@ export const useProduct = () => {
     },
   });
 
+  const createModifier = useMutation({
+    mutationKey: ["create", "modifier"],
+    mutationFn: productService.createModifier,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["list", "products"] });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Error al crear el modificador");
+      }
+    },
+    onMutate: () => {
+      toast.loading("Creando modificador...", { id: "create-modifier" });
+    },
+    onSettled: () => {
+      toast.dismiss("create-modifier");
+    },
+  });
+
   return {
     getAllProducts,
     createProduct,
     updateStatusProduct,
     createVariant,
+    createModifier,
   };
 };

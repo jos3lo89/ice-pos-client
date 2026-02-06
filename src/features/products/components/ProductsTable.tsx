@@ -17,8 +17,8 @@ import {
   RefreshCw,
   Search,
   XCircle,
-  Layers,
-  Settings2,
+  Wand2,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,9 @@ import { useForm } from "react-hook-form";
 import { Dialog } from "@/components/ui/dialog";
 import ProductUpdateStatus from "./ProductUpdateStatus";
 import CreateVariant from "./CreateVariant";
+import CreateModifier from "./CreateModifier";
 import type { Product } from "../interfaces/product.interface";
+import { toast } from "sonner";
 
 const ProductsTable = () => {
   const [page, setPage] = useState(1);
@@ -46,6 +48,7 @@ const ProductsTable = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
   const [isVariantDialogOpen, setIsVariantDialogOpen] = useState(false);
+  const [isModifierDialogOpen, setIsModifierDialogOpen] = useState(false);
 
   const { getAllProducts } = useProduct();
 
@@ -241,12 +244,13 @@ const ProductsTable = () => {
                           </DropdownMenuItem>
 
                           <DropdownMenuItem
-                            onClick={() =>
-                              console.log("Agregar modificador ID:", product.id)
-                            }
+                            onClick={() => {
+                              setSelectedProduct(product);
+                              setIsModifierDialogOpen(true);
+                            }}
                             className="cursor-pointer rounded-lg px-3 py-2 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
                           >
-                            <Layers className="w-4 h-4" />
+                            <Wand2 className="w-4 h-4" />
                             <span>Agregar Modificador</span>
                           </DropdownMenuItem>
 
@@ -262,9 +266,14 @@ const ProductsTable = () => {
                           </DropdownMenuItem>
 
                           <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
-                          <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 hover:bg-amber-500/10 hover:text-amber-400 focus:bg-amber-500/10 focus:text-amber-400 gap-3 transition-colors text-sm font-medium">
-                            <Settings2 className="w-4 h-4" />
-                            <span>Editar Detalles</span>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              toast.warning("Opcion non disponible");
+                            }}
+                            className="cursor-pointer rounded-lg px-3 py-2 hover:bg-amber-500/10 hover:text-amber-400 focus:bg-amber-500/10 focus:text-amber-400 gap-3 transition-colors text-sm font-medium"
+                          >
+                            <Eye className="w-4 h-4" />
+                            <span>Ver Detalles</span>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -358,6 +367,22 @@ const ProductsTable = () => {
             productName={selectedProduct.name}
             onSuccess={() => {
               setIsVariantDialogOpen(false);
+              setSelectedProduct(null);
+            }}
+          />
+        )}
+      </Dialog>
+
+      <Dialog
+        open={isModifierDialogOpen}
+        onOpenChange={setIsModifierDialogOpen}
+      >
+        {selectedProduct && (
+          <CreateModifier
+            productId={selectedProduct.id}
+            productName={selectedProduct.name}
+            onSuccess={() => {
+              setIsModifierDialogOpen(false);
               setSelectedProduct(null);
             }}
           />
