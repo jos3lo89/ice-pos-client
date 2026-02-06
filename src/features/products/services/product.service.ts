@@ -2,6 +2,7 @@ import http from "@/config/axios";
 import type {
   CreateProductRes,
   GetAllProductsRes,
+  UpdateStatusProductRes,
 } from "../interfaces/product.interface";
 import type { CreateProductT } from "../schemas/product.schema";
 
@@ -31,6 +32,19 @@ export const productService = {
       ...product,
       description: product.description || null,
     });
+    return data;
+  },
+
+  updateStatus: async (dto: {
+    productId: string;
+    values: {
+      is_available: boolean;
+    };
+  }) => {
+    const { data } = await http.patch<UpdateStatusProductRes>(
+      `/products/${dto.productId}/status`,
+      dto.values,
+    );
     return data;
   },
 };

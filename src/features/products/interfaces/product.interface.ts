@@ -61,3 +61,19 @@ export interface CreateProductRes {
   created_at: string;
   updated_at: string;
 }
+
+// actualizar estado del producto
+export interface UpdateStatusProductRes {
+  id: string;
+  name: string;
+  price: string;
+  category_id: string;
+  area_impresion: string;
+  description: string | null;
+  is_available: boolean;
+  codigo_sunat: string;
+  unidad_medida: string;
+  afec_igv_tipo: string;
+  created_at: string;
+  updated_at: string;
+}

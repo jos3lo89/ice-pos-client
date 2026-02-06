@@ -41,8 +41,32 @@ export const useProduct = () => {
     },
   });
 
+  const updateStatusProduct = useMutation({
+    mutationKey: ["update", "product", "status"],
+    mutationFn: productService.updateStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["list", "products"] });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Error al actualizar el estado del producto");
+      }
+    },
+    onMutate: () => {
+      toast.loading("Actualizando estado del producto...", {
+        id: "update-product-status",
+      });
+    },
+    onSettled: () => {
+      toast.dismiss("update-product-status");
+    },
+  });
+
   return {
     getAllProducts,
     createProduct,
+    updateStatusProduct,
   };
 };

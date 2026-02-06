@@ -34,11 +34,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
+import { Dialog } from "@/components/ui/dialog";
+import ProductUpdateStatus from "./ProductUpdateStatus";
+import type { Product } from "../interfaces/product.interface";
 
 const ProductsTable = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
 
   const { getAllProducts } = useProduct();
 
@@ -243,9 +248,10 @@ const ProductsTable = () => {
                           </DropdownMenuItem>
 
                           <DropdownMenuItem
-                            onClick={() =>
-                              console.log("Cambiar estado ID:", product.id)
-                            }
+                            onClick={() => {
+                              setSelectedProduct(product);
+                              setIsStatusDialogOpen(true);
+                            }}
                             className="cursor-pointer rounded-lg px-3 py-2 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
                           >
                             <RefreshCw className="w-4 h-4" />
@@ -327,6 +333,20 @@ const ProductsTable = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
+        {selectedProduct && (
+          <ProductUpdateStatus
+            productId={selectedProduct.id}
+            productName={selectedProduct.name}
+            isAvailable={selectedProduct.is_available}
+            onSuccess={() => {
+              setIsStatusDialogOpen(false);
+              setSelectedProduct(null);
+            }}
+          />
+        )}
+      </Dialog>
     </div>
   );
 };
