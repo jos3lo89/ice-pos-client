@@ -11,6 +11,7 @@ import {
   type LucideIcon,
   Plus,
   List,
+  Package,
 } from "lucide-react";
 
 export interface NavItem {
@@ -96,7 +97,7 @@ export const allNavItems: NavGroup[] = [
       },
       {
         label: "Productos",
-        icon: Tags,
+        icon: Package,
         children: [
           {
             to: "/lista-productos",
