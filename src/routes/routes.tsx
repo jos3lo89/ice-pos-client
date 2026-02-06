@@ -6,6 +6,8 @@ import {
   UsersPage,
   CreateUserPage,
   CreateCategoryPage,
+  ProductsPage,
+  CreateProductPage,
 } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -39,6 +41,14 @@ export const routes = createBrowserRouter([
       {
         path: "/crear-categoria",
         element: <CreateCategoryPage />,
+      },
+      {
+        path: "/lista-productos",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/crear-producto",
+        element: <CreateProductPage />,
       },
     ],
   },

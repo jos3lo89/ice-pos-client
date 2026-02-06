@@ -15,3 +15,11 @@ export const CategoriesPage = lazy(
 export const CreateCategoryPage = lazy(
   () => import("@/features/categories/pages/CreateCategoryPage"),
 );
+
+export const ProductsPage = lazy(
+  () => import("@/features/products/pages/ProductsPage"),
+);
+
+export const CreateProductPage = lazy(
+  () => import("@/features/products/pages/CreateProductPage"),
+);

@@ -23,7 +23,7 @@ const UsersPage = () => {
         </Link>
       </div>
 
-      <div className="bg-[#1e293b]/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
+      <div className="overflow-hidden">
         <UsersTable />
       </div>
     </div>
