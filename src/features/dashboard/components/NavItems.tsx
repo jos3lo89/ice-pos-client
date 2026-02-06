@@ -94,6 +94,22 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
+      {
+        label: "Productos",
+        icon: Tags,
+        children: [
+          {
+            to: "/lista-productos",
+            icon: List,
+            label: "Lista de Productos",
+          },
+          {
+            to: "/crear-producto",
+            icon: Plus,
+            label: "Crear Producto",
+          },
+        ],
+      },
     ],
   },
   {
