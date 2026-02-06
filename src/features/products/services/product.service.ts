@@ -1,5 +1,9 @@
 import http from "@/config/axios";
-import type { GetAllProductsRes } from "../interfaces/product.interface";
+import type {
+  CreateProductRes,
+  GetAllProductsRes,
+} from "../interfaces/product.interface";
+import type { CreateProductT } from "../schemas/product.schema";
 
 export const productService = {
   getAllProducts: async (
@@ -20,5 +24,13 @@ export const productService = {
       products: data.data,
       meta: data.meta,
     };
+  },
+
+  createProduct: async (product: CreateProductT) => {
+    const { data } = await http.post<CreateProductRes>("/products", {
+      ...product,
+      description: product.description || null,
+    });
+    return data;
   },
 };

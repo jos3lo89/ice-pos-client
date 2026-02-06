@@ -2,16 +2,13 @@ import http from "@/config/axios";
 import type {
   CreateCategorieRes,
   GetAllCategoriesRes,
+  ListCategoryCompleteRes,
   UpdateStateCategoryRes,
 } from "../interfaces/categories.interface";
 import type { CreateCategorieT } from "../schemas/categorie.schema";
 
 export const categorieService = {
-  getAllCategories: async (
-    page: number = 1,
-    limit: number = 5,
-    search?: string,
-  ) => {
+  getAllCategories: async (page: number, limit: number, search?: string) => {
     const { data } = await http.get<GetAllCategoriesRes>("/categories", {
       params: {
         page,
@@ -40,6 +37,12 @@ export const categorieService = {
 
   createCategorie: async (values: CreateCategorieT) => {
     const { data } = await http.post<CreateCategorieRes>("/categories", values);
+    return data;
+  },
+
+  listAllCategories: async () => {
+    const { data } =
+      await http.get<ListCategoryCompleteRes[]>("/categories/all");
     return data;
   },
 };

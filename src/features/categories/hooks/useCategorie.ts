@@ -67,8 +67,14 @@ export const useCategorie = () => {
     },
   });
 
+  const listAllCategories = useQuery({
+    queryKey: ["categories", "list", "all"],
+    queryFn: categorieService.listAllCategories,
+  });
+
   return {
     listCategories: getAllCategories,
+    listAllCategories,
     changeState: changeCategorieState,
     createCategorie,
   };

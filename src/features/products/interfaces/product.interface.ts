@@ -1,3 +1,4 @@
+// obtener todos los productos
 export interface GetAllProductsRes {
   data: Product[];
   meta: {
@@ -43,4 +44,20 @@ export interface Product {
     additional_price: string;
     is_active: boolean;
   }[];
+}
+
+// crear producto
+export interface CreateProductRes {
+  id: string;
+  name: string;
+  price: string;
+  category_id: string;
+  area_impresion: string;
+  description: string | null;
+  is_available: boolean;
+  codigo_sunat: string;
+  unidad_medida: string;
+  afec_igv_tipo: string;
+  created_at: string;
+  updated_at: string;
 }

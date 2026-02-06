@@ -49,3 +49,13 @@ export interface UpdateStateCategoryRes {
     products: number;
   };
 }
+
+// lista completa de categorias
+export interface ListCategoryCompleteRes {
+  id: string;
+  name: string;
+  slug: string;
+  _count: {
+    products: number;
+  };
+}
