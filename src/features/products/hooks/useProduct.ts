@@ -64,9 +64,31 @@ export const useProduct = () => {
     },
   });
 
+  const createVariant = useMutation({
+    mutationKey: ["create", "variant"],
+    mutationFn: productService.createVariant,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["list", "products"] });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Error al crear la variante");
+      }
+    },
+    onMutate: () => {
+      toast.loading("Creando variante...", { id: "create-variant" });
+    },
+    onSettled: () => {
+      toast.dismiss("create-variant");
+    },
+  });
+
   return {
     getAllProducts,
     createProduct,
     updateStatusProduct,
+    createVariant,
   };
 };

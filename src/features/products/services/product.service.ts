@@ -1,10 +1,11 @@
 import http from "@/config/axios";
 import type {
   CreateProductRes,
+  CreateVariantRes,
   GetAllProductsRes,
   UpdateStatusProductRes,
 } from "../interfaces/product.interface";
-import type { CreateProductT } from "../schemas/product.schema";
+import type { CreateProductT, CreateVariantT } from "../schemas/product.schema";
 
 export const productService = {
   getAllProducts: async (
@@ -44,6 +45,14 @@ export const productService = {
     const { data } = await http.patch<UpdateStatusProductRes>(
       `/products/${dto.productId}/status`,
       dto.values,
+    );
+    return data;
+  },
+
+  createVariant: async (variant: CreateVariantT) => {
+    const { data } = await http.post<CreateVariantRes>(
+      "/products/variants",
+      variant,
     );
     return data;
   },

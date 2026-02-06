@@ -36,6 +36,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Dialog } from "@/components/ui/dialog";
 import ProductUpdateStatus from "./ProductUpdateStatus";
+import CreateVariant from "./CreateVariant";
 import type { Product } from "../interfaces/product.interface";
 
 const ProductsTable = () => {
@@ -44,6 +45,7 @@ const ProductsTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
+  const [isVariantDialogOpen, setIsVariantDialogOpen] = useState(false);
 
   const { getAllProducts } = useProduct();
 
@@ -228,9 +230,10 @@ const ProductsTable = () => {
                           <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
 
                           <DropdownMenuItem
-                            onClick={() =>
-                              console.log("Agregar variante ID:", product.id)
-                            }
+                            onClick={() => {
+                              setSelectedProduct(product);
+                              setIsVariantDialogOpen(true);
+                            }}
                             className="cursor-pointer rounded-lg px-3 py-2 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
                           >
                             <Plus className="w-4 h-4" />
@@ -342,6 +345,19 @@ const ProductsTable = () => {
             isAvailable={selectedProduct.is_available}
             onSuccess={() => {
               setIsStatusDialogOpen(false);
+              setSelectedProduct(null);
+            }}
+          />
+        )}
+      </Dialog>
+
+      <Dialog open={isVariantDialogOpen} onOpenChange={setIsVariantDialogOpen}>
+        {selectedProduct && (
+          <CreateVariant
+            productId={selectedProduct.id}
+            productName={selectedProduct.name}
+            onSuccess={() => {
+              setIsVariantDialogOpen(false);
               setSelectedProduct(null);
             }}
           />
