@@ -39,7 +39,7 @@ import { Link } from "react-router-dom";
 
 const FloorsTable = () => {
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, isError, error, refetch } = useFloors(
