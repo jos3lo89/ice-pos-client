@@ -1,50 +1,51 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { floorService } from "../services/floor.service";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import type { CreateFloorT } from "../schemas/floor.schema";
 
-export const useFloor = () => {
+// listar todos los pisos con paginacion
+export const useFloors = (page: number, limit: number, search?: string) => {
+  return useQuery({
+    queryKey: ["floors", { page, limit, search }],
+    queryFn: () => floorService.getFloors(page, limit, search),
+    placeholderData: keepPreviousData,
+  });
+};
+
+// listar todos los pisos
+export const useAllFloors = () => {
+  return useQuery({
+    queryKey: ["floors", "all"],
+    queryFn: () => floorService.getAllFloors(),
+  });
+};
+
+// crear piso
+export const useCreateFloor = () => {
   const queryClient = useQueryClient();
-  // crear piso
-  const createFloor = useMutation({
+
+  return useMutation({
     mutationKey: ["create", "floor"],
-    mutationFn: floorService.createFloor,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get", "floors"] });
-      queryClient.invalidateQueries({ queryKey: ["get", "all", "floors"] });
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
-      } else {
-        toast.error("Error al crear el piso");
-      }
-    },
+    mutationFn: (data: CreateFloorT) => floorService.createFloor(data),
     onMutate: () => {
       toast.loading("Creando piso...", { id: "create-floor" });
     },
-    onSettled: () => {
-      toast.dismiss("create-floor");
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["floors"] });
+      toast.success("Piso creado correctamente", { id: "create-floor" });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al crear el piso";
+      toast.error(message, { id: "create-floor" });
     },
   });
-
-  // obtener pisos
-  const getFloors = (page: number, limit: number, search?: string) => {
-    return useQuery({
-      queryKey: ["get", "floors", page, limit, search],
-      queryFn: () => floorService.getFloors(page, limit, search),
-    });
-  };
-
-  // obtener todos los pisos
-  const getAllFloors = useQuery({
-    queryKey: ["get", "all", "floors"],
-    queryFn: () => floorService.getAllFloors(),
-  });
-
-  return {
-    createFloor,
-    getFloors,
-    getAllFloors,
-  };
 };

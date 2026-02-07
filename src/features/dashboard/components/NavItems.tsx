@@ -12,6 +12,7 @@ import {
   Plus,
   List,
   Package,
+  Layers,
 } from "lucide-react";
 
 export interface NavItem {
@@ -108,6 +109,22 @@ export const allNavItems: NavGroup[] = [
             to: "/crear-producto",
             icon: Plus,
             label: "Crear Producto",
+          },
+        ],
+      },
+      {
+        label: "Pisos",
+        icon: Layers,
+        children: [
+          {
+            to: "/lista-pisos",
+            icon: List,
+            label: "Lista de Pisos",
+          },
+          {
+            to: "/crear-piso",
+            icon: Plus,
+            label: "Crear Piso",
           },
         ],
       },
