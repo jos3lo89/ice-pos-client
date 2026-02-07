@@ -10,6 +10,8 @@ import {
   CreateProductPage,
   FloorsPage,
   CreateFloorPage,
+  TablesPage,
+  CreateTablePage,
 } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -59,6 +61,14 @@ export const routes = createBrowserRouter([
       {
         path: "/crear-piso",
         element: <CreateFloorPage />,
+      },
+      {
+        path: "/lista-mesas",
+        element: <TablesPage />,
+      },
+      {
+        path: "/crear-mesa",
+        element: <CreateTablePage />,
       },
     ],
   },

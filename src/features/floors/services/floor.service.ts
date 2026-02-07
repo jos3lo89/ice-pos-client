@@ -22,7 +22,7 @@ class FloorService {
   }
 
   async getAll() {
-    const { data } = await http.get<GetAllFloorsRes>(`${this.baseUrl}/all`);
+    const { data } = await http.get<GetAllFloorsRes[]>(`${this.baseUrl}/all`);
     return data;
   }
 }

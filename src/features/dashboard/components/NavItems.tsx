@@ -13,6 +13,7 @@ import {
   List,
   Package,
   Layers,
+  LayoutGrid,
 } from "lucide-react";
 
 export interface NavItem {
@@ -125,6 +126,22 @@ export const allNavItems: NavGroup[] = [
             to: "/crear-piso",
             icon: Plus,
             label: "Crear Piso",
+          },
+        ],
+      },
+      {
+        label: "Mesas",
+        icon: LayoutGrid,
+        children: [
+          {
+            to: "/lista-mesas",
+            icon: List,
+            label: "Lista de Mesas",
+          },
+          {
+            to: "/crear-mesa",
+            icon: Plus,
+            label: "Crear Mesa",
           },
         ],
       },

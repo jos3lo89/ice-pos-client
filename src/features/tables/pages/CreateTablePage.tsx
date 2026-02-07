@@ -1,7 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFloorSchema, type CreateFloorT } from "../schemas/floor.schema";
-import { Layers, ArrowLeft, CheckCircle2, Hash, Type } from "lucide-react";
+import { createTableSchema, type CreateTableT } from "../schemas/table.schema";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Table as TableIcon,
+  Layers,
+  LayoutGrid,
+} from "lucide-react";
 import {
   Form,
   FormControl,
@@ -12,28 +18,39 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import type { CreateFloorRes } from "../interfaces/floors.interface";
-import { useCreateFloor } from "../hooks/useFloor";
+import { useCreateTable } from "../hooks/useTable";
+import { useAllFloors } from "@/features/floors/hooks/useFloor";
+import type { TableCreateRes } from "../interfaces/table.interface";
 
-const CreateFloorPage = () => {
-  const createFloor = useCreateFloor();
+const CreateTablePage = () => {
+  const { data: floorsData } = useAllFloors();
+  const createTable = useCreateTable();
   const [showSuccess, setShowSuccess] = useState(false);
-  const [createdFloor, setCreatedFloor] = useState<CreateFloorRes | null>(null);
+  const [createdTable, setCreatedTable] = useState<TableCreateRes | null>(null);
 
-  const form = useForm<CreateFloorT>({
-    resolver: zodResolver(createFloorSchema),
+  const floors = floorsData ?? [];
+
+  const form = useForm<CreateTableT>({
+    resolver: zodResolver(createTableSchema),
     defaultValues: {
-      name: "",
-      level: 1,
+      table_number: "",
+      floor_id: "",
     },
   });
 
-  const onSubmit = (values: CreateFloorT) => {
-    createFloor.mutate(values, {
+  const onSubmit = (values: CreateTableT) => {
+    createTable.mutate(values, {
       onSuccess: (data) => {
-        setCreatedFloor(data);
+        setCreatedTable(data);
         setShowSuccess(true);
         form.reset();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -46,7 +63,7 @@ const CreateFloorPage = () => {
       {/* Header */}
       <div className="flex flex-col gap-3 border-b border-slate-700/50 pb-5">
         <Link
-          to="/lista-pisos"
+          to="/lista-mesas"
           className="flex items-center text-slate-400 hover:text-cyan-400 text-xs font-medium transition-colors group w-fit"
         >
           <ArrowLeft className="w-3.5 h-3.5 mr-1.5 group-hover:-translate-x-1 transition-transform" />
@@ -54,24 +71,21 @@ const CreateFloorPage = () => {
         </Link>
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-            <Layers className="w-6 h-6 text-cyan-500" />
+            <LayoutGrid className="w-6 h-6 text-cyan-500" />
           </div>
           <div>
-            <h1
-              className="text-2xl font-bold tracking-tight text-white"
-              id="create-floor-title"
-            >
-              Nuevo Piso
+            <h1 className="text-2xl font-bold tracking-tight text-white">
+              Nueva Mesa
             </h1>
             <p className="text-xs text-slate-400 mt-0.5">
-              Registra una nueva área o nivel para la gestión de mesas.
+              Registra una nueva mesa asignada a un piso o área.
             </p>
           </div>
         </div>
       </div>
 
       <div className="space-y-6">
-        {showSuccess && createdFloor && (
+        {showSuccess && createdTable && (
           <div className="flex flex-col gap-6 p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 animate-in zoom-in duration-500 shadow-2xl backdrop-blur-md">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center">
@@ -79,10 +93,10 @@ const CreateFloorPage = () => {
               </div>
               <div className="space-y-1">
                 <h2 className="text-xl font-bold text-white">
-                  ¡Piso creado con éxito!
+                  ¡Mesa creada con éxito!
                 </h2>
                 <p className="text-sm text-slate-400">
-                  El piso ha sido registrado correctamente en el sistema.
+                  La mesa ha sido registrada correctamente en el sistema.
                 </p>
               </div>
             </div>
@@ -90,26 +104,26 @@ const CreateFloorPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-xl bg-slate-900/40 border border-slate-700/30">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">
-                  Nombre
+                  Número de Mesa
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
-                  <Type className="w-4 h-4 text-cyan-400" />
-                  {createdFloor.name}
+                  <TableIcon className="w-4 h-4 text-cyan-400" />
+                  Mesa {createdTable.table_number}
                 </p>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">
-                  Nivel / Orden
+                  Piso / Área
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
-                  <Hash className="w-4 h-4 text-cyan-400" />#{" "}
-                  {createdFloor.level}
+                  <Layers className="w-4 h-4 text-cyan-400" />
+                  {createdTable.floors?.name || "N/A"}
                 </p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Link to="/lista-pisos" className="flex-1">
+              <Link to="/lista-mesas" className="flex-1">
                 <Button className="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold h-11 rounded-xl transition-all">
                   Volver a la lista
                 </Button>
@@ -118,7 +132,7 @@ const CreateFloorPage = () => {
                 onClick={() => setShowSuccess(false)}
                 className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-bold h-11 rounded-xl transition-all shadow-lg shadow-cyan-900/20"
               >
-                Crear otro piso
+                Crear otra mesa
               </Button>
             </div>
           </div>
@@ -134,19 +148,19 @@ const CreateFloorPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="table_number"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
-                          <Type className="w-4 h-4 text-cyan-500" />
-                          Nombre del Piso
+                          <TableIcon className="w-4 h-4 mr-2 text-cyan-500" />
+                          Número de Mesa
                           <span className="text-red-400 text-[10px] ml-0.5">
                             *
                           </span>
                         </FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Ej. Primer Piso, Terraza..."
+                            placeholder="Ej. T-01, Mesa 5..."
                             className="bg-slate-900/50 border-slate-700 focus:border-cyan-500/50 focus:ring-cyan-500/20 h-11 rounded-xl text-slate-100 text-sm transition-all"
                             {...field}
                           />
@@ -158,27 +172,37 @@ const CreateFloorPage = () => {
 
                   <FormField
                     control={form.control}
-                    name="level"
+                    name="floor_id"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
-                          <Hash className="w-4 h-4 text-cyan-500" />
-                          Nivel / Orden
+                          <Layers className="w-4 h-4 mr-2 text-cyan-500" />
+                          Piso / Área
                           <span className="text-red-400 text-[10px] ml-0.5">
                             *
                           </span>
                         </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            placeholder="1"
-                            className="bg-slate-900/50 border-slate-700 focus:border-cyan-500/50 focus:ring-cyan-500/20 h-11 rounded-xl text-slate-100 text-sm transition-all"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(parseInt(e.target.value) || 0)
-                            }
-                          />
-                        </FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-slate-900/50 border-slate-700 focus:border-cyan-500/50 focus:ring-cyan-500/20 h-11 rounded-xl text-slate-100 text-sm transition-all">
+                              <SelectValue placeholder="Selecciona el piso" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="bg-slate-800 border-slate-700 text-slate-100">
+                            {floors?.map((floor) => (
+                              <SelectItem
+                                key={floor.id}
+                                value={floor.id}
+                                className="focus:bg-slate-700 focus:text-cyan-400"
+                              >
+                                {floor.level}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage className="text-red-400 text-xs mt-1" />
                       </FormItem>
                     )}
@@ -188,14 +212,13 @@ const CreateFloorPage = () => {
                 <div className="pt-2 flex items-center gap-3">
                   <Button
                     type="submit"
-                    disabled={createFloor.isPending}
-                    id="submit-floor-button"
+                    disabled={createTable.isPending}
                     className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-bold h-11 rounded-xl transition-all shadow-lg shadow-cyan-900/20 text-sm"
                   >
-                    {createFloor.isPending ? "Guardando..." : "Guardar Piso"}
+                    {createTable.isPending ? "Guardando..." : "Guardar Mesa"}
                   </Button>
 
-                  <Link to="/lista-pisos" className="flex-1">
+                  <Link to="/lista-mesas" className="flex-1">
                     <Button
                       type="button"
                       variant="outline"
@@ -214,4 +237,4 @@ const CreateFloorPage = () => {
   );
 };
 
-export default CreateFloorPage;
+export default CreateTablePage;

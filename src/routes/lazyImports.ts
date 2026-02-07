@@ -31,3 +31,11 @@ export const FloorsPage = lazy(
 export const CreateFloorPage = lazy(
   () => import("@/features/floors/pages/CreateFloorPage"),
 );
+
+export const TablesPage = lazy(
+  () => import("@/features/tables/pages/TablesPage"),
+);
+
+export const CreateTablePage = lazy(
+  () => import("@/features/tables/pages/CreateTablePage"),
+);
