@@ -334,7 +334,7 @@ const DashboardLayout = () => {
         <div className="h-[2px] w-full bg-linear-to-r from-cyan-500/50 via-blue-600/50 to-transparent shrink-0" />
 
         {/* View Port */}
-        <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar relative p-4 lg:p-8">
+        <div className="flex-1 overflow-y-auto scroll-smooth relative p-4 lg:p-8">
           <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Outlet />
           </div>
