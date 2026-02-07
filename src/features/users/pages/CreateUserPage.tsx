@@ -5,7 +5,7 @@ import {
   userRoles,
   type CreateUserT,
 } from "../schemas/user.schema";
-import { useUsers } from "../hooks/useUsers";
+import { useCreateUser } from "../hooks/useUsers";
 import {
   UserPlus,
   ArrowLeft,
@@ -37,7 +37,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const CreateUserPage = () => {
-  const { createUser } = useUsers();
+  const createUser = useCreateUser();
   const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<CreateUserT>({

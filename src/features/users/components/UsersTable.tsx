@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useUsers } from "../hooks/useUsers";
+import { useUsersList } from "../hooks/useUsers";
 import { Badge } from "@/components/ui/badge";
 import { getRoleIcon } from "../helpers/getRoleIcon";
 import {
@@ -44,9 +44,7 @@ const UsersTable = () => {
   const [limit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { users } = useUsers();
-
-  const { data, isLoading, isError, error, refetch } = users(
+  const { data, isLoading, isError, error, refetch } = useUsersList(
     page,
     limit,
     searchTerm,

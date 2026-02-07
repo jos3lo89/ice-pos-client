@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCcw, Power, AlertTriangle } from "lucide-react";
-import { useUsers } from "../hooks/useUsers";
 import type { User } from "../interfaces/users.interface";
+import { useUserChangeState } from "../hooks/useUsers";
 
 interface ChangeStatusDialogProps {
   open: boolean;
@@ -25,7 +25,8 @@ const ChangeStatusDialog = ({
   onOpenChange,
   user,
 }: ChangeStatusDialogProps) => {
-  const { changeUserSate } = useUsers();
+  const changeUserSate = useUserChangeState();
+
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {

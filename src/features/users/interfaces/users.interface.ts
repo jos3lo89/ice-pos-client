@@ -37,8 +37,11 @@ export interface CreateUserRes {
   updated_at: string;
 }
 
-export interface UserChangeStateReq {
-  is_active: boolean;
+export interface ChangeUserStateReq {
+  payload: {
+    is_active: boolean;
+  };
+  userId: string;
 }
 
 export interface UserChangeStateRes {

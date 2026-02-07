@@ -13,7 +13,7 @@ import type { CreateFloorT } from "../schemas/floor.schema";
 export const useFloors = (page: number, limit: number, search?: string) => {
   return useQuery({
     queryKey: ["floors", { page, limit, search }],
-    queryFn: () => floorService.getFloors(page, limit, search),
+    queryFn: () => floorService.getAllPaginated(page, limit, search),
     placeholderData: keepPreviousData,
   });
 };
@@ -22,7 +22,7 @@ export const useFloors = (page: number, limit: number, search?: string) => {
 export const useAllFloors = () => {
   return useQuery({
     queryKey: ["floors", "all"],
-    queryFn: () => floorService.getAllFloors(),
+    queryFn: () => floorService.getAll(),
   });
 };
 
@@ -32,7 +32,7 @@ export const useCreateFloor = () => {
 
   return useMutation({
     mutationKey: ["create", "floor"],
-    mutationFn: (data: CreateFloorT) => floorService.createFloor(data),
+    mutationFn: (data: CreateFloorT) => floorService.create(data),
     onMutate: () => {
       toast.loading("Creando piso...", { id: "create-floor" });
     },
