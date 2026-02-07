@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useProduct } from "../hooks/useProduct";
+import { useCreateVariant } from "../hooks/useProduct";
 import {
   createVariantSchema,
   type CreateVariantT,
@@ -32,7 +32,7 @@ type Props = {
 };
 
 const CreateVariant = ({ productId, productName, onSuccess }: Props) => {
-  const { createVariant } = useProduct();
+  const createVariant = useCreateVariant();
 
   const form = useForm<CreateVariantT>({
     resolver: zodResolver(createVariantSchema),

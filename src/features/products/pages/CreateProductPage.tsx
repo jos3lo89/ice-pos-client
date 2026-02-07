@@ -4,7 +4,6 @@ import {
   createProductSchema,
   type CreateProductT,
 } from "../schemas/product.schema";
-import { useProduct } from "../hooks/useProduct";
 import {
   PackagePlus,
   ArrowLeft,
@@ -37,9 +36,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import type { CreateProductRes } from "../interfaces/product.interface";
 import { useCategorieListAll } from "@/features/categories/hooks/useCategorie";
+import { useCreateProduct } from "../hooks/useProduct";
 
 const CreateProductPage = () => {
-  const { createProduct } = useProduct();
+  const createProduct = useCreateProduct();
   const [showSuccess, setShowSuccess] = useState(false);
   const [createdProduct, setCreatedProduct] = useState<CreateProductRes | null>(
     null,

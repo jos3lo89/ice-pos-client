@@ -12,13 +12,13 @@ import type {
   CreateVariantT,
 } from "../schemas/product.schema";
 
-export const productService = {
-  getAllProducts: async (
+class ProductService {
+  async getAllProducts(
     page: number,
     limit: number,
     search?: string,
     category?: string,
-  ) => {
+  ) {
     const { data } = await http.get<GetAllProductsRes>("/products", {
       params: {
         page,
@@ -31,42 +31,44 @@ export const productService = {
       products: data.data,
       meta: data.meta,
     };
-  },
+  }
 
-  createProduct: async (product: CreateProductT) => {
+  async createProduct(product: CreateProductT) {
     const { data } = await http.post<CreateProductRes>("/products", {
       ...product,
       description: product.description || null,
     });
     return data;
-  },
+  }
 
-  updateStatus: async (dto: {
+  async updateStatus(dto: {
     productId: string;
     values: {
       is_available: boolean;
     };
-  }) => {
+  }) {
     const { data } = await http.patch<UpdateStatusProductRes>(
       `/products/${dto.productId}/status`,
       dto.values,
     );
     return data;
-  },
+  }
 
-  createVariant: async (variant: CreateVariantT) => {
+  async createVariant(variant: CreateVariantT) {
     const { data } = await http.post<CreateVariantRes>(
       "/products/variants",
       variant,
     );
     return data;
-  },
+  }
 
-  createModifier: async (modifier: CreateModifierT) => {
+  async createModifier(modifier: CreateModifierT) {
     const { data } = await http.post<CreateModifierRes>(
       "/products/modifier",
       modifier,
     );
     return data;
-  },
-};
+  }
+}
+
+export const productService = new ProductService();

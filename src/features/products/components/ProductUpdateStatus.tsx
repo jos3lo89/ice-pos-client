@@ -1,5 +1,4 @@
 import { useForm, Controller } from "react-hook-form";
-import { useProduct } from "../hooks/useProduct";
 import {
   DialogContent,
   DialogHeader,
@@ -11,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCw, CheckCircle2, XCircle } from "lucide-react";
+import { useUpdateStattusProduct } from "../hooks/useProduct";
 
 type Props = {
   productId: string;
@@ -25,7 +25,7 @@ const ProductUpdateStatus = ({
   isAvailable,
   onSuccess,
 }: Props) => {
-  const { updateStatusProduct } = useProduct();
+  const updateStatusProduct = useUpdateStattusProduct();
 
   const { handleSubmit, control, watch } = useForm<{
     is_available: boolean;

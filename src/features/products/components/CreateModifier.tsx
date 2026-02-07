@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useProduct } from "../hooks/useProduct";
 import {
   createModifierSchema,
   type CreateModifierT,
@@ -24,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Wand2, DollarSign, Tag, CheckCircle2 } from "lucide-react";
+import { useCreateModifier } from "../hooks/useProduct";
 
 type Props = {
   productId: string;
@@ -32,7 +32,7 @@ type Props = {
 };
 
 const CreateModifier = ({ productId, productName, onSuccess }: Props) => {
-  const { createModifier } = useProduct();
+  const createModifier = useCreateModifier();
 
   const form = useForm<CreateModifierT>({
     resolver: zodResolver(createModifierSchema),

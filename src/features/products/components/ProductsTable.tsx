@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useProduct } from "../hooks/useProduct";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
@@ -40,6 +39,7 @@ import CreateVariant from "./CreateVariant";
 import CreateModifier from "./CreateModifier";
 import type { Product } from "../interfaces/product.interface";
 import { toast } from "sonner";
+import { useProductList } from "../hooks/useProduct";
 
 const ProductsTable = () => {
   const [page, setPage] = useState(1);
@@ -50,9 +50,7 @@ const ProductsTable = () => {
   const [isVariantDialogOpen, setIsVariantDialogOpen] = useState(false);
   const [isModifierDialogOpen, setIsModifierDialogOpen] = useState(false);
 
-  const { getAllProducts } = useProduct();
-
-  const { data, isLoading, isError, error, refetch } = getAllProducts(
+  const { data, isLoading, isError, error, refetch } = useProductList(
     page,
     limit,
     searchTerm,
