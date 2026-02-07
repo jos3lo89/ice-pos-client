@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Category } from "../interfaces/categories.interface";
-import { useCategorie } from "../hooks/useCategorie";
+import { UseCategorieList } from "../hooks/useCategorie";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import {
@@ -44,10 +44,8 @@ const CategoriesTable = () => {
   const [limit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { listCategories } = useCategorie();
-
   // Fetch categories with current params
-  const { data, isLoading, isError, error, refetch } = listCategories(
+  const { data, isLoading, isError, error, refetch } = UseCategorieList(
     page,
     limit,
     searchTerm,

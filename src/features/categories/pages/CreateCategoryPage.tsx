@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useCategorie } from "../hooks/useCategorie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createCategorieSchema,
@@ -19,9 +18,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useCreateCategorie } from "../hooks/useCategorie";
 
 const CreateCategoryPage = () => {
-  const { createCategorie } = useCategorie();
+  const createCategorie = useCreateCategorie();
   const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<CreateCategorieT>({

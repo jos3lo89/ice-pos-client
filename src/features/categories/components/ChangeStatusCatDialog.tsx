@@ -10,9 +10,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { AlertTriangle, Power, RefreshCcw } from "lucide-react";
 import type { Category } from "../interfaces/categories.interface";
-import { useCategorie } from "../hooks/useCategorie";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
+import { useChangeCategorieState } from "../hooks/useCategorie";
 
 interface ChangeStatusDialogProps {
   open: boolean;
@@ -25,7 +25,8 @@ const ChangeStatusCatDialog = ({
   open,
   categorie,
 }: ChangeStatusDialogProps) => {
-  const { changeState } = useCategorie();
+  const changeState = useChangeCategorieState();
+
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {

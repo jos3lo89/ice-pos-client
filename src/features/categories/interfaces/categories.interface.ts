@@ -1,5 +1,4 @@
 // categorias de lista de categorias
-
 export interface Category {
   id: string;
   name: string;
@@ -57,5 +56,13 @@ export interface ListCategoryCompleteRes {
   slug: string;
   _count: {
     products: number;
+  };
+}
+
+// actualizar estado de categoria
+export interface UpdateStateCategoryReq {
+  categorieId: string;
+  payload: {
+    is_active: boolean;
   };
 }

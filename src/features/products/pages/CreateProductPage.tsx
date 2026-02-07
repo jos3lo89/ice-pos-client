@@ -5,7 +5,6 @@ import {
   type CreateProductT,
 } from "../schemas/product.schema";
 import { useProduct } from "../hooks/useProduct";
-import { useCategorie } from "@/features/categories/hooks/useCategorie";
 import {
   PackagePlus,
   ArrowLeft,
@@ -37,16 +36,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import type { CreateProductRes } from "../interfaces/product.interface";
+import { useCategorieListAll } from "@/features/categories/hooks/useCategorie";
 
 const CreateProductPage = () => {
   const { createProduct } = useProduct();
-  const { listAllCategories } = useCategorie();
   const [showSuccess, setShowSuccess] = useState(false);
   const [createdProduct, setCreatedProduct] = useState<CreateProductRes | null>(
     null,
   );
 
-  const { data: categoriesDataAll } = listAllCategories;
+  const { data: categoriesDataAll } = useCategorieListAll();
   const categories = categoriesDataAll ?? [];
 
   const form = useForm<CreateProductT>({

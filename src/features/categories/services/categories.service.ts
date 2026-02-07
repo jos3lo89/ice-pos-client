@@ -7,42 +7,42 @@ import type {
 } from "../interfaces/categories.interface";
 import type { CreateCategorieT } from "../schemas/categorie.schema";
 
-export const categorieService = {
-  getAllCategories: async (page: number, limit: number, search?: string) => {
-    const { data } = await http.get<GetAllCategoriesRes>("/categories", {
-      params: {
-        page,
-        limit,
-        search,
-      },
+class CategorieService {
+  private readonly baseUrl = "/categories";
+
+  async getAll(page: number, limit: number, search?: string) {
+    const { data } = await http.get<GetAllCategoriesRes>(this.baseUrl, {
+      params: { page, limit, search },
     });
     return {
       categories: data.data,
       meta: data.meta,
     };
-  },
+  }
 
-  changeCategorieState: async (values: {
+  async changeState(values: {
     categorieId: string;
     payload: {
       is_active: boolean;
     };
-  }) => {
+  }) {
     const { data } = await http.patch<UpdateStateCategoryRes>(
-      `/categories/${values.categorieId}/status`,
+      `${this.baseUrl}/${values.categorieId}/status`,
       values.payload,
     );
     return data;
-  },
+  }
 
-  createCategorie: async (values: CreateCategorieT) => {
-    const { data } = await http.post<CreateCategorieRes>("/categories", values);
+  async create(values: CreateCategorieT) {
+    const { data } = await http.post<CreateCategorieRes>(this.baseUrl, values);
     return data;
-  },
+  }
 
-  listAllCategories: async () => {
+  async listAll() {
     const { data } =
       await http.get<ListCategoryCompleteRes[]>("/categories/all");
     return data;
-  },
-};
+  }
+}
+
+export const categorieService = new CategorieService();

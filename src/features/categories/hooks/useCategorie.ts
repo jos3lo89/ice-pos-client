@@ -2,80 +2,86 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { categorieService } from "../services/categories.service";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import type { CreateCategorieT } from "../schemas/categorie.schema";
+import type { UpdateStateCategoryReq } from "../interfaces/categories.interface";
 
-export const useCategorie = () => {
+export const UseCategorieList = (
+  page: number,
+  limit: number,
+  search?: string,
+) => {
+  return useQuery({
+    queryKey: ["categories", "list", { page, limit, search }],
+    queryFn: () => categorieService.getAll(page, limit, search),
+  });
+};
+
+export const useCreateCategorie = () => {
   const qryClient = useQueryClient();
 
-  const getAllCategories = (page: number, limit: number, search?: string) => {
-    return useQuery({
-      queryKey: ["categories", "list", page, limit, search],
-      queryFn: () => categorieService.getAllCategories(page, limit, search),
-    });
-  };
-
-  const createCategorie = useMutation({
+  return useMutation({
     mutationKey: ["create", "categorie"],
-    mutationFn: categorieService.createCategorie,
-    onSuccess: () => {
-      qryClient.invalidateQueries({
-        queryKey: ["categories", "list"],
-      });
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error("Error  create la categoria", {
-          description: error.response?.data.message,
-        });
-      } else {
-        toast.error("Error al crear la categoria", {
-          description: "error desconcido crea la categoria",
-        });
-      }
-    },
+    mutationFn: (data: CreateCategorieT) => categorieService.create(data),
     onMutate: () => {
       toast.loading("Creando categoria...", { id: "create-categorie" });
     },
-    onSettled: () => {
-      toast.dismiss("create-categorie");
-    },
-  });
-
-  const changeCategorieState = useMutation({
-    mutationKey: ["cahnge", "state", "categorie"],
-    mutationFn: categorieService.changeCategorieState,
     onSuccess: () => {
       qryClient.invalidateQueries({
         queryKey: ["categories", "list"],
       });
+
+      toast.success("Categoria creada exitosamente", {
+        id: "create-categorie",
+      });
     },
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error("Error al cambiar es estado", {
-          description: error.response?.data.message,
-        });
-      } else {
-        toast.error("Error al cambiar es estado", {
-          description: "error desconcido al cambiar es estado",
-        });
-      }
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al crear la categoria";
+
+      toast.error("Error al crear la categoria", {
+        description: message,
+        id: "create-categorie",
+      });
     },
+  });
+};
+
+export const useChangeCategorieState = () => {
+  const qryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["cahnge", "state", "category"],
+    mutationFn: (data: UpdateStateCategoryReq) =>
+      categorieService.changeState(data),
     onMutate: () => {
-      toast.loading("Cambiando de estado...", { id: "change-state-categorie" });
+      toast.loading("Cambiando de estado...", { id: "change-state-category" });
     },
-    onSettled: () => {
-      toast.dismiss("change-state-categorie");
+    onSuccess: () => {
+      qryClient.invalidateQueries({
+        queryKey: ["categories", "list"],
+      });
+      toast.success("Estado cambiado exitosamente", {
+        id: "change-state-category",
+      });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al cambiar el estado de la categoria";
+
+      toast.error("Error al cambiar el estado de la categoria", {
+        description: message,
+        id: "change-state-category",
+      });
     },
   });
+};
 
-  const listAllCategories = useQuery({
+export const useCategorieListAll = () => {
+  return useQuery({
     queryKey: ["categories", "list", "all"],
-    queryFn: categorieService.listAllCategories,
+    queryFn: () => categorieService.listAll(),
   });
-
-  return {
-    listCategories: getAllCategories,
-    listAllCategories,
-    changeState: changeCategorieState,
-    createCategorie,
-  };
 };
