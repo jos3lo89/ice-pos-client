@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -13,10 +12,11 @@ import { UtensilsCrossed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginT } from "../schemas/auth.schema";
+import { useLogin } from "../hooks/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { mutate, isPending } = useAuth();
+  const { mutate, isPending } = useLogin();
   const {
     handleSubmit,
     register,

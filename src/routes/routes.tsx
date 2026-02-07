@@ -1,5 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
-import { DashboardHome, LoginPage, UsersPage } from "./lazyImports";
+import {
+  CategoriesPage,
+  DashboardHome,
+  LoginPage,
+  UsersPage,
+  CreateUserPage,
+  CreateCategoryPage,
+  ProductsPage,
+  CreateProductPage,
+  FloorsPage,
+  CreateFloorPage,
+  TablesPage,
+  CreateTablePage,
+} from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -18,8 +31,44 @@ export const routes = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
-        path: "/usuarios",
+        path: "/lista-empleados",
         element: <UsersPage />,
+      },
+      {
+        path: "/crear-empleado",
+        element: <CreateUserPage />,
+      },
+      {
+        path: "/lista-categorias",
+        element: <CategoriesPage />,
+      },
+      {
+        path: "/crear-categoria",
+        element: <CreateCategoryPage />,
+      },
+      {
+        path: "/lista-productos",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/crear-producto",
+        element: <CreateProductPage />,
+      },
+      {
+        path: "/lista-pisos",
+        element: <FloorsPage />,
+      },
+      {
+        path: "/crear-piso",
+        element: <CreateFloorPage />,
+      },
+      {
+        path: "/lista-mesas",
+        element: <TablesPage />,
+      },
+      {
+        path: "/crear-mesa",
+        element: <CreateTablePage />,
       },
     ],
   },

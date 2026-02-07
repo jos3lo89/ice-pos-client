@@ -1,11 +1,10 @@
-import type { Role } from "@/common/types/roles";
+import type { UserRole } from "@/common/types/roles";
 
 export interface UserState {
-  id: number;
+  id: string;
   username: string;
-  pin: string;
   full_name: string;
-  role: Role;
+  role: UserRole;
   is_active: boolean;
   phone: string;
   created_at: string;
