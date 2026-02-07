@@ -10,8 +10,6 @@ import { useFloors } from "../hooks/useFloor";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
   MoreVertical,
   Plus,
   Search,
@@ -21,6 +19,7 @@ import {
   Hash,
   ArrowRight,
 } from "lucide-react";
+import Pagination from "@/components/common/Pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import LoadingState from "@/components/common/LoadingState";
@@ -60,14 +59,6 @@ const FloorsTable = () => {
   const onSearchSubmit = (values: { search: string }) => {
     setSearchTerm(values.search);
     setPage(1);
-  };
-
-  const handlePrevPage = () => {
-    if (meta?.hasPrev) setPage((prev) => prev - 1);
-  };
-
-  const handleNextPage = () => {
-    if (meta?.hasNext) setPage((prev) => prev + 1);
   };
 
   if (isLoading) {
@@ -279,47 +270,13 @@ const FloorsTable = () => {
             <span className="text-slate-200">{meta?.lastPage}</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handlePrevPage}
-              disabled={!meta?.hasPrev}
-              className="bg-slate-900/50 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-30 rounded-lg gap-1 px-3 h-9 transition-all"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              {meta?.hasPrev ? "Anterior" : "Inicio"}
-            </Button>
-
-            <div className="flex items-center gap-1.5 px-3">
-              {Array.from({ length: meta?.lastPage ?? 0 }, (_, i) => i + 1).map(
-                (p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPage(p)}
-                    className={`w-9 h-9 rounded-lg text-xs font-black transition-all duration-300 ${
-                      p === page
-                        ? "bg-cyan-600 text-white shadow-xl shadow-cyan-900/40 scale-110"
-                        : "text-slate-500 hover:text-slate-200 hover:bg-slate-700/50"
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ),
-              )}
-            </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleNextPage}
-              disabled={!meta?.hasNext}
-              className="bg-slate-900/50 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-30 rounded-lg gap-1 px-3 h-9 transition-all"
-            >
-              {meta?.hasNext ? "Siguiente" : "Final"}
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
+          <Pagination
+            currentPage={page}
+            totalPages={meta?.lastPage ?? 0}
+            onPageChange={setPage}
+            hasPrev={meta?.hasPrev ?? false}
+            hasNext={meta?.hasNext ?? false}
+          />
         </div>
       </div>
     </div>

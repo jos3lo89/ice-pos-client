@@ -39,3 +39,7 @@ export const TablesPage = lazy(
 export const CreateTablePage = lazy(
   () => import("@/features/tables/pages/CreateTablePage"),
 );
+
+export const ProfilePage = lazy(
+  () => import("@/features/users/pages/ProfilePage"),
+);

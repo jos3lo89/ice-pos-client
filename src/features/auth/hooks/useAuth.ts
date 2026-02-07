@@ -12,17 +12,17 @@ export const useLogin = () => {
     mutationKey: ["login"],
     mutationFn: (data: LoginT) => authService.login(data),
     onMutate: () => {
-      toast.loading("Logging in...", { id: "login" });
+      toast.loading("Iniciando sesión...", { id: "login" });
     },
     onSuccess: (data) => {
       setUser(data);
-      toast.success("Login successful", { id: "login" });
+      toast.success("Inicio de sesión exitoso", { id: "login" });
     },
     onError: (err) => {
       const message =
         err instanceof AxiosError
           ? err.response?.data.message
-          : "Something went wrong";
+          : "Ocurrió un error al iniciar sesión";
       toast.error(message, { id: "login" });
     },
   });

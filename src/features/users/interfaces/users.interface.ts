@@ -54,3 +54,15 @@ export interface UserChangeStateRes {
   created_at: string;
   updated_at: string;
 }
+
+// get profile
+export interface GetProfileRes {
+  id: string;
+  username: string;
+  full_name: string;
+  role: UserRole;
+  is_active: boolean;
+  phone: string;
+  created_at: string;
+  updated_at: string;
+}

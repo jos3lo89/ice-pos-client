@@ -12,6 +12,7 @@ import {
   CreateFloorPage,
   TablesPage,
   CreateTablePage,
+  ProfilePage,
 } from "./lazyImports";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -69,6 +70,10 @@ export const routes = createBrowserRouter([
       {
         path: "/crear-mesa",
         element: <CreateTablePage />,
+      },
+      {
+        path: "/perfil",
+        element: <ProfilePage />,
       },
     ],
   },
