@@ -248,28 +248,32 @@ const DashboardLayout = () => {
         {/* Sidebar Footer */}
         <div className="p-4 border-t border-slate-700/50 space-y-4">
           {!sidebarCollapsed || sidebarOpen ? (
-            <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/50 border border-slate-700/50">
-              <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner shrink-0 cursor-pointer hover:ring-2 ring-cyan-500/50 transition-all">
+            <Link
+              to="/perfil"
+              className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-cyan-500/30 transition-all group"
+            >
+              <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner shrink-0 group-hover:ring-2 ring-cyan-500/50 transition-all">
                 {user.full_name.charAt(0)}
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-bold text-white truncate">
+                <p className="text-xs font-bold text-white truncate group-hover:text-cyan-400 transition-colors">
                   {user.full_name}
                 </p>
                 <p className="text-[10px] text-gray-400 capitalize">
                   {user.role}
                 </p>
               </div>
-            </div>
+            </Link>
           ) : (
-            <div className="flex justify-center">
-              <div
-                className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner"
-                title={user.full_name}
-              >
+            <Link
+              to="/perfil"
+              className="flex justify-center"
+              title={user.full_name}
+            >
+              <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner hover:ring-2 ring-cyan-500/50 transition-all">
                 {user.full_name.charAt(0)}
               </div>
-            </div>
+            </Link>
           )}
 
           <div className="flex flex-col gap-2">

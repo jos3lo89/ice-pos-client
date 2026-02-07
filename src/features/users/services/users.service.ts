@@ -3,6 +3,7 @@ import type {
   ChangeUserStateReq,
   CreateUserRes,
   GetAllUsersRes,
+  GetProfileRes,
   UserChangeStateRes,
 } from "../interfaces/users.interface";
 import type { CreateUserT } from "../schemas/user.schema";
@@ -30,6 +31,11 @@ class UsersService {
       `${this.baseUrl}/change-state/${values.userId}`,
       values.payload,
     );
+    return data;
+  }
+
+  async getProfile() {
+    const { data } = await http.get<GetProfileRes>(`${this.baseUrl}/profile`);
     return data;
   }
 }

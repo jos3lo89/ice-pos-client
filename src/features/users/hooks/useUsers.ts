@@ -71,3 +71,11 @@ export const useUserChangeState = () => {
     },
   });
 };
+
+// get profile
+export const useGetProfile = () => {
+  return useQuery({
+    queryKey: ["profile"],
+    queryFn: () => usersService.getProfile(),
+  });
+};
