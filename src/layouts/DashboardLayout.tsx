@@ -246,7 +246,23 @@ const DashboardLayout = () => {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-slate-700/50 space-y-4">
+        <div className="p-4 border-t border-slate-700/50 flex flex-col gap-4">
+          {/* 1. Collapse Sidebar Button */}
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="hidden lg:flex items-center justify-center w-full h-10 rounded-xl bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700 transition-colors"
+          >
+            {sidebarCollapsed ? (
+              <PanelLeft className="w-5 h-5" />
+            ) : (
+              <div className="flex items-center gap-3 px-3 w-full">
+                <PanelLeftClose className="w-5 h-5" />
+                <span className="text-sm font-semibold">Contraer menú</span>
+              </div>
+            )}
+          </button>
+
+          {/* 2. User Profile Link */}
           {!sidebarCollapsed || sidebarOpen ? (
             <Link
               to="/perfil"
@@ -276,38 +292,28 @@ const DashboardLayout = () => {
             </Link>
           )}
 
-          <div className="flex flex-col gap-2">
-            <ConfirmDialog
-              title="¿Confirmar cierre de sesión?"
-              confirmText="Cerrar Sesión"
-              onConfirm={handleLogout}
-            >
-              <button
-                className={cn(
-                  "flex items-center w-full h-10 rounded-xl text-red-400 hover:bg-red-400/10 transition-all group overflow-hidden",
-                  sidebarCollapsed && !sidebarOpen ? "justify-center" : "px-3",
-                )}
-              >
-                <div className="shrink-0 flex items-center justify-center w-6 h-6">
-                  <LogOut className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                </div>
-                {(!sidebarCollapsed || sidebarOpen) && (
-                  <span className="font-semibold text-sm ml-3">Salir</span>
-                )}
-              </button>
-            </ConfirmDialog>
-
+          {/* 3. Logout Button */}
+          <ConfirmDialog
+            title="¿Confirmar cierre de sesión?"
+            confirmText="Cerrar Sesión"
+            onConfirm={handleLogout}
+          >
             <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="hidden lg:flex items-center justify-center w-full h-10 rounded-xl bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700 transition-colors"
+              className={cn(
+                "flex items-center w-full h-10 rounded-xl text-red-500/80 hover:text-red-400 hover:bg-red-400/10 transition-all group overflow-hidden",
+                sidebarCollapsed && !sidebarOpen ? "justify-center" : "px-3",
+              )}
             >
-              {sidebarCollapsed ? (
-                <PanelLeft className="w-5 h-5" />
-              ) : (
-                <PanelLeftClose className="w-5 h-5" />
+              <div className="shrink-0 flex items-center justify-center w-6 h-6">
+                <LogOut className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              </div>
+              {(!sidebarCollapsed || sidebarOpen) && (
+                <span className="font-semibold text-sm ml-3">
+                  Cerrar Sesión
+                </span>
               )}
             </button>
-          </div>
+          </ConfirmDialog>
         </div>
       </aside>
 
