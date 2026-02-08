@@ -37,3 +37,25 @@ export interface GetAllFloorsRes {
   id: string;
   level: number;
 }
+
+// get all pisos with tables response
+export interface GetAllFloorsWithTablesRes {
+  id: string;
+  level: number;
+  name: string;
+  tables: Table[];
+}
+
+export interface Table {
+  id: string;
+  status: string;
+  table_number: string;
+  current_order_id: string | null;
+  current_order: {
+    id: string;
+    order_number: string;
+    status: string;
+    total: string;
+    created_at: string;
+  }[];
+}

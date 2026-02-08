@@ -20,9 +20,9 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 
 /**
- * DashboardLayout - Unified administration environment with responsive sidebars and sub-menus.
+ * AdminLayout - Unified administration environment with responsive sidebars and sub-menus.
  */
-const DashboardLayout = () => {
+const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
@@ -357,4 +357,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default AdminLayout;

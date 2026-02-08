@@ -49,3 +49,11 @@ export const useCreateFloor = () => {
     },
   });
 };
+
+// listar pisos con mesas
+export const useFloorsWithTables = () => {
+  return useQuery({
+    queryKey: ["floors", "with-tables"],
+    queryFn: () => floorService.getAllWithTables(),
+  });
+};

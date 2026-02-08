@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -15,7 +14,6 @@ import { loginSchema, type LoginT } from "../schemas/auth.schema";
 import { useLogin } from "../hooks/useAuth";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
   const {
     handleSubmit,
@@ -30,11 +28,7 @@ const LoginPage = () => {
   });
 
   const onSubmit = (values: LoginT) => {
-    mutate(values, {
-      onSuccess: () => {
-        navigate("/");
-      },
-    });
+    mutate(values);
   };
 
   return (

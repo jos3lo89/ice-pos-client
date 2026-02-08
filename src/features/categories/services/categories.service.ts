@@ -43,6 +43,13 @@ class CategorieService {
       await http.get<ListCategoryCompleteRes[]>("/categories/all");
     return data;
   }
+
+  async getWithProducts() {
+    const { data } = await http.get<ListCategoryCompleteRes[]>(
+      "/categories/products",
+    );
+    return data;
+  }
 }
 
 export const categorieService = new CategorieService();

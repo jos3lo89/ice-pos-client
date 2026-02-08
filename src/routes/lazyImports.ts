@@ -43,3 +43,11 @@ export const CreateTablePage = lazy(
 export const ProfilePage = lazy(
   () => import("@/features/users/pages/ProfilePage"),
 );
+
+export const OrderEntryPage = lazy(
+  () => import("@/features/orders/pages/OrderEntryPage"),
+);
+
+export const FloorWithTablesPage = lazy(
+  () => import("@/features/orders/pages/FloorWithTablesPage"),
+);
