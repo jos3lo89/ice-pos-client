@@ -1,5 +1,6 @@
 import http from "@/config/axios";
 import type {
+  CategoryWithProductsRes,
   CreateCategorieRes,
   GetAllCategoriesRes,
   ListCategoryCompleteRes,
@@ -44,8 +45,9 @@ class CategorieService {
     return data;
   }
 
+  // categorias con sus productos y variantes
   async getWithProducts() {
-    const { data } = await http.get<ListCategoryCompleteRes[]>(
+    const { data } = await http.get<CategoryWithProductsRes[]>(
       "/categories/products",
     );
     return data;
