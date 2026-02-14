@@ -4,6 +4,7 @@ import type {
   AddProductToOrderRes,
   CreateOrderRes,
 } from "../interfaces/order.interface";
+import type { CurrentOrderRes } from "../interfaces/current-order.interface";
 
 class OrderService {
   private readonly baseUrl = "/orders";
@@ -17,6 +18,13 @@ class OrderService {
     const { data } = await http.post<AddProductToOrderRes>(
       `${this.baseUrl}/${dto.orderId}/items`,
       dto.order,
+    );
+    return data;
+  }
+
+  async getOrderById(orderId: string) {
+    const { data } = await http.get<CurrentOrderRes>(
+      `${this.baseUrl}/${orderId}/current`,
     );
     return data;
   }

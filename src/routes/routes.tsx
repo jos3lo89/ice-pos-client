@@ -98,7 +98,7 @@ export const routes = createBrowserRouter([
         element: <FloorWithTablesPage />,
       },
       {
-        path: "/crear-orden/:tableId",
+        path: "/agregar-item/:orderId",
         element: <OrderEntryPage />,
       },
     ],

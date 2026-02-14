@@ -8,10 +8,15 @@ import { Badge } from "@/components/ui/badge";
 import { Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "../utils/status-config";
+import type { Table } from "@/features/floors/interfaces/floors.interface";
+import { useState } from "react";
+import CreateOrderDialog from "../components/CreateOrderDialog";
 
 const FloorWithTablesPage = () => {
   const navigate = useNavigate();
   const floorsQuery = useFloorsWithTables();
+  const [openCreateOrderDialog, setOpenCreateOrderDialog] = useState(false);
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 
   if (floorsQuery.isLoading) {
     return <LoadingState message="Cargando salones y mesas..." />;
@@ -32,22 +37,22 @@ const FloorWithTablesPage = () => {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-slate-400">
         <Utensils className="w-16 h-16 mb-4 opacity-20" />
-        <p className="text-xl font-semibold">No hay salones configurados</p>
+        <p className="text-xl font-semibold">No hay pisos configurados</p>
       </div>
     );
   }
 
-  const handleTableClick = (table: any) => {
+  const handleTableClick = (table: Table) => {
     if (table.status === "disponible") {
-      navigate(`/crear-orden/${table.id}`);
+      setSelectedTableId(table.id);
+      setOpenCreateOrderDialog(true);
     } else if (table.status === "ocupada" && table.current_order_id) {
-      // En un POS real, iríamos a ver la orden. Por ahora el requerimiento dice crear/add items
-      navigate(`/crear-orden/${table.id}`);
+      navigate(`/agregar-item/${table.current_order_id}`);
     }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20 px-2">
       <Tabs defaultValue={floors[0].id} className="w-full">
         <div className="sticky top-0 z-20 bg-[#0f172a]/80 backdrop-blur-md pb-4 pt-2 -mx-4 px-4 lg:-mx-8 lg:px-8 overflow-x-auto scrollbar-none">
           <TabsList className="bg-slate-800/50 border border-slate-700/50 p-1 rounded-2xl inline-flex w-auto min-w-full lg:min-w-0">
@@ -136,6 +141,13 @@ const FloorWithTablesPage = () => {
           </TabsContent>
         ))}
       </Tabs>
+      {selectedTableId && openCreateOrderDialog && (
+        <CreateOrderDialog
+          open={openCreateOrderDialog}
+          onOpenChange={setOpenCreateOrderDialog}
+          tableId={selectedTableId}
+        />
+      )}
     </div>
   );
 };

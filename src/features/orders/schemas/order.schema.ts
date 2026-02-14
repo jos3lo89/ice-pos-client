@@ -10,7 +10,7 @@ export type CreateOrderT = z.infer<typeof CreateOrderSchema>;
 
 // agregar producto a la orden
 export const AddProductToOrderSchema = z.object({
-  product_id: z.string(),
+  productId: z.string(),
   quantity: z.number().min(1, "La cantidad debe ser mayor a 0"),
   variant_id: z.string().optional(),
   modifier_ids: z.array(z.string()).optional(),

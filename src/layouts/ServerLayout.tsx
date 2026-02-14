@@ -5,7 +5,6 @@ import {
   Menu,
   Utensils,
   LogOut,
-  User as UserIcon,
   LayoutDashboard,
   ChevronRight,
 } from "lucide-react";
@@ -13,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -35,10 +35,7 @@ const ServerLayout = () => {
     setIsOpen(false);
   };
 
-  const navItems = [
-    { label: "Mesas y Salones", to: "/mesas", icon: Utensils },
-    { label: "Mi Perfil", to: "/perfil", icon: UserIcon },
-  ];
+  const navItems = [{ label: "Mesas y Salones", to: "/mesas", icon: Utensils }];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -75,6 +72,7 @@ const ServerLayout = () => {
                     </span>
                   </div>
                 </SheetTitle>
+                <SheetDescription />
               </SheetHeader>
 
               <div className="flex-1 py-6 px-3 space-y-2">
@@ -146,9 +144,9 @@ const ServerLayout = () => {
 
           <Link to="/mesas" className="flex items-center gap-2">
             <Utensils className="w-5 h-5 text-cyan-500" />
-            <span className="font-bold tracking-tight text-white uppercase text-sm">
+            {/* <span className="font-bold tracking-tight text-white uppercase text-sm">
               Pedidos
-            </span>
+            </span> */}
           </Link>
         </div>
 
@@ -161,18 +159,11 @@ const ServerLayout = () => {
       </header>
 
       {/* Main Viewport */}
-      <main className="flex-1 flex flex-col p-4 overflow-x-hidden relative">
+      <main className="flex-1 flex flex-col overflow-x-hidden relative">
         <div className="w-full flex-1">
           <Outlet />
         </div>
-
-        {/* Background Decorative Gradient */}
-        <div className="fixed -bottom-24 -left-24 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="fixed -top-24 -right-24 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
       </main>
-
-      {/* Mobile-only Background Texture */}
-      <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.02] pointer-events-none z-0" />
     </div>
   );
 };

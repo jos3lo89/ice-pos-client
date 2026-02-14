@@ -1,11 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { AddProductToOrderT, CreateOrderT } from "../schemas/order.schema";
 import { orderService } from "../services/order.service";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 // crear orden
 export const useCreateOrder = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["create", "order"],
     mutationFn: (order: CreateOrderT) => orderService.create(order),
@@ -14,6 +16,7 @@ export const useCreateOrder = () => {
     },
     onSuccess: () => {
       toast.success("Orden creada correctamente", { id: "create-order" });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
       const message =
@@ -48,5 +51,15 @@ export const useAddProductToOrder = () => {
           : "Error al agregar el producto a la orden";
       toast.error(message, { id: "add-product-to-order" });
     },
+  });
+};
+
+// get current order by id
+
+export const useGetCurrentOrderById = (orderId: string) => {
+  return useQuery({
+    queryKey: ["current", "order", orderId],
+    queryFn: () => orderService.getOrderById(orderId),
+    enabled: !!orderId,
   });
 };
