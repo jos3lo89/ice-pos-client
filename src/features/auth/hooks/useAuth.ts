@@ -4,9 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import type { LoginT } from "../schemas/auth.schema";
+import { roleBasedRedirection } from "@/utils/role-based-redirection";
+import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const { setUser } = useAuthStore();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationKey: ["login"],
@@ -17,6 +20,8 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setUser(data);
       toast.success("Inicio de sesión exitoso", { id: "login" });
+      const redirectPath = roleBasedRedirection(data.role);
+      navigate(redirectPath, { replace: true });
     },
     onError: (err) => {
       const message =

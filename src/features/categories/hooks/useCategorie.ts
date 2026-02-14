@@ -85,3 +85,10 @@ export const useCategorieListAll = () => {
     queryFn: () => categorieService.listAll(),
   });
 };
+
+export const useCategoriesWithProducts = () => {
+  return useQuery({
+    queryKey: ["categories", "with-products"],
+    queryFn: () => categorieService.getWithProducts(),
+  });
+};

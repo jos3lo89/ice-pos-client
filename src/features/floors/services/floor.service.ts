@@ -2,6 +2,7 @@ import http from "@/config/axios";
 import type {
   CreateFloorRes,
   GetAllFloorsRes,
+  GetAllFloorsWithTablesRes,
   GetFloorsRes,
 } from "../interfaces/floors.interface";
 import type { CreateFloorT } from "../schemas/floor.schema";
@@ -23,6 +24,14 @@ class FloorService {
 
   async getAll() {
     const { data } = await http.get<GetAllFloorsRes[]>(`${this.baseUrl}/all`);
+    return data;
+  }
+
+  // pisos con sus mesas
+  async getAllWithTables() {
+    const { data } = await http.get<GetAllFloorsWithTablesRes[]>(
+      `${this.baseUrl}/tables`,
+    );
     return data;
   }
 }

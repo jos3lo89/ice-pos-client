@@ -66,3 +66,36 @@ export interface UpdateStateCategoryReq {
     is_active: boolean;
   };
 }
+
+// categoria con sus productos
+export interface CategoryWithProductsRes {
+  id: string;
+  name: string;
+  slug: string;
+  products: Product[];
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: string;
+  product_modifiers: ProductModifier[];
+  product_variants: ProductVariant[];
+}
+
+export interface ProductModifier {
+  id: string;
+  product_id: string;
+  modifier_name: string;
+  additional_price: string;
+  is_active: boolean;
+}
+
+export interface ProductVariant {
+  id: string;
+  product_id: string;
+  variant_name: string;
+  additional_price: string;
+  is_active: boolean;
+}

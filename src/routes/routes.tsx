@@ -13,17 +13,24 @@ import {
   TablesPage,
   CreateTablePage,
   ProfilePage,
+  OrderEntryPage,
+  FloorWithTablesPage,
 } from "./lazyImports";
-import DashboardLayout from "@/layouts/DashboardLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
 import NotFound from "@/components/common/NotFound";
+import AdminLayout from "@/layouts/AdminLayout";
+import ServerLayout from "@/layouts/ServerLayout";
+import RoleGuard from "@/guards/RoleGuard";
+import GuestGuard from "@/guards/GuestGuard";
 
 export const routes = createBrowserRouter([
   {
     element: (
       <AuthGuard>
-        <DashboardLayout />
+        <RoleGuard allowedRoles={["admin"]}>
+          <AdminLayout />
+        </RoleGuard>
       </AuthGuard>
     ),
     children: [
@@ -78,7 +85,30 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    element: <AuthLayout />,
+    element: (
+      <AuthGuard>
+        <RoleGuard allowedRoles={["mesero"]}>
+          <ServerLayout />
+        </RoleGuard>
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: "/mesas",
+        element: <FloorWithTablesPage />,
+      },
+      {
+        path: "/agregar-item/:orderId",
+        element: <OrderEntryPage />,
+      },
+    ],
+  },
+  {
+    element: (
+      <GuestGuard>
+        <AuthLayout />
+      </GuestGuard>
+    ),
     children: [
       {
         path: "/login",

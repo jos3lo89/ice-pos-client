@@ -1,3 +1,5 @@
+import type { OrderStatusT, TableStatusT } from "@/common/types/order";
+
 // create piso response
 export interface CreateFloorRes {
   id: string;
@@ -36,4 +38,26 @@ export interface GetFloorsRes {
 export interface GetAllFloorsRes {
   id: string;
   level: number;
+}
+
+// get all pisos with tables response
+export interface GetAllFloorsWithTablesRes {
+  id: string;
+  level: number;
+  name: string;
+  tables: Table[];
+}
+
+export interface Table {
+  id: string;
+  status: TableStatusT;
+  table_number: string;
+  current_order_id: string | null;
+  current_order: {
+    id: string;
+    order_number: string;
+    status: OrderStatusT;
+    total: string;
+    created_at: string;
+  }[];
 }
