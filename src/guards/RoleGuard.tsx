@@ -12,8 +12,8 @@ const RoleGuard = ({ allowedRoles, children }: props) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    const redirectPath = roleBasedRedirection(user.role);
+  if (!allowedRoles.includes(user.rol)) {
+    const redirectPath = roleBasedRedirection(user.rol);
     return <Navigate to={redirectPath} replace />;
   }
 

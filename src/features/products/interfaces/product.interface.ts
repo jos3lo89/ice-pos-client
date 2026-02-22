@@ -14,112 +14,98 @@ export interface GetAllProductsRes {
 
 export interface Product {
   id: string;
-  name: string;
-  price: string;
-  category_id: string;
+  nombre: string;
+  precio: string;
+  categoria_id: string;
   area_impresion: string;
-  description: string | null;
-  is_available: boolean;
-  codigo_sunat: string;
-  unidad_medida: string;
-  afec_igv_tipo: string;
-  created_at: string;
-  updated_at: string;
-  categories: {
+  descripcion?: string;
+  esta_disponible: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  categorias: {
     id: string;
-    name: string;
+    nombre: string;
     slug: string;
   };
-  product_variants: {
+  variantes_producto: {
     id: string;
-    product_id: string;
-    variant_name: string;
-    additional_price: string;
-    is_active: boolean;
+    producto_id: string;
+    nombre_variante: string;
+    precio_adicional: string;
+    esta_activa: boolean;
   }[];
-  product_modifiers: {
+
+  modificadores_producto: {
     id: string;
-    product_id: string;
-    modifier_name: string;
-    additional_price: string;
-    is_active: boolean;
+    producto_id: string;
+    nombre_modificador: string;
+    precio_adicional: string;
+    esta_activo: boolean;
   }[];
 }
 
 // crear producto
 export interface CreateProductRes {
   id: string;
-  name: string;
-  price: string;
-  category_id: string;
+  nombre: string;
+  precio: string;
+  categoria_id: string;
   area_impresion: string;
-  description: string | null;
-  is_available: boolean;
-  codigo_sunat: string;
-  unidad_medida: string;
-  afec_igv_tipo: string;
-  created_at: string;
-  updated_at: string;
+  descripcion: string | null;
+  esta_disponible: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 // actualizar estado del producto
 export interface UpdateStatusProductRes {
   id: string;
-  name: string;
-  price: string;
-  category_id: string;
+  nombre: string;
+  precio: string;
+  categoria_id: string;
   area_impresion: string;
-  description: string | null;
-  is_available: boolean;
-  codigo_sunat: string;
-  unidad_medida: string;
-  afec_igv_tipo: string;
-  created_at: string;
-  updated_at: string;
+  descripcion: string | null;
+  esta_disponible: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 // crear variante de producto
 export interface CreateVariantRes {
   id: string;
-  product_id: string;
-  variant_name: string;
-  additional_price: string;
-  is_active: boolean;
-  products: {
+  producto_id: string;
+  nombre_variante: string;
+  precio_adicional: string;
+  esta_activa: boolean;
+  productos: {
     id: string;
-    name: string;
-    price: string;
-    category_id: string;
+    nombre: string;
+    precio: string;
+    categoria_id: string;
     area_impresion: string;
-    description: string | null;
-    is_available: boolean;
-    codigo_sunat: string;
-    unidad_medida: string;
-    afec_igv_tipo: string;
-    created_at: string;
-    updated_at: string;
+    descripcion: string | null;
+    esta_disponible: boolean;
+    fecha_creacion: string;
+    fecha_actualizacion: string;
   };
 }
 
 // crear modificador de producto
 export interface CreateModifierRes {
   id: string;
-  product_id: string;
-  modifier_name: string;
-  additional_price: string;
-  is_active: boolean;
-  products: {
+  producto_id: string;
+  nombre_modificador: string;
+  precio_adicional: string;
+  esta_activo: boolean;
+  productos: {
     id: string;
-    name: string;
-    price: string;
-    category_id: string;
+    nombre: string;
+    precio: string;
+    categoria_id: string;
     area_impresion: string;
-    description: string | null;
-    is_available: boolean;
-    codigo_sunat: string;
-    unidad_medida: string;
-    afec_igv_tipo: string;
-    created_at: string;
-    updated_at: string;
+    descripcion: string | null;
+    esta_disponible: boolean;
+    fecha_creacion: string;
+    fecha_actualizacion: string;
   };
 }

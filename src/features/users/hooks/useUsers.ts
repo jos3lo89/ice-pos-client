@@ -25,7 +25,7 @@ export const useCreateUser = () => {
       qryClient.invalidateQueries({ queryKey: ["users", "list"] });
 
       toast.success("¡Usuario creado!", {
-        description: `El usuario "${data.full_name}" se creó exitosamente.`,
+        description: `El usuario "${data.nombre_completo}" se creó exitosamente.`,
         id: "create-user",
       });
     },

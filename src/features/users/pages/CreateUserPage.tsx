@@ -43,11 +43,11 @@ const CreateUserPage = () => {
   const form = useForm<CreateUserT>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
-      username: "",
-      password: "",
-      full_name: "",
-      role: "mesero",
-      phone: "",
+      usuario: "",
+      contrasena: "",
+      nombre_completo: "",
+      rol: "mesero",
+      telefono: "",
     },
   });
 
@@ -127,7 +127,7 @@ const CreateUserPage = () => {
               >
                 <FormField
                   control={form.control}
-                  name="full_name"
+                  name="nombre_completo"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -152,7 +152,7 @@ const CreateUserPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
-                    name="username"
+                    name="usuario"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -176,7 +176,7 @@ const CreateUserPage = () => {
 
                   <FormField
                     control={form.control}
-                    name="role"
+                    name="rol"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -216,7 +216,7 @@ const CreateUserPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
-                    name="password"
+                    name="contrasena"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -241,7 +241,7 @@ const CreateUserPage = () => {
 
                   <FormField
                     control={form.control}
-                    name="phone"
+                    name="telefono"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">

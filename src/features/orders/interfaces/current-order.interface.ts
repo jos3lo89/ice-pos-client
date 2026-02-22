@@ -5,7 +5,7 @@ export interface CurrentOrderRes {
   mesero_id: string;
   status: string;
   order_type: string;
-  cancellation_reason: any;
+  cancellation_reason: string | null;
   notes: string;
   subtotal: string;
   igv: string;
@@ -13,7 +13,7 @@ export interface CurrentOrderRes {
   amount_paid: string;
   created_at: string;
   updated_at: string;
-  completed_at: any;
+  completed_at: string | null;
   _count: Count;
   order_items: OrderItem[];
   tables_orders_table_idTotables: TablesOrdersTableIdTotables;
@@ -23,12 +23,11 @@ export interface CurrentOrderRes {
 export interface Count {
   order_items: number;
 }
-
 export interface OrderItem {
   id: string;
   order_id: string;
   product_id: string;
-  variant_id: any;
+  variant_id: string | null;
   quantity: number;
   unit_price: string;
   modifiers_total: string;
@@ -38,6 +37,15 @@ export interface OrderItem {
   created_at: string;
   updated_at: string;
   products: Products;
+  order_item_modifiers?: OrderItemModifier[];
+  product_variants?: ProductVariant | null;
+}
+
+export interface OrderItemModifier {
+  order_item_id: string;
+  modifier_id: string;
+  modifier_name: string;
+  additional_price: string;
 }
 
 export interface Products {
@@ -46,15 +54,31 @@ export interface Products {
   price: string;
   category_id: string;
   area_impresion: string;
-  description: any;
+  description: string | null;
   is_available: boolean;
   codigo_sunat: string;
   unidad_medida: string;
   afec_igv_tipo: string;
   created_at: string;
   updated_at: string;
-  product_modifiers: any[];
-  product_variants: any[];
+  product_modifiers: ProductModifier[];
+  product_variants: ProductVariant[];
+}
+
+export interface ProductModifier {
+  id: string;
+  product_id: string;
+  modifier_name: string;
+  additional_price: string;
+  is_active: boolean;
+}
+
+export interface ProductVariant {
+  id: string;
+  product_id: string;
+  variant_name: string;
+  additional_price: string;
+  is_active: boolean;
 }
 
 export interface TablesOrdersTableIdTotables {
@@ -62,7 +86,7 @@ export interface TablesOrdersTableIdTotables {
   table_number: string;
   floor_id: string;
   status: string;
-  reserved_for: any;
+  reserved_for: string | null;
   current_order_id: string;
   created_at: string;
   updated_at: string;

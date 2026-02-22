@@ -30,6 +30,7 @@ export const useCreateOrder = () => {
 
 // agregar producto a la orden
 export const useAddProductToOrder = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["add", "product", "to", "order"],
     mutationFn: (dto: { orderId: string; order: AddProductToOrderT }) =>
@@ -43,6 +44,7 @@ export const useAddProductToOrder = () => {
       toast.success("Producto agregado correctamente", {
         id: "add-product-to-order",
       });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
       const message =

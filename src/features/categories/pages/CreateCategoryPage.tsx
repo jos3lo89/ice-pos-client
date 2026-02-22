@@ -27,13 +27,13 @@ const CreateCategoryPage = () => {
   const form = useForm<CreateCategorieT>({
     resolver: zodResolver(createCategorieSchema),
     defaultValues: {
-      name: "",
+      nombre: "",
       slug: "",
-      description: "",
+      descripcion: "",
     },
   });
 
-  const categoryName = form.watch("name");
+  const categoryName = form.watch("nombre");
 
   // Automatic slug generation
   useEffect(() => {
@@ -103,7 +103,7 @@ const CreateCategoryPage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="nombre"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 block">
@@ -149,7 +149,7 @@ const CreateCategoryPage = () => {
 
               <FormField
                 control={form.control}
-                name="description"
+                name="descripcion"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 block">

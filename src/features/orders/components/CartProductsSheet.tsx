@@ -1,0 +1,190 @@
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { ShoppingCart, Trash2, UtensilsCrossed } from "lucide-react";
+import type { OrderItem } from "../interfaces/current-order.interface";
+import { formatPricePEN } from "@/helpers/format-price";
+
+type Props = {
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+  items: OrderItem[];
+  total: string;
+};
+
+const CartProductsSheet = ({
+  isCartOpen,
+  setIsCartOpen,
+  items,
+  total,
+}: Props) => {
+  return (
+    <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+      <SheetContent
+        side="right"
+        className="w-full sm:max-w-md bg-[#0f172a] border-slate-800 p-0 overflow-hidden flex flex-col outline-none"
+      >
+        <SheetHeader className="px-6 py-4 bg-slate-900/50 border-b border-slate-800 shrink-0">
+          <SheetTitle className="text-2xl font-black text-white flex items-center gap-3">
+            <div className="p-2 bg-cyan-500/10 rounded-xl">
+              <ShoppingCart className="text-cyan-400 w-6 h-6" />
+            </div>
+            <span>Carrito de Pedido</span>
+          </SheetTitle>
+          <SheetDescription className="text-slate-500">
+            Revisa los productos antes de enviar a cocina.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="flex-1 overflow-hidden flex flex-col">
+          {items.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
+              <div className="w-24 h-24 rounded-full bg-slate-800/30 flex items-center justify-center mb-6 animate-pulse">
+                <UtensilsCrossed className="w-12 h-12 text-slate-700" />
+              </div>
+              <h3 className="text-xl font-black text-slate-300">
+                ¡El carrito está vacío!
+              </h3>
+              <p className="text-slate-500 mt-2 max-w-[240px] leading-relaxed">
+                Agregue deliciosos productos de nuestra carta para comenzar.
+              </p>
+            </div>
+          ) : (
+            <ScrollArea className="flex-1">
+              <div className="p-6 space-y-8">
+                {items.map((item) => {
+                  // Buscar la variante seleccionada en la lista de variantes del producto
+                  const selectedVariant = item.products.product_variants.find(
+                    (v) => v.id === item.variant_id,
+                  );
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="group animate-in slide-in-from-right-4 duration-300"
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="space-y-1.5 pr-4">
+                          <h4 className="font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight text-lg">
+                            {item.products.name}
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {/* Mostrar variante si existe */}
+                            {selectedVariant && (
+                              <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] uppercase font-black px-2 py-0">
+                                {selectedVariant.variant_name}
+                              </Badge>
+                            )}
+
+                            {/* Mostrar modificadores si la relación está presente */}
+                            {item.order_item_modifiers?.map((mod) => (
+                              <Badge
+                                key={mod.modifier_id}
+                                className="bg-slate-800 text-slate-400 border border-slate-700 text-[10px] uppercase font-black px-2 py-0"
+                              >
+                                {mod.modifier_name}
+                              </Badge>
+                            ))}
+                          </div>
+                          {item.notes && (
+                            <div className="flex items-center gap-2 mt-2 bg-orange-500/5 p-2 rounded-lg border border-orange-500/10">
+                              <p className="text-[11px] text-orange-400 font-bold italic line-clamp-2">
+                                "{item.notes}"
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
+                          onClick={() => {
+                            console.log("Eliminar producto", item.id);
+                          }}
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </Button>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 bg-slate-800/60 pl-3 pr-4 py-1.5 rounded-xl border border-slate-700/50">
+                          <span className="text-sm font-black text-cyan-400">
+                            {item.quantity}x
+                          </span>
+                          <div className="w-px h-3 bg-slate-700" />
+                          <span className="text-[11px] text-slate-400 font-bold">
+                            {formatPricePEN(item.unit_price)}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-end">
+                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-0.5">
+                            Subtotal
+                          </span>
+                          <span className="font-black text-lg text-white">
+                            {formatPricePEN(item.line_total)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="h-px bg-linear-to-r from-slate-800/0 via-slate-800 to-slate-800/0 mt-8" />
+                    </div>
+                  );
+                })}
+              </div>
+            </ScrollArea>
+          )}
+        </div>
+
+        <SheetFooter className="p-6 bg-[#0f172a] border-t border-slate-800 flex-col gap-4 sm:flex-col shrink-0">
+          <div className="space-y-4 w-full">
+            <div className="flex justify-between items-end">
+              <div className="flex flex-col">
+                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                  Monto Total
+                </span>
+                <span className="text-xl font-black text-white">
+                  Total a Pagar
+                </span>
+              </div>
+              <span className="text-4xl font-black text-cyan-500 tabular-nums tracking-tighter">
+                {formatPricePEN(total)}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 w-full pt-2">
+              <Button
+                variant="outline"
+                className="h-14 rounded-2xl border-slate-700 bg-slate-800/50 hover:bg-red-500/10 hover:border-red-500/50 hover:text-red-400 font-bold text-slate-400 transition-all duration-300"
+                onClick={() => {
+                  setIsCartOpen(false);
+                }}
+              >
+                Cerrar
+              </Button>
+              <Button
+                className="h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-600 font-black text-white shadow-xl shadow-cyan-500/20 disabled:opacity-50 transition-all duration-300 active:scale-95"
+                disabled={items.length === 0}
+                onClick={() => {
+                  console.log("Enviar Orden");
+                  setIsCartOpen(false);
+                }}
+              >
+                Enviar Orden
+              </Button>
+            </div>
+          </div>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default CartProductsSheet;

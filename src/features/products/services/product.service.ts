@@ -34,10 +34,7 @@ class ProductService {
   }
 
   async createProduct(product: CreateProductT) {
-    const { data } = await http.post<CreateProductRes>("/products", {
-      ...product,
-      description: product.description || null,
-    });
+    const { data } = await http.post<CreateProductRes>("/products", product);
     return data;
   }
 

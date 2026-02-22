@@ -31,7 +31,7 @@ const ChangeStatusDialog = ({
 
   useEffect(() => {
     if (user) {
-      setIsActive(user.is_active);
+      setIsActive(user.esta_activo);
     }
   }, [user, open]);
 
@@ -63,16 +63,13 @@ const ChangeStatusDialog = ({
           </DialogTitle>
           <DialogDescription className="text-slate-400">
             Estás modificando el acceso para
-            <span className="font-semibold text-cyan-400">
-              {" "}
-              {user.username}
-            </span>
+            <span className="font-semibold text-cyan-400"> {user.usuario}</span>
             .
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-6 py-6">
-          {user.is_active && (
+          {user.esta_activo && (
             <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
               <p className="text-xs text-blue-200 leading-relaxed">
@@ -123,7 +120,7 @@ const ChangeStatusDialog = ({
           </Button>
           <Button
             onClick={handleSave}
-            disabled={changeUserSate.isPending || user.is_active === isActive}
+            disabled={changeUserSate.isPending || user.esta_activo === isActive}
             className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold shadow-lg shadow-cyan-900/20"
           >
             {changeUserSate.isPending ? "Guardando..." : "Guardar Cambios"}

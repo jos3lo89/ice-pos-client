@@ -113,14 +113,14 @@ const ServerLayout = () => {
                   className="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 transition-all group"
                 >
                   <div className="w-10 h-10 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold shadow-inner">
-                    {user.full_name.charAt(0)}
+                    {user.nombre_completo.charAt(0)}
                   </div>
                   <div className="overflow-hidden">
                     <p className="text-sm font-bold text-white truncate">
-                      {user.full_name}
+                      {user.nombre_completo}
                     </p>
                     <p className="text-[10px] text-cyan-500 font-black uppercase tracking-widest">
-                      {user.role}
+                      {user.rol}
                     </p>
                   </div>
                 </Link>
@@ -154,7 +154,7 @@ const ServerLayout = () => {
           to="/perfil"
           className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-cyan-400 shadow-inner"
         >
-          {user.full_name.charAt(0)}
+          {user.nombre_completo.charAt(0)}
         </Link>
       </header>
 

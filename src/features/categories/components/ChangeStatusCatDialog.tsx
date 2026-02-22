@@ -31,7 +31,7 @@ const ChangeStatusCatDialog = ({
 
   useEffect(() => {
     if (categorie) {
-      setIsActive(categorie.is_active);
+      setIsActive(categorie.esta_activa);
     }
   }, [categorie, open]);
 
@@ -64,14 +64,14 @@ const ChangeStatusCatDialog = ({
             Estás modificando el estado de la categoria
             <span className="font-semibold text-cyan-400">
               {" "}
-              {categorie.name}
+              {categorie.nombre}
             </span>
             .
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-6 py-6">
-          {categorie.is_active && (
+          {categorie.esta_activa && (
             <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
               <p className="text-xs text-blue-200 leading-relaxed">
@@ -124,7 +124,9 @@ const ChangeStatusCatDialog = ({
           </Button>
           <Button
             onClick={handleSave}
-            disabled={changeState.isPending || categorie.is_active === isActive}
+            disabled={
+              changeState.isPending || categorie.esta_activa === isActive
+            }
             className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold shadow-lg shadow-cyan-900/20"
           >
             {changeState.isPending ? "Guardando..." : "Guardar Cambios"}

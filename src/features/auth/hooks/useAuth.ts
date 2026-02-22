@@ -20,7 +20,7 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setUser(data);
       toast.success("Inicio de sesión exitoso", { id: "login" });
-      const redirectPath = roleBasedRedirection(data.role);
+      const redirectPath = roleBasedRedirection(data.rol);
       navigate(redirectPath, { replace: true });
     },
     onError: (err) => {

@@ -17,39 +17,39 @@ export interface TablesListRes {
 
 export interface Table {
   id: string;
-  table_number: string;
-  floor_id: string;
-  status: TableStatusT;
-  reserved_for: string | null;
-  current_order_id: string | null;
-  created_at: string;
-  updated_at: string;
-  floors: {
+  numero_mesa: string;
+  piso_id: string;
+  estado: TableStatusT;
+  reservada_para: string | null;
+  orden_actual_id: string | null;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  pisos: {
     id: string;
-    name: string;
-    level: number;
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
+    nombre: string;
+    nivel: number;
+    esta_activo: boolean;
+    fecha_creacion: string;
+    fecha_actualizacion: string;
   };
 }
 
 // crear tabla response
 export interface TableCreateRes {
   id: string;
-  table_number: string;
-  floor_id: string;
-  status: TableStatusT;
-  reserved_for: string | null;
-  current_order_id: string | null;
-  created_at: string;
-  updated_at: string;
-  floors: {
+  numero_mesa: string;
+  piso_id: string;
+  estado: TableStatusT;
+  reservada_para: string | null;
+  orden_actual_id: string | null;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  pisos: {
     id: string;
-    name: string;
-    level: number;
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
+    nombre: string;
+    nivel: number;
+    esta_activo: boolean;
+    fecha_creacion: string;
+    fecha_actualizacion: string;
   };
 }

@@ -9,14 +9,15 @@ import { useFloorsWithTables } from "@/features/floors/hooks/useFloor";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import { useMemo, useState } from "react";
-import type { Product } from "@/features/categories/interfaces/categories.interface";
+import type { Producto } from "@/features/categories/interfaces/categories.interface";
 import ProductSelectedDialog from "./ProductSelectedDialog";
+import { formatPricePEN } from "@/helpers/format-price";
 
 const CategoryWithProducts = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const categoriesQuery = useCategoriesWithProducts();
@@ -28,8 +29,8 @@ const CategoryWithProducts = () => {
   const filteredProducts = useMemo(() => {
     const activeCategory = categories.find((c) => c.id === activeCategoryId);
     if (!activeCategory) return [];
-    return activeCategory.products.filter((p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    return activeCategory.productos.filter((p) =>
+      p.nombre.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [categories, activeCategoryId, searchQuery]);
 
@@ -62,7 +63,7 @@ const CategoryWithProducts = () => {
                   className={cn(
                     "w-full aspect-square flex flex-col items-center justify-center gap-1.5 px-1 lg:px-2 rounded-2xl transition-all text-[10px] font-black uppercase tracking-tighter text-center",
                     activeCategoryId === cat.id
-                      ? "bg-cyan-500 shadow-lg shadow-cyan-500/20 text-white"
+                      ? "bg-cyan-600 shadow-lg shadow-cyan-500/20 text-white/90"
                       : "text-slate-500 hover:bg-slate-800/50 hover:text-slate-300",
                   )}
                 >
@@ -74,7 +75,7 @@ const CategoryWithProducts = () => {
                         : "text-slate-600",
                     )}
                   />
-                  {cat.name}
+                  {cat.nombre}
                 </button>
               ))}
             </div>
@@ -82,7 +83,7 @@ const CategoryWithProducts = () => {
         </aside>
 
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="p-1">
+          <div className="p-2">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
               <Input
@@ -106,31 +107,31 @@ const CategoryWithProducts = () => {
                     <div>
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-bold text-slate-100 group-hover:text-cyan-400 transition-colors leading-tight">
-                          {product.name}
+                          {product.nombre}
                         </h3>
                         <Badge
                           variant="secondary"
                           className="bg-slate-800 text-cyan-400 rounded-lg text-xs font-black"
                         >
-                          S/ {Number(product.price).toFixed(2)}
+                          {formatPricePEN(product.precio)}
                         </Badge>
                       </div>
                       <p className="text-[10px] text-slate-500 line-clamp-2">
-                        {product.description ||
+                        {product.descripcion ||
                           "Deliciosa opción de nuestra carta."}
                       </p>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-1">
-                      {product.product_variants.length > 0 && (
+                      {product.variantes_producto.length > 0 && (
                         <Badge
                           variant="outline"
                           className="text-[9px] border-slate-700 text-slate-400"
                         >
-                          {product.product_variants.length} Variantes
+                          {product.variantes_producto.length} Variantes
                         </Badge>
                       )}
-                      {product.product_modifiers.length > 0 && (
+                      {product.modificadores_producto.length > 0 && (
                         <Badge
                           variant="outline"
                           className="text-[9px] border-slate-700 text-slate-400"

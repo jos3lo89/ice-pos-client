@@ -34,7 +34,7 @@ const AdminLayout = () => {
     return <AuthFallback />;
   }
 
-  const navGroups = allNavItems.filter((group) => group.role === user.role);
+  const navGroups = allNavItems.filter((group) => group.role === user.rol);
   const navItems = navGroups.flatMap((group) => group.children);
 
   // Auto-expand menu if child is active
@@ -269,14 +269,14 @@ const AdminLayout = () => {
               className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-cyan-500/30 transition-all group"
             >
               <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner shrink-0 group-hover:ring-2 ring-cyan-500/50 transition-all">
-                {user.full_name.charAt(0)}
+                {user.nombre_completo.charAt(0)}
               </div>
               <div className="overflow-hidden">
                 <p className="text-xs font-bold text-white truncate group-hover:text-cyan-400 transition-colors">
-                  {user.full_name}
+                  {user.nombre_completo}
                 </p>
                 <p className="text-[10px] text-gray-400 capitalize">
-                  {user.role}
+                  {user.rol}
                 </p>
               </div>
             </Link>
@@ -284,10 +284,10 @@ const AdminLayout = () => {
             <Link
               to="/perfil"
               className="flex justify-center"
-              title={user.full_name}
+              title={user.nombre_completo}
             >
               <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner hover:ring-2 ring-cyan-500/50 transition-all">
-                {user.full_name.charAt(0)}
+                {user.nombre_completo.charAt(0)}
               </div>
             </Link>
           )}

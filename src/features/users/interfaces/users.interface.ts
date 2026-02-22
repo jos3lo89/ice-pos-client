@@ -3,13 +3,13 @@ import type { UserRole } from "@/common/types/roles";
 // obtener todos los usuarios
 export interface User {
   id: string;
-  username: string;
-  full_name: string;
-  role: UserRole;
-  is_active: boolean;
-  phone: string | null;
-  created_at: string;
-  updated_at: string;
+  usuario: string;
+  nombre_completo: string;
+  rol: UserRole;
+  esta_activo: boolean;
+  telefono: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 export interface GetAllUsersRes {
@@ -28,15 +28,16 @@ export interface GetAllUsersRes {
 // crear usuario
 export interface CreateUserRes {
   id: string;
-  username: string;
-  full_name: string;
-  role: UserRole;
-  is_active: boolean;
-  phone: string | null;
-  created_at: string;
-  updated_at: string;
+  usuario: string;
+  nombre_completo: string;
+  rol: UserRole;
+  esta_activo: boolean;
+  telefono: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
+// cambio de estado request
 export interface ChangeUserStateReq {
   payload: {
     is_active: boolean;
@@ -44,25 +45,26 @@ export interface ChangeUserStateReq {
   userId: string;
 }
 
+// cambio de estado response
 export interface UserChangeStateRes {
   id: string;
-  username: string;
-  full_name: string;
-  role: UserRole;
-  is_active: boolean;
-  phone: string;
-  created_at: string;
-  updated_at: string;
+  usuario: string;
+  nombre_completo: string;
+  rol: UserRole;
+  esta_activo: boolean;
+  telefono: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 // get profile
 export interface GetProfileRes {
   id: string;
-  username: string;
-  full_name: string;
-  role: UserRole;
-  is_active: boolean;
-  phone: string;
-  created_at: string;
-  updated_at: string;
+  usuario: string;
+  nombre_completo: string;
+  rol: UserRole;
+  esta_activo: boolean;
+  telefono: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
