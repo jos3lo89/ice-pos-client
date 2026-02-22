@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/stores/auth.store";
+import ProfileDialog from "@/features/users/components/ProfileDialog";
 import {
   Menu,
   Utensils,
@@ -25,6 +26,7 @@ const ServerLayout = () => {
   const { user, logout } = useAuthStore();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [profileDialogOpen, setProfileDialogOpen] = useState(false);
 
   if (!user) {
     return <AuthFallback />;
@@ -107,10 +109,12 @@ const ServerLayout = () => {
               </div>
 
               <div className="p-4 border-t border-slate-800 space-y-4">
-                <Link
-                  to="/perfil"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 transition-all group"
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setProfileDialogOpen(true);
+                  }}
+                  className="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 transition-all group w-full text-left"
                 >
                   <div className="w-10 h-10 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold shadow-inner">
                     {user.nombre_completo.charAt(0)}
@@ -123,7 +127,7 @@ const ServerLayout = () => {
                       {user.rol}
                     </p>
                   </div>
-                </Link>
+                </button>
 
                 <ConfirmDialog
                   title="¿Cerrar sesión?"
@@ -150,12 +154,12 @@ const ServerLayout = () => {
           </Link>
         </div>
 
-        <Link
-          to="/perfil"
-          className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-cyan-400 shadow-inner"
+        <button
+          onClick={() => setProfileDialogOpen(true)}
+          className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-cyan-400 shadow-inner hover:ring-2 ring-cyan-500/50 transition-all"
         >
           {user.nombre_completo.charAt(0)}
-        </Link>
+        </button>
       </header>
 
       {/* Main Viewport */}
@@ -164,6 +168,8 @@ const ServerLayout = () => {
           <Outlet />
         </div>
       </main>
+
+      <ProfileDialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen} />
     </div>
   );
 };

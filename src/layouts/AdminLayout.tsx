@@ -6,6 +6,7 @@ import {
 } from "@/features/dashboard/components/NavItems";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/lib/utils";
+import ProfileDialog from "@/features/users/components/ProfileDialog";
 import {
   ChevronDown,
   ChevronRight,
@@ -26,6 +27,7 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [profileDialogOpen, setProfileDialogOpen] = useState(false);
 
   const location = useLocation();
   const { logout, user } = useAuthStore();
@@ -262,11 +264,11 @@ const AdminLayout = () => {
             )}
           </button>
 
-          {/* 2. User Profile Link */}
+          {/* 2. User Profile Button */}
           {!sidebarCollapsed || sidebarOpen ? (
-            <Link
-              to="/perfil"
-              className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-cyan-500/30 transition-all group"
+            <button
+              onClick={() => setProfileDialogOpen(true)}
+              className="flex items-center gap-3 p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-cyan-500/30 transition-all group w-full text-left"
             >
               <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner shrink-0 group-hover:ring-2 ring-cyan-500/50 transition-all">
                 {user.nombre_completo.charAt(0)}
@@ -279,17 +281,17 @@ const AdminLayout = () => {
                   {user.rol}
                 </p>
               </div>
-            </Link>
+            </button>
           ) : (
-            <Link
-              to="/perfil"
-              className="flex justify-center"
+            <button
+              onClick={() => setProfileDialogOpen(true)}
+              className="flex justify-center w-full"
               title={user.nombre_completo}
             >
               <div className="w-9 h-9 rounded-full bg-linear-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white font-bold text-sm shadow-inner hover:ring-2 ring-cyan-500/50 transition-all">
                 {user.nombre_completo.charAt(0)}
               </div>
-            </Link>
+            </button>
           )}
 
           {/* 3. Logout Button */}
@@ -353,6 +355,8 @@ const AdminLayout = () => {
           <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
         </div>
       </main>
+
+      <ProfileDialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen} />
     </div>
   );
 };
