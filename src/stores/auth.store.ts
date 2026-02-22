@@ -16,11 +16,11 @@ export const useAuthStore = create<AuthState>()(
         }),
 
       logout: () => {
-        localStorage.removeItem(STORAGE_NAME);
         set({
           user: null,
           isAuthenticated: false,
         });
+        localStorage.removeItem(STORAGE_NAME);
       },
     }),
     {

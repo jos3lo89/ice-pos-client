@@ -32,3 +32,28 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationKey: ["logout"],
+    mutationFn: () => authService.logout(),
+    onMutate: () => {
+      toast.loading("Cerrando sesión...", { id: "logout" });
+    },
+    onSuccess: () => {
+      logout();
+      toast.success("Sesión cerrada exitosamente", { id: "logout" });
+      navigate("/login", { replace: true });
+    },
+    onError: (err) => {
+      const message =
+        err instanceof AxiosError
+          ? err.response?.data.message
+          : "Ocurrió un error al cerrar sesión";
+      toast.error(message, { id: "logout" });
+    },
+  });
+};

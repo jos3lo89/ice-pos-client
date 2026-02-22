@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
+import { useLogout } from "@/features/auth/hooks/useAuth";
 
 /**
  * AdminLayout - Unified administration environment with responsive sidebars and sub-menus.
@@ -30,7 +31,8 @@ const AdminLayout = () => {
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
 
   const location = useLocation();
-  const { logout, user } = useAuthStore();
+  const { user } = useAuthStore();
+  const logout = useLogout();
 
   if (!user) {
     return <AuthFallback />;
@@ -57,7 +59,7 @@ const AdminLayout = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    logout.mutate();
   };
 
   const NavLinkComponent = ({
@@ -356,7 +358,10 @@ const AdminLayout = () => {
         </div>
       </main>
 
-      <ProfileDialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen} />
+      <ProfileDialog
+        open={profileDialogOpen}
+        onOpenChange={setProfileDialogOpen}
+      />
     </div>
   );
 };

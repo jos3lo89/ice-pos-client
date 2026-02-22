@@ -10,3 +10,7 @@ export interface LoginRes {
   fecha_creacion: string;
   fecha_actualizacion: string;
 }
+
+export interface LogoutRes {
+  message: string;
+}

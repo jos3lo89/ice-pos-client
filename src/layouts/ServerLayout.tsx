@@ -21,19 +21,21 @@ import {
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import AuthFallback from "@/components/common/AuthFallback";
+import { useLogout } from "@/features/auth/hooks/useAuth";
 
 const ServerLayout = () => {
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
+  const logout = useLogout();
 
   if (!user) {
     return <AuthFallback />;
   }
 
   const handleLogout = () => {
-    logout();
+    logout.mutate();
     setIsOpen(false);
   };
 
@@ -169,7 +171,10 @@ const ServerLayout = () => {
         </div>
       </main>
 
-      <ProfileDialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen} />
+      <ProfileDialog
+        open={profileDialogOpen}
+        onOpenChange={setProfileDialogOpen}
+      />
     </div>
   );
 };
