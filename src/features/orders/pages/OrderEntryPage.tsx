@@ -58,11 +58,10 @@ const OrderEntryPage = () => {
           </Button>
           <div>
             <h2 className="text-lg font-bold text-white leading-tight">
-              Mesa{" "}
-              {currentOrderData.tables_orders_table_idTotables.table_number}
+              Mesa {currentOrderData.mesa_actual.numero_mesa}
             </h2>
             <p className="text-[10px] text-cyan-500 uppercase tracking-widest font-black">
-              {currentOrderData.tables_orders_table_idTotables.floors.name}
+              {currentOrderData.mesa_actual.pisos.nivel}
             </p>
           </div>
         </div>
@@ -74,7 +73,7 @@ const OrderEntryPage = () => {
         >
           <ShoppingCart className="w-5 h-5 text-cyan-400" />
           <Badge className="absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center p-0 bg-red-500 border-2 border-slate-900 rounded-full text-[10px] font-bold">
-            {currentOrderData._count.order_items}
+            {currentOrderData._count.items_orden}
           </Badge>
           <span className="font-bold text-sm">S/ {currentOrderData.total}</span>
         </Button>
@@ -85,7 +84,7 @@ const OrderEntryPage = () => {
       <CartProductsSheet
         isCartOpen={isCartOpen}
         setIsCartOpen={setIsCartOpen}
-        items={currentOrderData.order_items}
+        items={currentOrderData.items_orden}
         total={currentOrderData.total}
       />
     </div>

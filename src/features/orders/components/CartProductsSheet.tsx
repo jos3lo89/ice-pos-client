@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Trash2, UtensilsCrossed } from "lucide-react";
-import type { OrderItem } from "../interfaces/current-order.interface";
+import type { ItemsOrden } from "../interfaces/current-order.interface";
 import { formatPricePEN } from "@/helpers/format-price";
 
 type Props = {
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
-  items: OrderItem[];
+  items: ItemsOrden[];
   total: string;
 };
 
@@ -62,10 +62,10 @@ const CartProductsSheet = ({
               <div className="p-6 space-y-8">
                 {items.map((item) => {
                   // Buscar la variante seleccionada en la lista de variantes del producto
-                  const selectedVariant = item.products.product_variants.find(
-                    (v) => v.id === item.variant_id,
-                  );
-
+                  const selectedVariant = {
+                    variant_name: item.nombre_variante,
+                    variant_price: item.precio_variante,
+                  };
                   return (
                     <div
                       key={item.id}
@@ -74,7 +74,7 @@ const CartProductsSheet = ({
                       <div className="flex justify-between items-start mb-3">
                         <div className="space-y-1.5 pr-4">
                           <h4 className="font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight text-lg">
-                            {item.products.name}
+                            {item.nombre_producto}
                           </h4>
                           <div className="flex flex-wrap gap-1.5">
                             {/* Mostrar variante si existe */}
@@ -85,19 +85,19 @@ const CartProductsSheet = ({
                             )}
 
                             {/* Mostrar modificadores si la relación está presente */}
-                            {item.order_item_modifiers?.map((mod) => (
+                            {item.modificadores_item_orden?.map((mod) => (
                               <Badge
-                                key={mod.modifier_id}
+                                key={mod.modificador_id}
                                 className="bg-slate-800 text-slate-400 border border-slate-700 text-[10px] uppercase font-black px-2 py-0"
                               >
-                                {mod.modifier_name}
+                                {mod.nombre_modificador}
                               </Badge>
                             ))}
                           </div>
-                          {item.notes && (
+                          {item.notas && (
                             <div className="flex items-center gap-2 mt-2 bg-orange-500/5 p-2 rounded-lg border border-orange-500/10">
                               <p className="text-[11px] text-orange-400 font-bold italic line-clamp-2">
-                                "{item.notes}"
+                                "{item.notas}"
                               </p>
                             </div>
                           )}
@@ -117,11 +117,11 @@ const CartProductsSheet = ({
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3 bg-slate-800/60 pl-3 pr-4 py-1.5 rounded-xl border border-slate-700/50">
                           <span className="text-sm font-black text-cyan-400">
-                            {item.quantity}x
+                            {item.cantidad}x
                           </span>
                           <div className="w-px h-3 bg-slate-700" />
                           <span className="text-[11px] text-slate-400 font-bold">
-                            {formatPricePEN(item.unit_price)}
+                            {formatPricePEN(item.precio_unitario)}
                           </span>
                         </div>
                         <div className="flex flex-col items-end">
@@ -129,7 +129,7 @@ const CartProductsSheet = ({
                             Subtotal
                           </span>
                           <span className="font-black text-lg text-white">
-                            {formatPricePEN(item.line_total)}
+                            {formatPricePEN(item.total_linea)}
                           </span>
                         </div>
                       </div>
