@@ -61,11 +61,12 @@ const CartProductsSheet = ({
             <ScrollArea className="flex-1">
               <div className="p-6 space-y-8">
                 {items.map((item) => {
-                  // Buscar la variante seleccionada en la lista de variantes del producto
-                  const selectedVariant = {
-                    variant_name: item.nombre_variante,
-                    variant_price: item.precio_variante,
-                  };
+                  const selectedVariant = item.nombre_variante
+                    ? {
+                        variant_name: item.nombre_variante,
+                        variant_price: item.precio_variante,
+                      }
+                    : null;
                   return (
                     <div
                       key={item.id}
@@ -77,14 +78,12 @@ const CartProductsSheet = ({
                             {item.nombre_producto}
                           </h4>
                           <div className="flex flex-wrap gap-1.5">
-                            {/* Mostrar variante si existe */}
                             {selectedVariant && (
                               <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] uppercase font-black px-2 py-0">
                                 {selectedVariant.variant_name}
                               </Badge>
                             )}
 
-                            {/* Mostrar modificadores si la relación está presente */}
                             {item.modificadores_item_orden?.map((mod) => (
                               <Badge
                                 key={mod.modificador_id}

@@ -45,7 +45,6 @@ const OrderEntryPage = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
-      {/* Header */}
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 p-4 shrink-0 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
           <Button
@@ -58,10 +57,10 @@ const OrderEntryPage = () => {
           </Button>
           <div>
             <h2 className="text-lg font-bold text-white leading-tight">
-              Mesa {currentOrderData.mesa_actual.numero_mesa}
+              {`Mesa ${currentOrderData.mesa_actual.numero_mesa}`}
             </h2>
             <p className="text-[10px] text-cyan-500 uppercase tracking-widest font-black">
-              {currentOrderData.mesa_actual.pisos.nivel}
+              {`Piso ${currentOrderData.mesa_actual.pisos.nivel}`}
             </p>
           </div>
         </div>
