@@ -37,6 +37,7 @@ import { useState } from "react";
 import type { CreateProductRes } from "../interfaces/product.interface";
 import { useCategorieListAll } from "@/features/categories/hooks/useCategorie";
 import { useCreateProduct } from "../hooks/useProduct";
+import { formatPricePEN } from "@/helpers/format-price";
 
 const CreateProductPage = () => {
   const createProduct = useCreateProduct();
@@ -120,7 +121,7 @@ const CreateProductPage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <Package className="w-4 h-4 text-cyan-400" />
-                  {createdProduct.name}
+                  {createdProduct.nombre}
                 </p>
               </div>
               <div className="space-y-1">
@@ -129,7 +130,7 @@ const CreateProductPage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <DollarSign className="w-4 h-4 text-green-400" />
-                  S/ {parseFloat(createdProduct.price).toFixed(2)}
+                  {formatPricePEN(createdProduct.precio)}
                 </p>
               </div>
               <div className="space-y-1">
@@ -147,8 +148,8 @@ const CreateProductPage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <Tag className="w-4 h-4 text-orange-400" />
-                  {categories.find((c) => c.id === createdProduct.category_id)
-                    ?.name || "N/A"}
+                  {categories.find((c) => c.id === createdProduct.categoria_id)
+                    ?.nombre || "N/A"}
                 </p>
               </div>
             </div>
@@ -260,7 +261,7 @@ const CreateProductPage = () => {
                                 value={category.id}
                                 className="focus:bg-slate-700 focus:text-cyan-400"
                               >
-                                {category.name}
+                                {category.nombre}
                               </SelectItem>
                             ))}
                           </SelectContent>

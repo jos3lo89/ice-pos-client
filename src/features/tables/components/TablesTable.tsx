@@ -190,7 +190,7 @@ const TablesTable = () => {
                           <TableIcon className="w-4 h-4 text-cyan-500" />
                         </div>
                         <span className="text-slate-200 font-bold tracking-tight text-sm">
-                          Mesa {table.table_number}
+                          Mesa {table.numero_mesa}
                         </span>
                       </div>
                     </TableCell>
@@ -198,20 +198,20 @@ const TablesTable = () => {
                       <div className="flex items-center gap-2">
                         <Layers className="w-3.5 h-3.5 text-slate-500" />
                         <span className="text-slate-300 text-sm font-medium">
-                          {table.floors?.name || "Sin asignar"}
+                          {table.pisos?.nombre || "Sin asignar"}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
-                      {getStatusBadge(table.status)}
+                      {getStatusBadge(table.estado)}
                     </TableCell>
                     <TableCell className="text-center">
-                      {table.current_order_id ? (
+                      {table.orden_actual_id ? (
                         <Badge
                           variant="outline"
                           className="bg-cyan-500/5 border-cyan-500/20 text-cyan-400 px-3 py-0.5 rounded-full font-bold text-[10px]"
                         >
-                          # {table.current_order_id.substring(0, 8)}
+                          # {table.orden_actual_id.substring(0, 8)}
                         </Badge>
                       ) : (
                         <span className="text-slate-600 text-[10px] font-medium tracking-wider">

@@ -161,19 +161,19 @@ const UsersTable = () => {
                     <TableCell>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-slate-200 tracking-tight">
-                          {user.full_name}
+                          {user.nombre_completo}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
                         <span className="text-slate-300 font-medium">
-                          {user.username}
+                          {user.usuario}
                         </span>
                         <div className="flex items-center text-xs text-slate-500">
-                          {user.phone ? (
+                          {user.telefono ? (
                             <span className="flex items-center">
-                              {user.phone}
+                              {user.telefono}
                             </span>
                           ) : (
                             <span className="flex items-center text-red-500/60 italic">
@@ -188,14 +188,14 @@ const UsersTable = () => {
                         variant="outline"
                         className="bg-slate-900/60 border-slate-700 text-slate-300 gap-2 py-1 px-3 rounded-lg group-hover:border-cyan-500/30 transition-colors"
                       >
-                        {getRoleIcon(user.role)}
+                        {getRoleIcon(user.rol)}
                         <span className="capitalize text-[11px] font-bold">
-                          {user.role}
+                          {user.rol}
                         </span>
                       </Badge>
                     </TableCell>
                     <TableCell className="text-center">
-                      {user.is_active ? (
+                      {user.esta_activo ? (
                         <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 uppercase tracking-wider">
                           <CheckCircle2 className="w-3 h-3 mr-1.5" /> Activo
                         </div>

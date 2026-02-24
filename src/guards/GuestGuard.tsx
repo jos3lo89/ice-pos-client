@@ -7,7 +7,7 @@ const GuestGuard = ({ children }: PropsWithChildren) => {
   const { user, isAuthenticated } = useAuthStore();
 
   if (isAuthenticated && user) {
-    const redirectPath = roleBasedRedirection(user.role);
+    const redirectPath = roleBasedRedirection(user.rol);
     return <Navigate to={redirectPath} replace />;
   }
 

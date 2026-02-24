@@ -1,16 +1,17 @@
 // categorias de lista de categorias
 export interface Category {
   id: string;
-  name: string;
+  nombre: string;
   slug: string;
-  description: string | null;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  descripcion: string | null;
+  esta_activa: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
   _count: {
-    products: number;
+    productos: number;
   };
 }
+
 export interface GetAllCategoriesRes {
   data: Category[];
   meta: {
@@ -27,35 +28,35 @@ export interface GetAllCategoriesRes {
 // crear categoria
 export interface CreateCategorieRes {
   id: string;
-  name: string;
+  nombre: string;
   slug: string;
-  description: string | null;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  descripcion: string | null;
+  esta_activa: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 // actualizar estado de categoria
 export interface UpdateStateCategoryRes {
   id: string;
-  name: string;
+  nombre: string;
   slug: string;
-  description: string | null;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  descripcion: string | null;
+  esta_activa: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
   _count: {
-    products: number;
+    productos: number;
   };
 }
 
 // lista completa de categorias
 export interface ListCategoryCompleteRes {
   id: string;
-  name: string;
+  nombre: string;
   slug: string;
   _count: {
-    products: number;
+    productos: number;
   };
 }
 
@@ -70,32 +71,32 @@ export interface UpdateStateCategoryReq {
 // categoria con sus productos
 export interface CategoryWithProductsRes {
   id: string;
-  name: string;
+  nombre: string;
   slug: string;
-  products: Product[];
+  productos: Producto[];
 }
 
-export interface Product {
+export interface Producto {
   id: string;
-  name: string;
-  description: string | null;
-  price: string;
-  product_modifiers: ProductModifier[];
-  product_variants: ProductVariant[];
+  nombre: string;
+  descripcion?: string;
+  precio: string;
+  modificadores_producto: ModificadoresProducto[];
+  variantes_producto: VariantesProducto[];
 }
 
-export interface ProductModifier {
+export interface ModificadoresProducto {
   id: string;
-  product_id: string;
-  modifier_name: string;
-  additional_price: string;
-  is_active: boolean;
+  producto_id: string;
+  nombre_modificador: string;
+  precio_adicional: string;
+  esta_activo: boolean;
 }
 
-export interface ProductVariant {
+export interface VariantesProducto {
   id: string;
-  product_id: string;
-  variant_name: string;
-  additional_price: string;
-  is_active: boolean;
+  producto_id: string;
+  nombre_variante: string;
+  precio_adicional: string;
+  esta_activa: boolean;
 }

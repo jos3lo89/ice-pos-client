@@ -160,16 +160,16 @@ const CategoriesTable = () => {
                     </TableCell>
                     <TableCell>
                       <span className="text-slate-200 font-medium">
-                        {cat.name}
+                        {cat.nombre}
                       </span>
                     </TableCell>
                     <TableCell>
                       <div className="inline-flex items-center px-2.5 py-0.5 rounded-lg bg-slate-900/50 border border-slate-700 text-cyan-400 font-mono text-xs">
-                        {cat._count.products}
+                        {cat._count.productos}
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
-                      {cat.is_active ? (
+                      {cat.esta_activa ? (
                         <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 uppercase tracking-wider">
                           <CheckCircle2 className="w-3 h-3 mr-1.5" /> Activo
                         </div>

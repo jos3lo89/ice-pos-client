@@ -12,7 +12,6 @@ import {
   CreateFloorPage,
   TablesPage,
   CreateTablePage,
-  ProfilePage,
   OrderEntryPage,
   FloorWithTablesPage,
 } from "./lazyImports";
@@ -77,10 +76,6 @@ export const routes = createBrowserRouter([
       {
         path: "/crear-mesa",
         element: <CreateTablePage />,
-      },
-      {
-        path: "/perfil",
-        element: <ProfilePage />,
       },
     ],
   },

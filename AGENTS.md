@@ -1,170 +1,231 @@
 # AGENTS.md
 
-Purpose
+Guide for coding agents working in this repository.
 
-- Guide coding agents working in this repo.
-- Keep instructions factual to this codebase.
+## Repository Summary
 
-Repository Summary
+- Vite + React 19 + TypeScript app
+- Module system: ESM (`"type": "module"`)
+- Styling: Tailwind CSS 4, tailwind-merge, tailwind-animations
+- Data: Axios + TanStack Query
+- State: Zustand
+- Forms: react-hook-form + zod
+- Notifications: sonner
 
-- Vite + React + TypeScript app.
-- Module system: ESM ("type": "module").
-- Styling: Tailwind CSS, tailwind-merge, tailwind-animations.
-- Data: Axios + TanStack Query.
-- State: Zustand.
-- Forms: react-hook-form + zod.
-- Notifications: sonner.
+## Package Manager
 
-Package Manager
+pnpm (pnpm-lock.yaml present). Use `pnpm` for installing packages.
 
-- pnpm (pnpm-lock.yaml present).
-- Use pnpm for installing packages.
+## Commands
 
-Commands (Do Not Run)
+Do not run these commands in this environment. Instruct user to run locally.
 
-- Install: pnpm install
-- Dev server: pnpm dev
-- Build: pnpm build (tsc -b && vite build)
-- Lint: pnpm lint (eslint .)
-- Preview: pnpm preview
-- Tests: no test script configured
-- Single test: not available; add a test runner first
+| Command | Description |
+|---------|-------------|
+| `pnpm install` | Install dependencies |
+| `pnpm dev` | Start dev server |
+| `pnpm build` | Build (tsc -b && vite build) |
+| `pnpm lint` | Run ESLint |
+| `pnpm preview` | Preview production build |
+| Tests | No test script configured |
+| Single test | Not available; add a test runner first |
 
-Execution Policy
+## Environment
 
-- Do not run tests or start the dev server for any task.
-- Do not run lint/build/preview commands in this environment.
-- Tell the user to run these commands locally when needed.
+- Example file: `.env.example`
+- Required var: `VITE_API_BASE_URL`
+- Access via `import.meta.env.VITE_*`
 
-Environment
+## Project Structure
 
-- Example env file: .env.example
-- Required var shown: VITE_API_BASE_URL
-- Vite env access via import.meta.env
+```
+src/
+├── components/          # UI and shared components
+│   ├── ui/              # Reusable primitives (button, input, dialog, etc.)
+│   └── common/          # Shared components (Pagination, LoadingState, etc.)
+├── config/              # Axios and TanStack Query configuration
+├── features/*/          # Feature-based modules
+│   ├── pages/           # Page components
+│   ├── components/      # Feature-specific components
+│   ├── hooks/           # Custom hooks (use*)
+│   ├── services/        # API service classes
+│   ├── schemas/         # Zod schemas
+│   └── interfaces/      # TypeScript interfaces
+├── guards/              # Route guards (AuthGuard, RoleGuard, GuestGuard)
+├── interfaces/          # Shared types/interfaces
+├── layouts/             # Layout wrappers
+├── lib/                 # Utilities (cn helper)
+├── routes/              # Router setup and lazy imports
+└── stores/              # Zustand stores
+```
 
-Project Structure (observed)
+## TypeScript Configuration
 
-- src/components/ UI and shared components.
-- src/components/ui/ reusable primitives.
-- src/layouts/ layout wrappers.
-- src/routes/ router setup and lazy imports.
-- src/features/*/pages for feature pages.
-- src/features/*/components, hooks, services, schemas, interfaces.
-- src/config/ axios and query client.
-- src/stores/ Zustand stores.
-- src/interfaces/ shared types/interfaces.
-- src/lib/utils.ts utilities (cn helper).
+- Strict mode enabled
+- `verbatimModuleSyntax: true` - requires explicit `import type` for type-only imports
+- `noUnusedLocals` and `noUnusedParameters` enabled
+- Module resolution: bundler
+- Path alias: `@/*` → `./src/*`
+- JSX: react-jsx
 
-TypeScript + Tooling
+## Code Style
 
-- Strict mode enabled.
-- noUnusedLocals and noUnusedParameters enabled.
-- Module resolution: bundler.
-- Path alias: @/* -> ./src/*.
-- JSX: react-jsx.
+### Imports
 
-Code Style: General
+- Use `@/` alias for src/ imports
+- External imports before local imports
+- Prefer `import type` for type-only imports (required by verbatimModuleSyntax)
+- Example: `import type { UserRole } from "@/common/types/roles"`
 
-- Mixed formatting exists; follow local file style.
-- src/main.tsx uses single quotes and no semicolons.
-- Many other files use double quotes and semicolons.
-- Avoid mass reformatting unrelated to the change.
+### Formatting
 
-Code Style: Imports
+- Mixed formatting exists; follow local file style
+- `src/main.tsx` uses single quotes, no semicolons
+- Most other files use double quotes with semicolons
+- Avoid mass reformatting unrelated to changes
 
-- Use @/ alias for src/ imports when appropriate.
-- Keep external imports before local ones (match local style).
-- Prefer import type for type-only imports.
-- Group type imports with related values or separate per file convention.
+### Types
 
-Code Style: Types
+- Avoid `any`; use proper types or generics
+- Prefer `unknown` + type narrowing when uncertain
+- Use zod inference for form/data types: `type CreateUserT = z.infer<typeof createUserSchema>`
 
-- Avoid any; use proper types or generics.
-- Prefer unknown + narrowing when types are uncertain.
-- Use zod inference for form/data types where schemas exist.
+### Naming
 
-Code Style: Naming
+- Components: PascalCase (e.g., `CreateUserPage`)
+- Hooks: camelCase with `use` prefix (e.g., `useUsersList`)
+- Types/Interfaces: PascalCase
+- Variables: camelCase
+- Services: PascalCase class with singleton export
 
-- Components: PascalCase function names and filenames.
-- Hooks: useX naming (useAuth).
-- Types/Interfaces: PascalCase.
-- Variables: camelCase.
+## React Patterns
 
-React Patterns
+- React 19 with StrictMode
+- App entry: `src/main.tsx` creates root and renders App
+- Router: `createBrowserRouter` in `src/routes/routes.tsx`
+- Providers: ThemeProvider, QueryClientProvider, ReactQueryDevtools in App.tsx
+- Layout routes wrap child pages via `<Outlet />`
+- Route guards: AuthGuard, RoleGuard, GuestGuard
 
-- App entry: src/main.tsx creates root and renders App.
-- Router: createBrowserRouter in src/routes/routes.tsx.
-- Providers: ThemeProvider, QueryClientProvider, ReactQueryDevtools in src/App.tsx.
-- Layout routes wrap child pages via Outlet.
+## Data Fetching
 
-Data Fetching
+### Axios
 
-- Axios instance in src/config/axios.ts (baseURL from env, withCredentials).
-- TanStack Query configured in src/config/tanstack-query.ts with defaults.
+- Instance in `src/config/axios.ts`
+- baseURL from `VITE_API_BASE_URL`
+- `withCredentials: true` for cookie-based auth
 
-Error Handling
+### TanStack Query
 
-- Use AxiosError for API failures where applicable.
-- Prefer explicit branches for known error types.
-- Do not swallow errors silently; surface via UI/toasts when expected.
+- Query client in `src/config/tanstack-query.ts`
+- Query keys pattern: `["entity", "action", { params }]`
+- Example: `["users", "list", { page, limit, search }]`
+- Use `invalidateQueries` to refresh after mutations
 
-Forms and Validation
+### Service Class Pattern
 
-- react-hook-form with zodResolver.
-- Define schemas near the form and infer types from schema.
+```typescript
+class EntityService {
+  private readonly baseUrl = "/entity";
 
-State Management
+  async getAll(params) {
+    const { data } = await http.get<ResponseType>(this.baseUrl, { params });
+    return data;
+  }
+}
+export const entityService = new EntityService();
+```
 
-- Zustand stores live in src/stores/.
-- Prefer selectors when reading store state to avoid extra renders.
+## Forms and Validation
 
-UI and Styling (Dashboard + Users reference)
+- Use react-hook-form with zodResolver
+- Define zod schemas near the form
+- Infer types from schema: `type FormT = z.infer<typeof formSchema>`
 
-- Overall theme: dark slate surfaces (bg-slate-900/800/700) with gray text
-  (text-gray-300/400/500) and cyan accents (cyan-500/400).
-- Borders: border-slate-700; cards and tables often use bg-slate-800 or
-  bg-slate-800/50 with rounded-lg/rounded-xl and shadow-xl.
-- Accent colors in the UI: cyan-600/500 buttons, blue-600, red-500 for danger,
-  green-500 for success, and stat accents use green/blue/purple/orange.
-- Logo mark uses gradient (from-cyan-500 to-blue-600).
-- Interactive states: hover bg-slate-700, focus-visible ring cyan-500.
-- Page motion: animate-in fade-in duration-500 on main views.
+## State Management
 
-Routing
+- Zustand stores in `src/stores/`
+- Use persist middleware for localStorage-backed state
+- Prefer selectors when reading store state
 
-- Routes are defined as objects in src/routes/routes.tsx.
-- Lazy page components are imported via src/routes/lazyImports.ts.
+## Error Handling
 
-Commit Message Conventions (Conventional Commits)
+- Use `AxiosError` type for API failures
+- Extract error message: `error.response?.data.message`
+- Surface errors via toast notifications, never swallow silently
 
-Format:
+## Toast Notifications (sonner)
 
-text
-<type>[optional scope]: <description>
+Pattern for mutations:
 
-Common types: feat, fix, docs, style, refactor, perf, test, chore, ci, build,
-revert.
+```typescript
+return useMutation({
+  mutationFn: (data) => service.create(data),
+  onMutate: () => toast.loading("Creating...", { id: "create-entity" }),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["entity"] });
+    toast.success("Created successfully", { id: "create-entity" });
+  },
+  onError: (error) => {
+    const message = error instanceof AxiosError
+      ? error.response?.data.message
+      : "Unknown error";
+    toast.error("Error", { description: message, id: "create-entity" });
+  },
+});
+```
 
-Git and Commits (Agent Behavior)
+Key points:
+- Use consistent toast ID to replace loading → success/error
+- Include descriptive error messages from API
 
-- Do not run git commit commands.
-- If the user asks for a commit, respond with a suggested commit message
-  and a short English description only.
-- Do not execute terminal commands for commits.
+## UI and Styling
 
-Agent Guidance
+- Theme: dark slate surfaces with cyan accents
+- Backgrounds: `bg-slate-900/800/700`, cards use `bg-slate-800/50`
+- Text: `text-white` for headings, `text-slate-300/400` for body
+- Borders: `border-slate-700`
+- Accent: `cyan-500/600` for primary actions
+- Status colors: `green-500` success, `red-500` danger, `blue-600` info
+- Interactive: `hover:bg-slate-700`, `focus-visible:ring-cyan-500`
+- Page animation: `animate-in fade-in duration-500`
 
-- Do not modify .env directly; use .env.example for documenting variables.
-- Keep changes minimal and targeted unless refactoring is requested.
-- Never run tests or start the dev server as part of an edit task.
+## Routing
 
-Cursor/Copilot Rules
+- Routes defined as objects in `src/routes/routes.tsx`
+- Lazy page components via `src/routes/lazyImports.ts`
+- Guards wrap layouts for auth/role protection
 
-- No .cursor/rules/ or .cursorrules found.
-- No .github/copilot-instructions.md found.
+## Commit Messages (Conventional Commits)
 
-When Adding Tests (future)
+Format: `<type>[optional scope]: <description>`
 
-- Select a runner (Vitest or Jest) and add scripts.
-- Include a single-test command example in this file.
-- Even then, do not run tests or start the dev server here; instruct the user.
+Common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
+
+## Agent Behavior
+
+- Do not run `git commit` commands; suggest commit message only
+- Do not modify `.env` directly; use `.env.example` for documenting vars
+- Keep changes minimal and targeted unless refactoring is requested
+- Do not run tests, dev server, lint, or build commands
+
+## Performance Optimization
+
+Load the `vercel-react-best-practices` skill when optimizing React performance:
+
+```
+Skill: vercel-react-best-practices
+```
+
+This skill provides 57 rules across 8 categories including:
+- Eliminating waterfalls (Promise.all, parallel fetching)
+- Bundle size optimization (dynamic imports, barrel imports)
+- Re-render optimization (memo, dependencies, derived state)
+- Rendering performance (conditional rendering, hoisting JSX)
+
+## When Adding Tests
+
+1. Select a runner (Vitest or Jest)
+2. Add test scripts to package.json
+3. Update this file with single-test command
+4. Instruct user to run tests locally

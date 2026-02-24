@@ -42,8 +42,8 @@ const CreateTablePage = () => {
   const form = useForm<CreateTableT>({
     resolver: zodResolver(createTableSchema),
     defaultValues: {
-      table_number: "",
-      floor_id: "",
+      numero_mesa: "",
+      piso_id: "",
     },
   });
 
@@ -108,7 +108,7 @@ const CreateTablePage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <TableIcon className="w-4 h-4 text-cyan-400" />
-                  Mesa {createdTable.table_number}
+                  Mesa {createdTable.numero_mesa}
                 </p>
               </div>
               <div className="space-y-1">
@@ -117,7 +117,7 @@ const CreateTablePage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <Layers className="w-4 h-4 text-cyan-400" />
-                  {createdTable.floors?.name || "N/A"}
+                  {createdTable.pisos?.nombre || "N/A"}
                 </p>
               </div>
             </div>
@@ -148,7 +148,7 @@ const CreateTablePage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
-                    name="table_number"
+                    name="numero_mesa"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -172,7 +172,7 @@ const CreateTablePage = () => {
 
                   <FormField
                     control={form.control}
-                    name="floor_id"
+                    name="piso_id"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -198,7 +198,7 @@ const CreateTablePage = () => {
                                 value={floor.id}
                                 className="focus:bg-slate-700 focus:text-cyan-400"
                               >
-                                {floor.level}
+                                {floor.nivel}
                               </SelectItem>
                             ))}
                           </SelectContent>

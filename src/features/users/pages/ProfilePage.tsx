@@ -112,14 +112,14 @@ const ProfilePage = () => {
 
             <div className="relative z-10 space-y-4">
               <div className="mx-auto w-24 h-24 rounded-full bg-linear-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-4xl font-black shadow-xl shadow-cyan-500/20 ring-4 ring-slate-800">
-                {profile.full_name.charAt(0)}
+                {profile.nombre_completo.charAt(0)}
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  {profile.full_name}
+                  {profile.nombre_completo}
                 </h2>
                 <p className="text-cyan-500 font-medium uppercase tracking-widest text-xs mt-1">
-                  {profile.role}
+                  {profile.rol}
                 </p>
               </div>
 
@@ -127,17 +127,17 @@ const ProfilePage = () => {
                 <span
                   className={cn(
                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter flex items-center gap-1.5",
-                    profile.is_active
+                    profile.esta_activo
                       ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                       : "bg-red-500/10 text-red-400 border border-red-500/20",
                   )}
                 >
-                  {profile.is_active ? (
+                  {profile.esta_activo ? (
                     <CheckCircle2 className="w-3 h-3" />
                   ) : (
                     <XCircle className="w-3 h-3" />
                   )}
-                  {profile.is_active ? "Estado: Activo" : "Estado: Inactivo"}
+                  {profile.esta_activo ? "Estado: Activo" : "Estado: Inactivo"}
                 </span>
               </div>
             </div>
@@ -145,11 +145,11 @@ const ProfilePage = () => {
             <div className="mt-8 pt-8 border-t border-slate-700/50 grid grid-cols-1 gap-4 text-left font-sans">
               <div className="flex items-center gap-3 text-slate-300 text-sm">
                 <Mail className="w-4 h-4 text-cyan-400" />
-                <span className="truncate">{profile.username}</span>
+                <span className="truncate">{profile.usuario}</span>
               </div>
               <div className="flex items-center gap-3 text-slate-300 text-sm">
                 <Smartphone className="w-4 h-4 text-cyan-400" />
-                <span>{profile.phone || "No registrado"}</span>
+                <span>{profile.telefono || "No registrado"}</span>
               </div>
             </div>
           </div>
@@ -167,22 +167,22 @@ const ProfilePage = () => {
                 <InfoCard
                   icon={User}
                   label="Nombre Completo"
-                  value={profile.full_name}
+                  value={profile.nombre_completo}
                 />
                 <InfoCard
                   icon={Mail}
                   label="Nombre de Usuario / Email"
-                  value={profile.username}
+                  value={profile.usuario}
                 />
                 <InfoCard
                   icon={Shield}
                   label="Rol del Sistema"
-                  value={profile.role}
+                  value={profile.rol}
                 />
                 <InfoCard
                   icon={Phone}
                   label="Teléfono de Contacto"
-                  value={profile.phone || "N/A"}
+                  value={profile.telefono || "N/A"}
                 />
               </div>
             </section>
@@ -196,12 +196,12 @@ const ProfilePage = () => {
                 <InfoCard
                   icon={Calendar}
                   label="Fecha de Registro"
-                  value={formatDate(profile.created_at)}
+                  value={formatDate(profile.fecha_creacion)}
                 />
                 <InfoCard
                   icon={Clock}
                   label="Última Actualización"
-                  value={formatDate(profile.updated_at)}
+                  value={formatDate(profile.fecha_actualizacion)}
                 />
               </div>
             </section>

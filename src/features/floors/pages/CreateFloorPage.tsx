@@ -25,8 +25,8 @@ const CreateFloorPage = () => {
   const form = useForm<CreateFloorT>({
     resolver: zodResolver(createFloorSchema),
     defaultValues: {
-      name: "",
-      level: 1,
+      nombre: "",
+      nivel: 1,
     },
   });
 
@@ -94,7 +94,7 @@ const CreateFloorPage = () => {
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
                   <Type className="w-4 h-4 text-cyan-400" />
-                  {createdFloor.name}
+                  {createdFloor.nombre}
                 </p>
               </div>
               <div className="space-y-1">
@@ -102,8 +102,8 @@ const CreateFloorPage = () => {
                   Nivel / Orden
                 </span>
                 <p className="text-slate-200 font-medium flex items-center gap-2">
-                  <Hash className="w-4 h-4 text-cyan-400" />#{" "}
-                  {createdFloor.level}
+                  <Hash className="w-4 h-4 text-cyan-400" />{" "}
+                  {createdFloor.nivel}
                 </p>
               </div>
             </div>
@@ -134,7 +134,7 @@ const CreateFloorPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="nombre"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">
@@ -158,7 +158,7 @@ const CreateFloorPage = () => {
 
                   <FormField
                     control={form.control}
-                    name="level"
+                    name="nivel"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-300 text-sm font-semibold mb-1.5 flex items-center">

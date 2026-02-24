@@ -30,6 +30,7 @@ export const useCreateOrder = () => {
 
 // agregar producto a la orden
 export const useAddProductToOrder = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["add", "product", "to", "order"],
     mutationFn: (dto: { orderId: string; order: AddProductToOrderT }) =>
@@ -43,6 +44,7 @@ export const useAddProductToOrder = () => {
       toast.success("Producto agregado correctamente", {
         id: "add-product-to-order",
       });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
       const message =
@@ -61,5 +63,58 @@ export const useGetCurrentOrderById = (orderId: string) => {
     queryKey: ["current", "order", orderId],
     queryFn: () => orderService.getOrderById(orderId),
     enabled: !!orderId,
+  });
+};
+
+// delete order item
+export const useDeleteOrderItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["delete", "order", "item"],
+    mutationFn: (itemId: string) => orderService.deleteOrderItem(itemId),
+    onMutate: () => {
+      toast.loading("Eliminando producto de la orden...", {
+        id: "delete-order-item",
+      });
+    },
+    onSuccess: () => {
+      toast.success("Producto eliminado correctamente", {
+        id: "delete-order-item",
+      });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al eliminar el producto de la orden";
+      toast.error(message, { id: "delete-order-item" });
+    },
+  });
+};
+
+// delete order
+export const useDeleteOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["delete", "order"],
+    mutationFn: (orderId: string) => orderService.deleteOrder(orderId),
+    onMutate: () => {
+      toast.loading("Eliminando orden...", { id: "delete-order" });
+    },
+    onSuccess: () => {
+      toast.success("Orden eliminada correctamente", { id: "delete-order" });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+      // queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al eliminar la orden";
+      toast.error(message, { id: "delete-order" });
+    },
   });
 };

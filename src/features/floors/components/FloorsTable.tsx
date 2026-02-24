@@ -162,14 +162,14 @@ const FloorsTable = () => {
                           <Building className="w-4 h-4 text-cyan-500" />
                         </div>
                         <span className="text-slate-200 font-bold tracking-tight text-sm">
-                          {floor.name}
+                          {floor.nombre}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900/60 border border-slate-700 text-slate-400 font-mono text-xs font-black">
                         <Hash className="w-3 h-3 text-cyan-500" />
-                        {floor.level}
+                        {floor.nivel}
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
@@ -177,11 +177,11 @@ const FloorsTable = () => {
                         variant="outline"
                         className="bg-cyan-500/5 border-cyan-500/20 text-cyan-400 px-3 py-0.5 rounded-full font-bold"
                       >
-                        {floor._count.tables} Mesas
+                        {floor._count.mesas} Mesas
                       </Badge>
                     </TableCell>
                     <TableCell className="text-center">
-                      {floor.is_active ? (
+                      {floor.esta_activo ? (
                         <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-black border border-green-500/20 uppercase tracking-widest">
                           <CheckCircle2 className="w-3 h-3 mr-1.5" /> Activo
                         </div>

@@ -39,6 +39,7 @@ import CreateModifier from "./CreateModifier";
 import type { Product } from "../interfaces/product.interface";
 import { toast } from "sonner";
 import { useProductList } from "../hooks/useProduct";
+import { formatPricePEN } from "@/helpers/format-price";
 
 const ProductsTable = () => {
   const [page, setPage] = useState(1);
@@ -169,10 +170,10 @@ const ProductsTable = () => {
                     <TableCell>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-slate-200 font-medium tracking-tight">
-                          {product.name}
+                          {product.nombre}
                         </span>
                         <span className="text-slate-500 text-xs truncate max-w-[200px]">
-                          {product.description || "Sin descripción"}
+                          {product.descripcion || "Sin descripción"}
                         </span>
                       </div>
                     </TableCell>
@@ -181,16 +182,16 @@ const ProductsTable = () => {
                         variant="outline"
                         className="bg-slate-900/60 border-slate-700 text-slate-400 py-0.5 px-2 rounded-md group-hover:border-cyan-500/30 transition-colors"
                       >
-                        {product.categories.name}
+                        {product.categorias.nombre}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       <span className="text-cyan-400 font-mono font-bold">
-                        S/ {Number(product.price).toFixed(2)}
+                        {formatPricePEN(product.precio)}
                       </span>
                     </TableCell>
                     <TableCell className="text-center">
-                      {product.is_available ? (
+                      {product.esta_disponible ? (
                         <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 uppercase tracking-wider">
                           <CheckCircle2 className="w-3 h-3 mr-1.5" /> Disponible
                         </div>
@@ -305,8 +306,8 @@ const ProductsTable = () => {
         {selectedProduct && (
           <ProductUpdateStatus
             productId={selectedProduct.id}
-            productName={selectedProduct.name}
-            isAvailable={selectedProduct.is_available}
+            productName={selectedProduct.nombre}
+            isAvailable={selectedProduct.esta_disponible}
             onSuccess={() => {
               setIsStatusDialogOpen(false);
               setSelectedProduct(null);
@@ -319,7 +320,7 @@ const ProductsTable = () => {
         {selectedProduct && (
           <CreateVariant
             productId={selectedProduct.id}
-            productName={selectedProduct.name}
+            productName={selectedProduct.nombre}
             onSuccess={() => {
               setIsVariantDialogOpen(false);
               setSelectedProduct(null);
@@ -335,7 +336,7 @@ const ProductsTable = () => {
         {selectedProduct && (
           <CreateModifier
             productId={selectedProduct.id}
-            productName={selectedProduct.name}
+            productName={selectedProduct.nombre}
             onSuccess={() => {
               setIsModifierDialogOpen(false);
               setSelectedProduct(null);

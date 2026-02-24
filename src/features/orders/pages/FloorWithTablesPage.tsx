@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "../utils/status-config";
-import type { Table } from "@/features/floors/interfaces/floors.interface";
+import type { Mesa } from "@/features/floors/interfaces/floors.interface";
 import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
 
@@ -42,12 +42,12 @@ const FloorWithTablesPage = () => {
     );
   }
 
-  const handleTableClick = (table: Table) => {
-    if (table.status === "disponible") {
+  const handleTableClick = (table: Mesa) => {
+    if (table.estado === "disponible") {
       setSelectedTableId(table.id);
       setOpenCreateOrderDialog(true);
-    } else if (table.status === "ocupada" && table.current_order_id) {
-      navigate(`/agregar-item/${table.current_order_id}`);
+    } else if (table.estado === "ocupada" && table.orden_actual_id) {
+      navigate(`/agregar-item/${table.orden_actual_id}`);
     }
   };
 
@@ -62,7 +62,7 @@ const FloorWithTablesPage = () => {
                 value={floor.id}
                 className="rounded-xl px-6 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all whitespace-nowrap"
               >
-                {floor.name}
+                {floor.nombre}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -71,9 +71,9 @@ const FloorWithTablesPage = () => {
         {floors.map((floor) => (
           <TabsContent key={floor.id} value={floor.id} className="mt-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {floor.tables.map((table) => {
+              {floor.mesas.map((table) => {
                 const config =
-                  statusConfig[table.status] || statusConfig.disponible;
+                  statusConfig[table.estado] || statusConfig.disponible;
                 const StatusIcon = config.icon;
 
                 return (
@@ -81,7 +81,7 @@ const FloorWithTablesPage = () => {
                     key={table.id}
                     className={cn(
                       "relative group cursor-pointer overflow-hidden border-slate-700/50 transition-all hover:scale-[1.03] active:scale-95 shadow-lg",
-                      table.status === "disponible"
+                      table.estado === "disponible"
                         ? "bg-slate-800/40 hover:bg-slate-800/60 hover:border-cyan-500/30"
                         : "bg-slate-900/60 border-slate-800/50",
                     )}
@@ -90,11 +90,11 @@ const FloorWithTablesPage = () => {
                     <div
                       className={cn(
                         "absolute top-0 left-0 w-1 h-full transition-colors",
-                        table.status === "disponible"
+                        table.estado === "disponible"
                           ? "bg-emerald-500"
-                          : table.status === "ocupada"
+                          : table.estado === "ocupada"
                             ? "bg-orange-500"
-                            : table.status === "reservada"
+                            : table.estado === "reservada"
                               ? "bg-blue-500"
                               : "bg-slate-500",
                       )}
@@ -112,7 +112,7 @@ const FloorWithTablesPage = () => {
 
                       <div className="text-center">
                         <span className="text-2xl font-black text-white block leading-none">
-                          {table.table_number}
+                          {table.numero_mesa}
                         </span>
                         <Badge
                           variant="outline"
@@ -125,7 +125,7 @@ const FloorWithTablesPage = () => {
                         </Badge>
                       </div>
 
-                      {table.status === "ocupada" &&
+                      {table.estado === "ocupada" &&
                         table.current_order?.[0] && (
                           <div className="mt-1 pt-2 border-t border-slate-700/50 w-full text-center">
                             <p className="text-[10px] font-bold text-orange-400">

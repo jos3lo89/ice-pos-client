@@ -3,26 +3,16 @@ import type { OrderStatusT, TableStatusT } from "@/common/types/order";
 // create piso response
 export interface CreateFloorRes {
   id: string;
-  name: string;
-  level: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  nombre: string;
+  nivel: number;
+  esta_activo: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 // get pisos
 export interface GetFloorsRes {
-  data: {
-    id: string;
-    name: string;
-    level: number;
-    is_active: boolean;
-    created_at: string;
-    updated_at: string;
-    _count: {
-      tables: number;
-    };
-  }[];
+  data: Piso[];
   meta: {
     total: number;
     page: number;
@@ -34,30 +24,42 @@ export interface GetFloorsRes {
   };
 }
 
+export interface Piso {
+  id: string;
+  nombre: string;
+  nivel: number;
+  esta_activo: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  _count: {
+    mesas: number;
+  };
+}
+
 // get all pisos response
 export interface GetAllFloorsRes {
   id: string;
-  level: number;
+  nivel: number;
 }
 
 // get all pisos with tables response
 export interface GetAllFloorsWithTablesRes {
   id: string;
-  level: number;
-  name: string;
-  tables: Table[];
+  nivel: number;
+  nombre: string;
+  mesas: Mesa[];
 }
 
-export interface Table {
+export interface Mesa {
   id: string;
-  status: TableStatusT;
-  table_number: string;
-  current_order_id: string | null;
+  estado: TableStatusT;
+  numero_mesa: string;
+  orden_actual_id: string | null;
   current_order: {
     id: string;
-    order_number: string;
-    status: OrderStatusT;
+    numero_orden: string;
+    estado: OrderStatusT;
     total: string;
-    created_at: string;
+    fecha_creacion: string;
   }[];
 }
