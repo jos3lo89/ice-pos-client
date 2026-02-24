@@ -93,3 +93,28 @@ export const useDeleteOrderItem = () => {
     },
   });
 };
+
+// delete order
+export const useDeleteOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["delete", "order"],
+    mutationFn: (orderId: string) => orderService.deleteOrder(orderId),
+    onMutate: () => {
+      toast.loading("Eliminando orden...", { id: "delete-order" });
+    },
+    onSuccess: () => {
+      toast.success("Orden eliminada correctamente", { id: "delete-order" });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+      // queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al eliminar la orden";
+      toast.error(message, { id: "delete-order" });
+    },
+  });
+};

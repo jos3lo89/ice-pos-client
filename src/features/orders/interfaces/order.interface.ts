@@ -64,3 +64,20 @@ export interface DeleteOrderItemRes {
     id: string;
   };
 }
+
+// eliminar orden response
+export interface DeleteOrderRes {
+  id: string;
+  numero_orden: string;
+  mesa_id: string;
+  mesero_id: string;
+  estado: string;
+  tipo_orden: string;
+  motivo_cancelacion: string | null;
+  notas: string | null;
+  total: string;
+  monto_pagado: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  fecha_completado: string | null;
+}

@@ -4,6 +4,7 @@ import type {
   AddProductToOrderRes,
   CreateOrderRes,
   DeleteOrderItemRes,
+  DeleteOrderRes,
 } from "../interfaces/order.interface";
 import type { CurrentOrderRes } from "../interfaces/current-order.interface";
 
@@ -33,6 +34,13 @@ class OrderService {
   async deleteOrderItem(itemId: string) {
     const { data } = await http.delete<DeleteOrderItemRes>(
       `${this.baseUrl}/${itemId}/delete-item`,
+    );
+    return data;
+  }
+
+  async deleteOrder(orderId: string) {
+    const { data } = await http.delete<DeleteOrderRes>(
+      `${this.baseUrl}/${orderId}/delete-order`,
     );
     return data;
   }

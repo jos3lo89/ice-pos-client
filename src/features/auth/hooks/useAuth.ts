@@ -1,6 +1,6 @@
 import { authService } from "@/features/auth/services/auth.service";
 import { useAuthStore } from "@/stores/auth.store";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import type { LoginT } from "../schemas/auth.schema";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export const useLogin = () => {
   const { setUser } = useAuthStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ["login"],
@@ -22,6 +23,7 @@ export const useLogin = () => {
       toast.success("Inicio de sesión exitoso", { id: "login" });
       const redirectPath = roleBasedRedirection(data.rol);
       navigate(redirectPath, { replace: true });
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (err) => {
       const message =
