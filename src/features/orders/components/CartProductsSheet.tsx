@@ -78,23 +78,35 @@ const CartProductsSheet = ({
                             <h4 className="font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight text-lg">
                               {item.nombre_producto}
                             </h4>
-                            <div className="flex flex-wrap gap-1.5">
+                            <div className="flex flex-wrap gap-2">
                               {selectedVariant && (
-                                <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] uppercase font-black px-2 py-0">
-                                  {selectedVariant.variant_name}{" "}
-                                  {formatPricePEN(
-                                    selectedVariant.variant_price,
-                                  )}
+                                <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 group-hover:bg-cyan-500/20 transition-colors">
+                                  <span>{selectedVariant.variant_name}</span>
+                                  <div className="w-1 h-1 rounded-full bg-cyan-400/30" />
+                                  <span className="text-cyan-300/80 font-bold">
+                                    {(Number(selectedVariant.variant_price) > 0
+                                      ? "+ "
+                                      : "") +
+                                      formatPricePEN(
+                                        selectedVariant.variant_price,
+                                      )}
+                                  </span>
                                 </Badge>
                               )}
 
                               {item.modificadores_item_orden?.map((mod) => (
                                 <Badge
                                   key={mod.modificador_id}
-                                  className="bg-slate-800 text-slate-400 border border-slate-700 text-[10px] uppercase font-black px-2 py-0"
+                                  className="bg-slate-800/50 text-slate-400 border border-slate-700/50 text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 group-hover:border-slate-600 transition-colors"
                                 >
-                                  {mod.nombre_modificador}{" "}
-                                  {formatPricePEN(mod.precio_adicional)}
+                                  <span>{mod.nombre_modificador}</span>
+                                  <div className="w-1 h-1 rounded-full bg-slate-600/30" />
+                                  <span className="text-slate-500 font-bold">
+                                    {(Number(mod.precio_adicional) > 0
+                                      ? "+ "
+                                      : "") +
+                                      formatPricePEN(mod.precio_adicional)}
+                                  </span>
                                 </Badge>
                               ))}
                             </div>
