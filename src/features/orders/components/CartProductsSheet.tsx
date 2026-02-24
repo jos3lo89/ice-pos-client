@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Trash2, UtensilsCrossed } from "lucide-react";
 import type { ItemsOrden } from "../interfaces/current-order.interface";
 import { formatPricePEN } from "@/helpers/format-price";
+import { useDeleteOrderItem } from "../hooks/useOrder";
 
 type Props = {
   isCartOpen: boolean;
@@ -26,6 +27,12 @@ const CartProductsSheet = ({
   items,
   total,
 }: Props) => {
+  const deleteOrderItem = useDeleteOrderItem();
+
+  const handleDeleteOrderItem = (itemId: string) => {
+    deleteOrderItem.mutate(itemId);
+  };
+
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
       <SheetContent
@@ -122,9 +129,8 @@ const CartProductsSheet = ({
                             variant="ghost"
                             size="icon"
                             className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
-                            onClick={() => {
-                              console.log("Eliminar producto", item.id);
-                            }}
+                            disabled={deleteOrderItem.isPending}
+                            onClick={() => handleDeleteOrderItem(item.id)}
                           >
                             <Trash2 className="w-5 h-5" />
                           </Button>

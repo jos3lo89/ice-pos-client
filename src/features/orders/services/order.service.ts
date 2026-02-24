@@ -3,6 +3,7 @@ import type { AddProductToOrderT, CreateOrderT } from "../schemas/order.schema";
 import type {
   AddProductToOrderRes,
   CreateOrderRes,
+  DeleteOrderItemRes,
 } from "../interfaces/order.interface";
 import type { CurrentOrderRes } from "../interfaces/current-order.interface";
 
@@ -25,6 +26,13 @@ class OrderService {
   async getOrderById(orderId: string) {
     const { data } = await http.get<CurrentOrderRes>(
       `${this.baseUrl}/${orderId}/current`,
+    );
+    return data;
+  }
+
+  async deleteOrderItem(itemId: string) {
+    const { data } = await http.delete<DeleteOrderItemRes>(
+      `${this.baseUrl}/${itemId}/delete-item`,
     );
     return data;
   }

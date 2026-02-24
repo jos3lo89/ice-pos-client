@@ -65,3 +65,31 @@ export const useGetCurrentOrderById = (orderId: string) => {
     enabled: !!orderId,
   });
 };
+
+// delete order item
+export const useDeleteOrderItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["delete", "order", "item"],
+    mutationFn: (itemId: string) => orderService.deleteOrderItem(itemId),
+    onMutate: () => {
+      toast.loading("Eliminando producto de la orden...", {
+        id: "delete-order-item",
+      });
+    },
+    onSuccess: () => {
+      toast.success("Producto eliminado correctamente", {
+        id: "delete-order-item",
+      });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al eliminar el producto de la orden";
+      toast.error(message, { id: "delete-order-item" });
+    },
+  });
+};

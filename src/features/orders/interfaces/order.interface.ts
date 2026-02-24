@@ -42,3 +42,25 @@ export interface AddProductToOrderRes {
     variant_name: string;
   } | null;
 }
+
+// eliminar producto de la orden response
+export interface DeleteOrderItemRes {
+  id: string;
+  orden_id: string;
+  producto_id: string;
+  variante_id: string;
+  nombre_producto: string;
+  nombre_variante: string;
+  precio_variante: string;
+  cantidad: number;
+  precio_unitario: string;
+  total_modificadores: string;
+  total_linea: string;
+  estado: string;
+  notas: string | null;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  ordenes: {
+    id: string;
+  };
+}
