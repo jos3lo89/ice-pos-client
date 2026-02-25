@@ -9,10 +9,11 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Trash2, UtensilsCrossed } from "lucide-react";
+import { ShoppingCart, Trash2, UtensilsCrossed, X } from "lucide-react";
 import type { ItemsOrden } from "../interfaces/current-order.interface";
 import { formatPricePEN } from "@/helpers/format-price";
-import { useDeleteOrderItem } from "../hooks/useOrder";
+import { useDeleteOrderItem, useSendComand } from "../hooks/useOrder";
+import { useParams } from "react-router-dom";
 
 type Props = {
   isCartOpen: boolean;
@@ -27,10 +28,22 @@ const CartProductsSheet = ({
   items,
   total,
 }: Props) => {
+  const { orderId } = useParams();
   const deleteOrderItem = useDeleteOrderItem();
+  const sendComand = useSendComand();
 
   const handleDeleteOrderItem = (itemId: string) => {
     deleteOrderItem.mutate(itemId);
+  };
+
+  const handleSendComand = () => {
+    if (!orderId) return;
+    const itemsId = items
+      .filter((item) => item.estado === "pendiente")
+      .map((item) => item.id);
+
+    if (itemsId.length === 0) return;
+    sendComand.mutate({ orderId, itemsId });
   };
 
   return (
@@ -125,15 +138,32 @@ const CartProductsSheet = ({
                               </div>
                             )}
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
-                            disabled={deleteOrderItem.isPending}
-                            onClick={() => handleDeleteOrderItem(item.id)}
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </Button>
+                          {item.estado === "pendiente" ? (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
+                              disabled={deleteOrderItem.isPending}
+                              onClick={() => handleDeleteOrderItem(item.id)}
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
+                              onClick={() => {
+                                console.log(item.id);
+                              }}
+                              disabled={
+                                deleteOrderItem.isPending ||
+                                item.estado === "cancelado"
+                              }
+                            >
+                              <X className="w-5 h-5" />
+                            </Button>
+                          )}
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -194,11 +224,8 @@ const CartProductsSheet = ({
               </Button>
               <Button
                 className="h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-600 font-black text-white shadow-xl shadow-cyan-500/20 disabled:opacity-50 transition-all duration-300 active:scale-95"
-                disabled={items.length === 0}
-                onClick={() => {
-                  console.log("Enviar Orden");
-                  setIsCartOpen(false);
-                }}
+                onClick={() => handleSendComand()}
+                disabled={sendComand.isPending}
               >
                 Enviar Orden
               </Button>

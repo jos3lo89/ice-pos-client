@@ -4,6 +4,7 @@ import { orderService } from "../services/order.service";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import type { SendComandT } from "../interfaces/order.interface";
 
 // crear orden
 export const useCreateOrder = () => {
@@ -115,6 +116,30 @@ export const useDeleteOrder = () => {
           ? error.response?.data.message
           : "Error al eliminar la orden";
       toast.error(message, { id: "delete-order" });
+    },
+  });
+};
+
+// send comand
+export const useSendComand = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["send", "comand"],
+    mutationFn: (dto: SendComandT) => orderService.sendComand(dto),
+    onMutate: () => {
+      toast.loading("Enviando comanda...", { id: "send-comand" });
+    },
+    onSuccess: () => {
+      toast.success("Comanda enviada correctamente", { id: "send-comand" });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al enviar la comanda";
+      toast.error(message, { id: "send-comand" });
     },
   });
 };

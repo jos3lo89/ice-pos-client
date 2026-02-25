@@ -4,7 +4,7 @@ import {
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/features/orders/hooks/useOrder";
-import { ArrowLeft, ShoppingCart, Trash2 } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -78,15 +78,28 @@ const OrderEntryPage = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="relative bg-red-500 border-red-700 hover:bg-red-700 rounded-2xl gap-2 h-11 px-4"
-            onClick={handleDeleteOrder}
-            disabled={deleteOrder.isPending}
-          >
-            <Trash2 className="w-5 h-5" />
-          </Button>
+          {currentOrderData.estado === "pendiente" ? (
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative bg-red-500 border-red-700 hover:bg-red-700 rounded-2xl gap-2 h-11 px-4"
+              onClick={handleDeleteOrder}
+              disabled={deleteOrder.isPending}
+            >
+              <Trash2 className="w-5 h-5" />
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative bg-red-500 border-red-700 hover:bg-red-700 rounded-2xl gap-2 h-11 px-4"
+              onClick={() => {
+                console.log("cancelando orden");
+              }}
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          )}
 
           <Button
             variant="outline"
