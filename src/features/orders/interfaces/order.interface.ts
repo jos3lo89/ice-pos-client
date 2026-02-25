@@ -81,3 +81,26 @@ export interface DeleteOrderRes {
   fecha_actualizacion: string;
   fecha_completado: string | null;
 }
+
+// enviar comanda request
+export interface SendComandT {
+  orderId: string;
+  itemsId: string[];
+}
+
+// enviar comando response
+export interface SendComandRes {
+  id: string;
+  numero_orden: string;
+  mesa_id: string;
+  mesero_id: string;
+  estado: string;
+  tipo_orden: string;
+  motivo_cancelacion: string | null;
+  notas: string;
+  total: string;
+  monto_pagado: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  fecha_completado: string | null;
+}

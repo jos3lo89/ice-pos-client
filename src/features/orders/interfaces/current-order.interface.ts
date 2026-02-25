@@ -1,17 +1,27 @@
 // current order response
+export type OrderStatus =
+  | "pendiente"
+  | "preparando"
+  | "listo"
+  | "servido"
+  | "completado"
+  | "cancelado";
+
+export type OrderType = "en_local" | "para_llevar";
+
+export type OrderItemStatus =
+  | "pendiente"
+  | "preparando"
+  | "listo"
+  | "cancelado";
+
 export interface CurrentOrderRes {
   id: string;
   numero_orden: string;
   mesa_id: string;
   mesero_id: string;
-  estado:
-    | "pendiente"
-    | "preparando"
-    | "listo"
-    | "servido"
-    | "completado"
-    | "cancelado";
-  tipo_orden: "en_local" | "para_llevar";
+  estado: OrderStatus;
+  tipo_orden: OrderType;
   motivo_cancelacion: string | null;
   notas: string;
   total: string;
@@ -39,13 +49,7 @@ export interface ItemsOrden {
   precio_unitario: string;
   total_modificadores: string;
   total_linea: string;
-  estado:
-    | "pendiente"
-    | "preparando"
-    | "listo"
-    | "servido"
-    | "completado"
-    | "cancelado";
+  estado: OrderItemStatus;
   notas: string | null;
   fecha_creacion: string;
   fecha_actualizacion: string;

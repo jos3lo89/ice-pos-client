@@ -9,10 +9,28 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Trash2, UtensilsCrossed } from "lucide-react";
-import type { ItemsOrden } from "../interfaces/current-order.interface";
+import {
+  ShoppingCart,
+  Trash2,
+  UtensilsCrossed,
+  X,
+  Clock,
+  ChefHat,
+  CheckCircle2,
+  Ban,
+} from "lucide-react";
+import type {
+  ItemsOrden,
+  OrderItemStatus,
+} from "../interfaces/current-order.interface";
 import { formatPricePEN } from "@/helpers/format-price";
-import { useDeleteOrderItem } from "../hooks/useOrder";
+import {
+  useCancelOrderItem,
+  useDeleteOrderItem,
+  useSendComand,
+} from "../hooks/useOrder";
+import { useParams } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 type Props = {
   isCartOpen: boolean;
@@ -21,16 +39,69 @@ type Props = {
   total: string;
 };
 
+const statusConfig: Record<
+  OrderItemStatus,
+  { label: string; color: string; bg: string; border: string; icon: any }
+> = {
+  pendiente: {
+    label: "Pendiente",
+    color: "text-slate-400",
+    bg: "bg-slate-500/10",
+    border: "border-slate-500/20",
+    icon: Clock,
+  },
+  preparando: {
+    label: "En Cocina",
+    color: "text-amber-400",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/20",
+    icon: ChefHat,
+  },
+  listo: {
+    label: "Listo",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+    icon: CheckCircle2,
+  },
+  cancelado: {
+    label: "Cancelado",
+    color: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/20",
+    icon: Ban,
+  },
+};
+
 const CartProductsSheet = ({
   isCartOpen,
   setIsCartOpen,
   items,
   total,
 }: Props) => {
+  const { orderId } = useParams();
   const deleteOrderItem = useDeleteOrderItem();
+  const sendComand = useSendComand();
+  const cancelOrderItem = useCancelOrderItem();
+
+  const isSendable = items.some((item) => item.estado === "pendiente");
 
   const handleDeleteOrderItem = (itemId: string) => {
     deleteOrderItem.mutate(itemId);
+  };
+
+  const handleSendComand = () => {
+    if (!orderId || !isSendable) return;
+    const itemsId = items
+      .filter((item) => item.estado === "pendiente")
+      .map((item) => item.id);
+
+    sendComand.mutate({ orderId, itemsId });
+  };
+
+  const handleCancelOrderItem = (itemId: string) => {
+    if (!orderId) return;
+    cancelOrderItem.mutate({ orderId, itemId });
   };
 
   return (
@@ -75,22 +146,85 @@ const CartProductsSheet = ({
                           variant_price: item.precio_variante,
                         }
                       : null;
+
+                    const StatusIcon = statusConfig[item.estado].icon;
+
                     return (
                       <div
                         key={item.id}
-                        className="group animate-in slide-in-from-right-4 duration-300"
+                        className={cn(
+                          "group relative animate-in slide-in-from-right-4 duration-300 p-4 rounded-2xl border transition-all",
+                          item.estado === "cancelado" &&
+                            "opacity-50 grayscale border-red-900/30 bg-red-950/20",
+                          item.estado === "preparando" &&
+                            "border-amber-500/30 bg-amber-500/5",
+                          item.estado === "listo" &&
+                            "border-emerald-500/30 bg-emerald-500/5",
+                          item.estado === "pendiente" &&
+                            "border-slate-800/50 bg-slate-900/40 hover:border-slate-700/80",
+                        )}
                       >
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="space-y-1.5 pr-4">
-                            <h4 className="font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight text-lg">
+                        {/* Status Badge */}
+                        <div className="absolute -top-2.5 right-4 z-10">
+                          <Badge
+                            className={cn(
+                              "font-black text-[9px] uppercase tracking-wider border px-2 py-0.5 flex items-center gap-1.5 shadow-lg",
+                              statusConfig[item.estado].bg,
+                              statusConfig[item.estado].color,
+                              statusConfig[item.estado].border,
+                            )}
+                          >
+                            {StatusIcon && (
+                              <StatusIcon
+                                className={cn(
+                                  "w-3 h-3",
+                                  item.estado === "preparando" &&
+                                    "animate-pulse",
+                                )}
+                              />
+                            )}
+                            <span>{statusConfig[item.estado].label}</span>
+                          </Badge>
+                        </div>
+
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="space-y-2 pr-4">
+                            <h4
+                              className={cn(
+                                "font-black group-hover:text-cyan-400 transition-colors uppercase tracking-tight text-lg leading-tight",
+                                item.estado === "cancelado"
+                                  ? "text-slate-500 line-through"
+                                  : "text-white",
+                              )}
+                            >
                               {item.nombre_producto}
                             </h4>
                             <div className="flex flex-wrap gap-2">
                               {selectedVariant && (
-                                <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 group-hover:bg-cyan-500/20 transition-colors">
+                                <Badge
+                                  className={cn(
+                                    "border text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 transition-colors",
+                                    item.estado === "cancelado"
+                                      ? "bg-slate-800/30 text-slate-600 border-slate-800"
+                                      : "bg-cyan-500/10 text-cyan-400 border-cyan-500/20 group-hover:bg-cyan-500/20",
+                                  )}
+                                >
                                   <span>{selectedVariant.variant_name}</span>
-                                  <div className="w-1 h-1 rounded-full bg-cyan-400/30" />
-                                  <span className="text-cyan-300/80 font-bold">
+                                  <div
+                                    className={cn(
+                                      "w-1 h-1 rounded-full",
+                                      item.estado === "cancelado"
+                                        ? "bg-slate-700"
+                                        : "bg-cyan-400/30",
+                                    )}
+                                  />
+                                  <span
+                                    className={
+                                      item.estado === "cancelado"
+                                        ? "text-slate-600"
+                                        : "text-cyan-300/80"
+                                    }
+                                  >
                                     {(Number(selectedVariant.variant_price) > 0
                                       ? "+ "
                                       : "") +
@@ -104,11 +238,29 @@ const CartProductsSheet = ({
                               {item.modificadores_item_orden?.map((mod) => (
                                 <Badge
                                   key={mod.modificador_id}
-                                  className="bg-slate-800/50 text-slate-400 border border-slate-700/50 text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 group-hover:border-slate-600 transition-colors"
+                                  className={cn(
+                                    "border text-[10px] uppercase font-black px-2.5 py-0.5 flex items-center gap-2 transition-colors",
+                                    item.estado === "cancelado"
+                                      ? "bg-slate-800/30 text-slate-600 border-slate-800"
+                                      : "bg-slate-800/50 text-slate-400 border-slate-700/50 group-hover:border-slate-600",
+                                  )}
                                 >
                                   <span>{mod.nombre_modificador}</span>
-                                  <div className="w-1 h-1 rounded-full bg-slate-600/30" />
-                                  <span className="text-slate-500 font-bold">
+                                  <div
+                                    className={cn(
+                                      "w-1 h-1 rounded-full",
+                                      item.estado === "cancelado"
+                                        ? "bg-slate-700"
+                                        : "bg-slate-600/30",
+                                    )}
+                                  />
+                                  <span
+                                    className={
+                                      item.estado === "cancelado"
+                                        ? "text-slate-600"
+                                        : "text-slate-500 font-bold"
+                                    }
+                                  >
                                     {(Number(mod.precio_adicional) > 0
                                       ? "+ "
                                       : "") +
@@ -118,45 +270,121 @@ const CartProductsSheet = ({
                               ))}
                             </div>
                             {item.notas && (
-                              <div className="flex items-center gap-2 mt-2 bg-orange-500/5 p-2 rounded-lg border border-orange-500/10">
-                                <p className="text-[11px] text-orange-400 font-bold italic line-clamp-2">
+                              <div
+                                className={cn(
+                                  "flex items-center gap-2 mt-2 p-2 rounded-lg border",
+                                  item.estado === "cancelado"
+                                    ? "bg-slate-800/20 border-slate-800/50"
+                                    : "bg-orange-500/5 border-orange-500/10",
+                                )}
+                              >
+                                <p
+                                  className={cn(
+                                    "text-[11px] font-bold italic line-clamp-2",
+                                    item.estado === "cancelado"
+                                      ? "text-slate-600"
+                                      : "text-orange-400",
+                                  )}
+                                >
                                   "{item.notas}"
                                 </p>
                               </div>
                             )}
                           </div>
+
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-10 w-10 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-xl shrink-0 transition-all duration-300"
-                            disabled={deleteOrderItem.isPending}
-                            onClick={() => handleDeleteOrderItem(item.id)}
+                            className={cn(
+                              "h-10 w-10 rounded-xl shrink-0 transition-all duration-300",
+                              item.estado === "pendiente"
+                                ? "text-slate-500 hover:text-red-400 hover:bg-red-400/10"
+                                : item.estado === "cancelado"
+                                  ? "text-slate-700 opacity-20 cursor-not-allowed"
+                                  : "text-slate-500 hover:text-orange-400 hover:bg-orange-400/10",
+                            )}
+                            disabled={
+                              deleteOrderItem.isPending ||
+                              cancelOrderItem.isPending ||
+                              item.estado === "cancelado"
+                            }
+                            onClick={() => {
+                              if (item.estado === "pendiente") {
+                                handleDeleteOrderItem(item.id);
+                              } else {
+                                handleCancelOrderItem(item.id);
+                              }
+                            }}
                           >
-                            <Trash2 className="w-5 h-5" />
+                            {item.estado === "pendiente" ? (
+                              <Trash2 className="w-5 h-5" />
+                            ) : (
+                              <X className="w-5 h-5" />
+                            )}
                           </Button>
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 bg-slate-800/60 pl-3 pr-4 py-1.5 rounded-xl border border-slate-700/50">
-                            <span className="text-sm font-black text-cyan-400">
+                          <div
+                            className={cn(
+                              "flex items-center gap-3 pl-3 pr-4 py-1.5 rounded-xl border transition-colors",
+                              item.estado === "cancelado"
+                                ? "bg-slate-800/30 border-slate-800/50"
+                                : "bg-slate-800/60 border-slate-700/50",
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "text-sm font-black",
+                                item.estado === "cancelado"
+                                  ? "text-slate-600"
+                                  : "text-cyan-400",
+                              )}
+                            >
                               {item.cantidad}x
                             </span>
-                            <div className="w-px h-3 bg-slate-700" />
-                            <span className="text-[11px] text-slate-400 font-bold">
+                            <div
+                              className={cn(
+                                "w-px h-3",
+                                item.estado === "cancelado"
+                                  ? "bg-slate-800"
+                                  : "bg-slate-700",
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                "text-[11px] font-bold",
+                                item.estado === "cancelado"
+                                  ? "text-slate-700"
+                                  : "text-slate-400",
+                              )}
+                            >
                               {formatPricePEN(item.precio_unitario)}
                             </span>
                           </div>
                           <div className="flex flex-col items-end">
-                            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-0.5">
+                            <span
+                              className={cn(
+                                "text-[10px] font-bold uppercase tracking-widest mb-0.5",
+                                item.estado === "cancelado"
+                                  ? "text-slate-700"
+                                  : "text-slate-500",
+                              )}
+                            >
                               Subtotal
                             </span>
-                            <span className="font-black text-lg text-white">
+                            <span
+                              className={cn(
+                                "font-black text-lg",
+                                item.estado === "cancelado"
+                                  ? "text-slate-600"
+                                  : "text-white",
+                              )}
+                            >
                               {formatPricePEN(item.total_linea)}
                             </span>
                           </div>
                         </div>
-
-                        <div className="h-px bg-linear-to-r from-slate-800/0 via-slate-800 to-slate-800/0 mt-8" />
                       </div>
                     );
                   })}
@@ -194,11 +422,8 @@ const CartProductsSheet = ({
               </Button>
               <Button
                 className="h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-600 font-black text-white shadow-xl shadow-cyan-500/20 disabled:opacity-50 transition-all duration-300 active:scale-95"
-                disabled={items.length === 0}
-                onClick={() => {
-                  console.log("Enviar Orden");
-                  setIsCartOpen(false);
-                }}
+                onClick={handleSendComand}
+                disabled={sendComand.isPending || !isSendable}
               >
                 Enviar Orden
               </Button>

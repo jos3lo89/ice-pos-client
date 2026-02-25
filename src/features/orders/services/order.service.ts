@@ -5,6 +5,7 @@ import type {
   CreateOrderRes,
   DeleteOrderItemRes,
   DeleteOrderRes,
+  SendComandT,
 } from "../interfaces/order.interface";
 import type { CurrentOrderRes } from "../interfaces/current-order.interface";
 
@@ -42,6 +43,32 @@ class OrderService {
     const { data } = await http.delete<DeleteOrderRes>(
       `${this.baseUrl}/${orderId}/delete-order`,
     );
+    return data;
+  }
+
+  async sendComand(dto: SendComandT) {
+    const { data } = await http.post(
+      `${this.baseUrl}/${dto.orderId}/send-comand`,
+      {
+        itemsId: dto.itemsId,
+      },
+    );
+    return data;
+  }
+
+  async cancelOrderItem(dto: { orderId: string; itemId: string }) {
+    const { data } = await http.patch(
+      `${this.baseUrl}/${dto.orderId}/cancel-item`,
+      {
+        itemId: dto.itemId,
+      },
+    );
+    return data;
+  }
+
+  // cancelar orden
+  async cancelOrder(orderId: string) {
+    const { data } = await http.patch(`${this.baseUrl}/${orderId}/cancel`);
     return data;
   }
 }
