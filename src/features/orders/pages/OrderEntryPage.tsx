@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  useCancelOrder,
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/features/orders/hooks/useOrder";
@@ -13,6 +14,7 @@ import ErrorState from "@/components/common/ErrorState";
 import CategoryWithProducts from "../components/CategoryWithProducts";
 import { useParams } from "react-router-dom";
 import CartProductsSheet from "../components/CartProductsSheet";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
@@ -22,6 +24,7 @@ const OrderEntryPage = () => {
 
   const currentOrder = useGetCurrentOrderById(orderId!);
   const deleteOrder = useDeleteOrder();
+  const cancelOrder = useCancelOrder();
 
   if (currentOrder.isLoading) {
     return <LoadingState message="Cargando orden" />;
@@ -55,6 +58,14 @@ const OrderEntryPage = () => {
     });
   };
 
+  const handleCancelOrder = () => {
+    cancelOrder.mutate(currentOrderData.id, {
+      onSuccess: () => {
+        navigate("/mesas");
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 p-4 shrink-0 flex items-center justify-between z-10">
@@ -79,38 +90,50 @@ const OrderEntryPage = () => {
 
         <div className="flex items-center gap-2">
           {currentOrderData.estado === "pendiente" ? (
-            <Button
-              variant="outline"
-              size="icon"
-              className="relative bg-red-500 border-red-700 hover:bg-red-700 rounded-2xl gap-2 h-11 px-4"
-              onClick={handleDeleteOrder}
-              disabled={deleteOrder.isPending}
+            <ConfirmDialog
+              onConfirm={handleDeleteOrder}
+              title="Eliminar orden"
+              description="¿Estas seguro de eliminar la orden?"
             >
-              <Trash2 className="w-5 h-5" />
-            </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="relative bg-red-500/10 border-red-500/20 hover:bg-red-500 hover:border-red-500 text-red-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-red-500/5 group"
+                disabled={deleteOrder.isPending}
+              >
+                <Trash2 className="w-5 h-5 transition-transform group-hover:scale-110" />
+              </Button>
+            </ConfirmDialog>
           ) : (
-            <Button
-              variant="outline"
-              size="icon"
-              className="relative bg-red-500 border-red-700 hover:bg-red-700 rounded-2xl gap-2 h-11 px-4"
-              onClick={() => {
-                console.log("cancelando orden");
-              }}
+            <ConfirmDialog
+              onConfirm={handleCancelOrder}
+              title="Cancelar orden"
+              description="¿Estas seguro de cancelar la orden?"
             >
-              <X className="w-5 h-5" />
-            </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="relative bg-orange-500/10 border-orange-500/20 hover:bg-orange-500 hover:border-orange-500 text-orange-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-orange-500/5 group"
+                disabled={cancelOrder.isPending}
+              >
+                <X className="w-5 h-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
+              </Button>
+            </ConfirmDialog>
           )}
 
           <Button
             variant="outline"
-            className="relative bg-slate-800 border-slate-700 hover:bg-slate-700 rounded-2xl gap-2 h-11 px-4"
+            className="relative bg-cyan-500/10 border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-500/50 text-white rounded-2xl gap-3 h-11 px-5 transition-all duration-300 shadow-lg shadow-cyan-500/5 group group"
             onClick={() => setIsCartOpen(true)}
           >
-            <ShoppingCart className="w-5 h-5 text-cyan-400" />
-            <Badge className="absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center p-0 bg-red-500 border-2 border-slate-900 rounded-full text-[10px] font-bold">
-              {currentOrderData._count.items_orden}
-            </Badge>
-            <span className="font-bold text-sm">
+            <div className="relative">
+              <ShoppingCart className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
+              <Badge className="absolute -top-3 -right-3 min-w-[20px] h-5 flex items-center justify-center p-1 bg-cyan-500 border-2 border-slate-900 rounded-full text-[9px] font-black shadow-lg shadow-cyan-500/20">
+                {currentOrderData._count.items_orden}
+              </Badge>
+            </div>
+            <div className="w-px h-4 bg-slate-700 mx-1" />
+            <span className="font-black text-sm tracking-tight text-cyan-50">
               S/ {currentOrderData.total}
             </span>
           </Button>

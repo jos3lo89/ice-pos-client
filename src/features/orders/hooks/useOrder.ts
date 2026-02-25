@@ -143,3 +143,57 @@ export const useSendComand = () => {
     },
   });
 };
+
+// cancel order item
+export const useCancelOrderItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["cancel", "order", "item"],
+    mutationFn: (dto: { orderId: string; itemId: string }) =>
+      orderService.cancelOrderItem(dto),
+    onMutate: () => {
+      toast.loading("Cancelando producto de la orden...", {
+        id: "cancel-order-item",
+      });
+    },
+    onSuccess: () => {
+      toast.success("Producto cancelado correctamente", {
+        id: "cancel-order-item",
+      });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al cancelar el producto de la orden";
+      toast.error(message, { id: "cancel-order-item" });
+    },
+  });
+};
+
+// cancel order
+export const useCancelOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["cancel", "order"],
+    mutationFn: (orderId: string) => orderService.cancelOrder(orderId),
+    onMutate: () => {
+      toast.loading("Cancelando orden...", { id: "cancel-order" });
+    },
+    onSuccess: () => {
+      toast.success("Orden cancelada correctamente", { id: "cancel-order" });
+      queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error al cancelar la orden";
+      toast.error(message, { id: "cancel-order" });
+    },
+  });
+};

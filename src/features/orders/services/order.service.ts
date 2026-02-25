@@ -55,6 +55,22 @@ class OrderService {
     );
     return data;
   }
+
+  async cancelOrderItem(dto: { orderId: string; itemId: string }) {
+    const { data } = await http.patch(
+      `${this.baseUrl}/${dto.orderId}/cancel-item`,
+      {
+        itemId: dto.itemId,
+      },
+    );
+    return data;
+  }
+
+  // cancelar orden
+  async cancelOrder(orderId: string) {
+    const { data } = await http.patch(`${this.baseUrl}/${orderId}/cancel`);
+    return data;
+  }
 }
 
 export const orderService = new OrderService();
