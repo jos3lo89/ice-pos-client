@@ -30,20 +30,22 @@ const ConfirmDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="border-slate-700 bg-slate-800 text-slate-100">
+      <AlertDialogContent className="rounded-xl border-slate-700/80 bg-slate-900 text-slate-100 shadow-2xl shadow-black/60">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-white">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-gray-400">
+          <AlertDialogTitle className="text-sm font-semibold tracking-tight text-slate-100">
+            {title}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-sm leading-relaxed text-slate-400">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-slate-700 bg-slate-900/60 text-gray-300 hover:bg-slate-700 hover:text-white">
+          <AlertDialogCancel className="border-slate-700 bg-slate-800 text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-700 hover:text-slate-100">
             {cancelText}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className="bg-red-500/20 text-red-400 hover:bg-red-500/30"
+            className="border border-red-500/30 bg-red-500/15 text-red-400 transition-all hover:border-red-500/50 hover:bg-red-500/25 hover:text-red-300 hover:shadow-[0_0_15px_rgba(239,68,68,0.25)]"
           >
             {confirmText}
           </AlertDialogAction>
