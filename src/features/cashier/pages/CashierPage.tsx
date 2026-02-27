@@ -24,9 +24,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { OpenSessionDialog } from "../components/OpenSessionDialog";
+import { CloseSessionDialog } from "../components/CloseSessionDialog";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();
+  const [isOpenDialogOpen, setIsOpenDialogOpen] = useState(false);
+  const [isCloseDialogOpen, setIsCloseDialogOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -98,10 +103,18 @@ const CashierPage = () => {
           </p>
         </div>
 
-        <Button className="h-14 px-10 rounded-2xl bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-lg shadow-xl shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 gap-3">
+        <Button
+          onClick={() => setIsOpenDialogOpen(true)}
+          className="h-14 px-10 rounded-2xl bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-lg shadow-xl shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 gap-3 cursor-pointer"
+        >
           <Plus className="w-6 h-6" />
           Aperturar Caja
         </Button>
+
+        <OpenSessionDialog
+          isOpen={isOpenDialogOpen}
+          onOpenChange={setIsOpenDialogOpen}
+        />
       </div>
     );
   }
@@ -135,10 +148,20 @@ const CashierPage = () => {
           >
             Ver Historial
           </Button>
-          <Button className="h-12 px-8 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10">
+          <Button
+            onClick={() => setIsCloseDialogOpen(true)}
+            className="h-12 px-8 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+          >
             Arqueo y Cierre
           </Button>
         </div>
+
+        <CloseSessionDialog
+          isOpen={isCloseDialogOpen}
+          onOpenChange={setIsCloseDialogOpen}
+          sessionId={session.id}
+          expectedBalance={session.caja_fisica.saldo_esperado}
+        />
       </header>
 
       {/* Main Stats Grid */}
