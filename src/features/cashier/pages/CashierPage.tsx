@@ -133,12 +133,12 @@ const CashierPage = () => {
               {new Date(session.fecha_apertura).toLocaleDateString()}
             </div>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
+          {/* <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
             Control de Caja
           </h1>
           <p className="text-gray-400 font-medium">
             Monitoriza los ingresos y el flujo de efectivo en tiempo real.
-          </p>
+          </p> */}
         </div>
 
         <div className="flex items-center gap-3">
@@ -152,7 +152,7 @@ const CashierPage = () => {
             onClick={() => setIsCloseDialogOpen(true)}
             className="h-12 px-8 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
           >
-            Arqueo y Cierre
+            Cerrar Caja
           </Button>
         </div>
 
@@ -250,9 +250,20 @@ const CashierPage = () => {
                     100
                   }
                 />
+                <PaymentDetail
+                  label="Tarjeta"
+                  amount={session.ventas_digitales.tarjeta}
+                  icon={CreditCard}
+                  colorClass="text-cyan-400"
+                  percentage={
+                    (session.ventas_digitales.tarjeta /
+                      (session.resumen.total_ventas || 1)) *
+                    100
+                  }
+                />
               </div>
 
-              <div className="mt-12 p-6 bg-slate-900/40 rounded-2xl border border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-6">
+              {/* <div className="mt-12 p-6 bg-slate-900/40 rounded-2xl border border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
                     <CreditCard className="w-6 h-6 text-orange-400" />
@@ -269,7 +280,7 @@ const CashierPage = () => {
                 <div className="text-2xl font-black text-white">
                   S/ {session.ventas_digitales.tarjeta.toFixed(2)}
                 </div>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
 
@@ -289,9 +300,9 @@ const CashierPage = () => {
                   <h3 className="text-lg font-bold text-white">
                     {session.cajero.nombre}
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  {/* <p className="text-xs text-slate-400">
                     ID: {session.cajero.usuario}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </Card>
@@ -303,7 +314,7 @@ const CashierPage = () => {
                 </div>
                 <div>
                   <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest">
-                    Apertura de Turno
+                    Apertura
                   </p>
                   <h3 className="text-lg font-bold text-white">
                     {new Date(session.fecha_apertura).toLocaleTimeString([], {
@@ -323,16 +334,16 @@ const CashierPage = () => {
         {/* Right Column - Physics Register Summary */}
         <div className="lg:col-span-4 space-y-6">
           <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl h-full border-t border-t-white/5">
-            <CardHeader className="bg-white/2 border-b border-white/5 p-8">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center mb-4">
-                <PiggyBank className="w-7 h-7 text-emerald-400" />
+            <CardHeader className="border-b border-white/5">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                  <PiggyBank className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl font-black text-white tracking-tight">
+                  Caja Física
+                </CardTitle>
+                <CardDescription className="text-slate-400" />
               </div>
-              <CardTitle className="text-2xl font-black text-white tracking-tight">
-                Caja Física
-              </CardTitle>
-              <CardDescription className="text-slate-400">
-                Conciliación de dinero real
-              </CardDescription>
             </CardHeader>
             <CardContent className="p-8 space-y-8">
               <div className="space-y-6">
