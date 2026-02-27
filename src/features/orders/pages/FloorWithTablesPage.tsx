@@ -11,6 +11,7 @@ import { statusConfig } from "../utils/status-config";
 import type { Mesa } from "@/features/floors/interfaces/floors.interface";
 import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
+import { formatPricePEN } from "@/helpers/format-price";
 
 const FloorWithTablesPage = () => {
   const navigate = useNavigate();
@@ -125,14 +126,13 @@ const FloorWithTablesPage = () => {
                         </Badge>
                       </div>
 
-                      {table.estado === "ocupada" &&
-                        table.current_order?.[0] && (
-                          <div className="mt-1 pt-2 border-t border-slate-700/50 w-full text-center">
-                            <p className="text-[10px] font-bold text-orange-400">
-                              Total: S/ {table.current_order[0].total}
-                            </p>
-                          </div>
-                        )}
+                      {table.estado === "ocupada" && table.orden_actual && (
+                        <div className="mt-1 pt-2 border-t border-slate-700/50 w-full text-center">
+                          <p className="text-[10px] font-bold text-orange-400">
+                            Total: S/ {formatPricePEN(table.orden_actual.total)}
+                          </p>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 );

@@ -1,4 +1,4 @@
-import type { OrderStatusT, TableStatusT } from "@/common/types/order";
+import type { TableStatusT } from "@/common/types/order";
 
 // create piso response
 export interface CreateFloorRes {

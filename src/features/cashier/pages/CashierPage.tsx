@@ -323,7 +323,7 @@ const CashierPage = () => {
         {/* Right Column - Physics Register Summary */}
         <div className="lg:col-span-4 space-y-6">
           <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl h-full border-t border-t-white/5">
-            <CardHeader className="bg-white/[0.02] border-b border-white/[0.05] p-8">
+            <CardHeader className="bg-white/2 border-b border-white/5 p-8">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center mb-4">
                 <PiggyBank className="w-7 h-7 text-emerald-400" />
               </div>

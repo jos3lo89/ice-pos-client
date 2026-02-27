@@ -4,13 +4,7 @@ import { useFloorsWithTables } from "@/features/floors/hooks/useFloor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  LayoutGrid,
-  Utensils,
-  Wallet,
-  HandCoins,
-  ArrowRight,
-} from "lucide-react";
+import { LayoutGrid, Wallet, HandCoins, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/features/orders/utils/status-config";
 import type { Mesa } from "@/features/floors/interfaces/floors.interface";
