@@ -8,6 +8,7 @@ import type {
   SendComandT,
 } from "../interfaces/order.interface";
 import type { CurrentOrderRes } from "../interfaces/current-order.interface";
+import type { OrderDetailToPayRes } from "../interfaces/order-detail-to-pay.interface";
 
 class OrderService {
   private readonly baseUrl = "/orders";
@@ -69,6 +70,14 @@ class OrderService {
   // cancelar orden
   async cancelOrder(orderId: string) {
     const { data } = await http.patch(`${this.baseUrl}/${orderId}/cancel`);
+    return data;
+  }
+
+  // detalles de order para pagar
+  async getOrderDetails(orderId: string) {
+    const { data } = await http.get<OrderDetailToPayRes>(
+      `${this.baseUrl}/${orderId}/detail`,
+    );
     return data;
   }
 }

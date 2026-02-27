@@ -197,3 +197,12 @@ export const useCancelOrder = () => {
     },
   });
 };
+
+// get order details
+export const useGetOrderDetails = (orderId: string) => {
+  return useQuery({
+    queryKey: ["order", "details", orderId],
+    queryFn: () => orderService.getOrderDetails(orderId),
+    enabled: !!orderId,
+  });
+};

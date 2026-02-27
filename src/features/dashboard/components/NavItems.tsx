@@ -14,6 +14,7 @@ import {
   Package,
   Layers,
   LayoutGrid,
+  Wallet,
 } from "lucide-react";
 
 export interface NavItem {
@@ -44,22 +45,6 @@ export const allNavItems: NavGroup[] = [
         label: "Dashboard",
         exact: true,
       },
-      // {
-      //   label: "Gestión",
-      //   icon: Package,
-      //   children: [
-      //     {
-      //       to: "/productos",
-      //       icon: Package,
-      //       label: "Productos",
-      //     },
-      //     {
-      //       to: "/categorias",
-      //       icon: Tags,
-      //       label: "Categorías",
-      //     },
-      //   ],
-      // },
       {
         label: "Empleados",
         icon: UserRoundCogIcon,
@@ -76,11 +61,6 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
-      // {
-      //   to: "/reportes",
-      //   icon: ClipboardList,
-      //   label: "Reportes",
-      // },
       {
         label: "Categorías",
         icon: Tags,
@@ -151,6 +131,12 @@ export const allNavItems: NavGroup[] = [
     role: "cajero",
     children: [
       {
+        to: "/caja",
+        icon: Wallet,
+        label: "Caja",
+        exact: true,
+      },
+      {
         to: "/",
         icon: LayoutDashboard,
         label: "Dashboard",
@@ -161,12 +147,12 @@ export const allNavItems: NavGroup[] = [
         icon: ShoppingCart,
         children: [
           {
-            to: "/dashboard/pos",
+            to: "/punto-venta",
             icon: ShoppingCart,
             label: "Punto de Venta",
           },
           {
-            to: "/dashboard/kitchen",
+            to: "/cocina",
             icon: ChefHat,
             label: "Cocina",
           },

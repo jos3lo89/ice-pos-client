@@ -51,3 +51,15 @@ export const OrderEntryPage = lazy(
 export const FloorWithTablesPage = lazy(
   () => import("@/features/orders/pages/FloorWithTablesPage"),
 );
+
+export const CashierPage = lazy(
+  () => import("@/features/cashier/pages/CashierPage"),
+);
+
+export const PointOfSalePage = lazy(
+  () => import("@/features/cashier/pages/PointOfSalePage"),
+);
+
+export const ChargePage = lazy(
+  () => import("@/features/cashier/pages/ChargePage"),
+);

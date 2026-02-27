@@ -55,11 +55,11 @@ export interface Mesa {
   estado: TableStatusT;
   numero_mesa: string;
   orden_actual_id: string | null;
-  current_order: {
+  orden_actual: {
     id: string;
     numero_orden: string;
-    estado: OrderStatusT;
+    estado: string;
     total: string;
     fecha_creacion: string;
-  }[];
+  } | null;
 }
