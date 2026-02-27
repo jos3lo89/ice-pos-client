@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/features/orders/utils/status-config";
 import { formatPricePEN } from "@/helpers/format-price";
+import { PaymentDialog } from "@/features/payments/components/PaymentDialog";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -42,6 +43,7 @@ const ChargePage = () => {
   const [selectedItems, setSelectedItems] = useState<Record<string, number>>(
     {},
   );
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
 
   const toggleItemSelection = (itemId: string, maxQty: number) => {
     setSelectedItems((prev) => {
@@ -55,12 +57,7 @@ const ChargePage = () => {
   };
 
   const handlePaySelected = () => {
-    const itemsToPay = Object.entries(selectedItems).map(([id, qty]) => ({
-      itemId: id,
-      cantidad: qty,
-    }));
-    console.log("Procesando pago para los siguientes items:", itemsToPay);
-    console.log("Total a cobrar:", selectedTotal);
+    setIsPaymentDialogOpen(true);
   };
 
   const selectedTotal = useMemo(() => {
@@ -460,6 +457,17 @@ const ChargePage = () => {
           </div>
         </div>
       </div>
+      <PaymentDialog
+        isOpen={isPaymentDialogOpen}
+        onOpenChange={setIsPaymentDialogOpen}
+        orderId={orderId!}
+        totalAmount={selectedTotal}
+        itemIds={Object.keys(selectedItems)}
+        onSuccess={() => {
+          setSelectedItems({});
+          refetch();
+        }}
+      />
     </div>
   );
 };
