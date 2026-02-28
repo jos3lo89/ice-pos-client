@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { statusConfig } from "@/features/orders/utils/status-config";
 import { formatPricePEN } from "@/helpers/format-price";
 import { PaymentDialog } from "@/features/payments/components/PaymentDialog";
+import { formatDateTime } from "@/utils/format-date-time";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -277,8 +278,8 @@ const ChargePage = () => {
 
           {historial_pagos.length > 0 && (
             <Card className="bg-[#1e293b]/50 border-slate-700/50 rounded-3xl overflow-hidden shadow-xl">
-              <CardHeader className="bg-white/2 border-b border-white/5 p-6">
-                <div className="flex items-center gap-3">
+              <CardHeader className="border-b border-white/5 px-2">
+                <div className="flex items-center gap-2">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
                     <History className="w-5 h-5 text-blue-400" />
                   </div>
@@ -309,7 +310,7 @@ const ChargePage = () => {
                         </div>
                         <div className="space-y-0.5">
                           <p className="text-sm font-bold text-white tracking-tight">
-                            Pago #{pago.numero_pago}
+                            Pago {pago.numero_pago}
                           </p>
                           <div className="flex items-center gap-3 text-[10px] text-slate-500 font-medium">
                             <span className="capitalize">{pago.metodo}</span>
@@ -318,18 +319,13 @@ const ChargePage = () => {
                               {pago.tipo_documento}
                             </span>
                             <span className="w-1 h-1 rounded-full bg-slate-700" />
-                            <span>
-                              {new Date(pago.fecha_creacion).toLocaleString()}
-                            </span>
+                            <span>{formatDateTime(pago.fecha_creacion)}</span>
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="text-lg font-black text-white">
-                          S/ {parseFloat(pago.monto).toFixed(2)}
-                        </p>
-                        <p className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">
-                          Aprobado
+                          {formatPricePEN(pago.monto)}
                         </p>
                       </div>
                     </div>

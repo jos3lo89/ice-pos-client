@@ -24,10 +24,9 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { useLogout } from "@/features/auth/hooks/useAuth";
 import { useCurrentSession } from "@/features/cashier/hooks/useCashier";
+import { formatDateTime } from "@/utils/format-date-time";
+import { formatPricePEN } from "@/helpers/format-price";
 
-/**
- * CashierLayout - Unified environment for cashiers with session visibility in header.
- */
 const CashierLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -355,8 +354,7 @@ const CashierLayout = () => {
               </div>
               {session && (
                 <span className="text-[10px] text-gray-400 font-medium hidden lg:inline">
-                  Iniciada:{" "}
-                  {new Date(session.fecha_apertura).toLocaleTimeString()}
+                  Iniciada: {formatDateTime(session.fecha_apertura)}
                 </span>
               )}
             </div>
@@ -373,7 +371,7 @@ const CashierLayout = () => {
                       Efectivo
                     </span>
                     <span className="text-xs lg:text-sm font-bold text-emerald-400 leading-tight">
-                      S/ {session.resumen.total_efectivo.toFixed(2)}
+                      {formatPricePEN(session.resumen.total_efectivo)}
                     </span>
                   </div>
                 </div>
@@ -385,7 +383,7 @@ const CashierLayout = () => {
                       Digital
                     </span>
                     <span className="text-xs lg:text-sm font-bold text-blue-400 leading-tight">
-                      S/ {session.resumen.total_digital.toFixed(2)}
+                      {formatPricePEN(session.resumen.total_digital)}
                     </span>
                   </div>
                 </div>
@@ -397,7 +395,7 @@ const CashierLayout = () => {
                       Total
                     </span>
                     <span className="text-xs lg:text-sm font-bold text-white leading-tight">
-                      S/ {session.resumen.total_ventas.toFixed(2)}
+                      {formatPricePEN(session.resumen.total_ventas)}
                     </span>
                   </div>
                 </div>
@@ -411,9 +409,7 @@ const CashierLayout = () => {
                   Hoy
                 </span>
                 <span className="text-xs text-gray-300 font-medium">
-                  {new Date().toLocaleDateString("es-PE", {
-                    dateStyle: "medium",
-                  })}
+                  {formatDateTime(new Date(), "date")}
                 </span>
               </div>
             </div>

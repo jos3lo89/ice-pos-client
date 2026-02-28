@@ -27,6 +27,8 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { OpenSessionDialog } from "../components/OpenSessionDialog";
 import { CloseSessionDialog } from "../components/CloseSessionDialog";
+import { formatDateTime } from "@/utils/format-date-time";
+import { formatPricePEN } from "@/helpers/format-price";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();
@@ -121,7 +123,6 @@ const CashierPage = () => {
 
   return (
     <div className="space-y-8 pb-10">
-      {/* Header Area */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-3">
           <div className="flex items-center gap-3">
@@ -130,15 +131,9 @@ const CashierPage = () => {
             </Badge>
             <div className="flex items-center text-gray-500 text-xs gap-2 font-medium">
               <Calendar className="w-3.5 h-3.5" />
-              {new Date(session.fecha_apertura).toLocaleDateString()}
+              {formatDateTime(session.fecha_apertura, "date")}
             </div>
           </div>
-          {/* <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
-            Control de Caja
-          </h1>
-          <p className="text-gray-400 font-medium">
-            Monitoriza los ingresos y el flujo de efectivo en tiempo real.
-          </p> */}
         </div>
 
         <div className="flex items-center gap-3">
@@ -164,32 +159,31 @@ const CashierPage = () => {
         />
       </header>
 
-      {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Ventas Totales"
-          value={`S/ ${session.resumen.total_ventas.toFixed(2)}`}
+          value={formatPricePEN(session.resumen.total_ventas)}
           icon={TrendingUp}
           description="Ventas brutas hoy"
           variant="primary"
         />
         <StatCard
           title="En Efectivo"
-          value={`S/ ${session.resumen.total_efectivo.toFixed(2)}`}
+          value={formatPricePEN(session.resumen.total_efectivo)}
           icon={Wallet}
           description="Dinero en caja física"
           variant="emerald"
         />
         <StatCard
           title="Pagos Digitales"
-          value={`S/ ${session.resumen.total_digital.toFixed(2)}`}
+          value={formatPricePEN(session.resumen.total_digital)}
           icon={Smartphone}
           description="Apps y Transferencias"
           variant="blue"
         />
         <StatCard
           title="Saldo Esperado"
-          value={`S/ ${session.caja_fisica.saldo_esperado.toFixed(2)}`}
+          value={formatPricePEN(session.caja_fisica.saldo_esperado)}
           icon={ShieldCheck}
           description="Incluye saldo apertura"
           variant="purple"
@@ -317,10 +311,7 @@ const CashierPage = () => {
                     Apertura
                   </p>
                   <h3 className="text-lg font-bold text-white">
-                    {new Date(session.fecha_apertura).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatDateTime(session.fecha_apertura, "time")}
                   </h3>
                   <p className="text-xs text-slate-400">
                     Hace {getTimeDifference(session.fecha_apertura)}
@@ -331,7 +322,6 @@ const CashierPage = () => {
           </div>
         </div>
 
-        {/* Right Column - Physics Register Summary */}
         <div className="lg:col-span-4 space-y-6">
           <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl h-full border-t border-t-white/5">
             <CardHeader className="border-b border-white/5">
@@ -358,17 +348,14 @@ const CashierPage = () => {
                   sub="Ingresos en billetes/monedas"
                 />
                 <div className="pt-6 mt-6 border-t border-slate-700/50">
-                  <div className="flex justify-between items-end mb-1">
+                  <div className="flex justify-between flex-col gap-2 items-end">
                     <span className="text-xl font-bold text-white">
                       Total Esperado
                     </span>
                     <span className="text-3xl font-black text-emerald-400">
-                      S/ {session.caja_fisica.saldo_esperado.toFixed(2)}
+                      {formatPricePEN(session.caja_fisica.saldo_esperado)}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 text-right">
-                    Monto calculado por el sistema
-                  </p>
                 </div>
               </div>
 
@@ -482,7 +469,7 @@ const PaymentDetail = ({
     <div className="space-y-1.5">
       <div className="flex justify-between items-end">
         <span className="text-lg font-black text-white">
-          S/ {amount.toFixed(2)}
+          {formatPricePEN(amount)}
         </span>
         <span className="text-[10px] font-bold text-slate-500">
           {percentage.toFixed(0)}%
@@ -509,7 +496,7 @@ const PhysicsRow = ({ label, value, sub }: any) => (
         {sub}
       </p>
     </div>
-    <div className="text-lg font-bold text-white">S/ {value.toFixed(2)}</div>
+    <div className="text-lg font-bold text-white">{formatPricePEN(value)}</div>
   </div>
 );
 
