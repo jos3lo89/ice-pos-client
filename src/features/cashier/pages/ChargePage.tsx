@@ -30,6 +30,8 @@ import { statusConfig } from "@/features/orders/utils/status-config";
 import { formatPricePEN } from "@/helpers/format-price";
 import { PaymentDialog } from "@/features/payments/components/PaymentDialog";
 import { formatDateTime } from "@/utils/format-date-time";
+import { TicketVentaDialog } from "../components/TicketVentaDialog";
+import { Printer } from "lucide-react";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -45,6 +47,8 @@ const ChargePage = () => {
     {},
   );
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+  const [paymentId, setPaymentId] = useState<string>("");
 
   const toggleItemSelection = (itemId: string, maxQty: number) => {
     setSelectedItems((prev) => {
@@ -327,6 +331,18 @@ const ChargePage = () => {
                         <p className="text-lg font-black text-white">
                           {formatPricePEN(pago.monto)}
                         </p>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-3 rounded-lg border-slate-700/50 text-slate-400 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all font-bold text-[10px] gap-2"
+                          onClick={() => {
+                            setIsTicketDialogOpen(true);
+                            setPaymentId(pago.id);
+                          }}
+                        >
+                          <Printer className="w-3.5 h-3.5" />
+                          Ticket
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -464,6 +480,14 @@ const ChargePage = () => {
           refetch();
         }}
       />
+
+      {isTicketDialogOpen && (
+        <TicketVentaDialog
+          isTicketDialogOpen={isTicketDialogOpen}
+          setIsTicketDialogOpen={setIsTicketDialogOpen}
+          paymentId={paymentId}
+        />
+      )}
     </div>
   );
 };

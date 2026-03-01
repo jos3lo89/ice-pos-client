@@ -2,6 +2,7 @@ import http from "@/config/axios";
 import type {
   CreatePaymentDto,
   CreatePaymentRes,
+  GetTicketRes,
 } from "../interfaces/payment.interface";
 
 class PaymentService {
@@ -19,6 +20,13 @@ class PaymentService {
       ...(dto.notes && { notes: dto.notes }),
     };
     const { data } = await http.post<CreatePaymentRes>(this.baseUrl, payload);
+    return data;
+  }
+
+  async getTicket(paymentId: string) {
+    const { data } = await http.get<GetTicketRes>(
+      `${this.baseUrl}${paymentId}/ticket`,
+    );
     return data;
   }
 }

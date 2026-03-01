@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { paymentService } from "../services/payment.service";
 import type { CreatePaymentDto } from "../interfaces/payment.interface";
 import { toast } from "sonner";
@@ -28,5 +28,13 @@ export const useCreatePayment = () => {
           : "Error al crear el pago";
       toast.error(message, { id: "create-payment" });
     },
+  });
+};
+
+export const useGetTicket = (paymentId: string) => {
+  return useQuery({
+    queryKey: ["ticket", paymentId],
+    queryFn: () => paymentService.getTicket(paymentId),
+    enabled: !!paymentId,
   });
 };
