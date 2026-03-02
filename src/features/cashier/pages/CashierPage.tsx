@@ -19,6 +19,9 @@ import {
   Receipt,
   PiggyBank,
   Plus,
+  ArrowUp,
+  ArrowDown,
+  Activity,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,11 +33,13 @@ import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
 import { useNavigate } from "react-router-dom";
+import CreateCashMovement from "@/presentation/features/cashier/components/CreateCashMovement";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();
   const [isOpenDialogOpen, setIsOpenDialogOpen] = useState(false);
   const [isCloseDialogOpen, setIsCloseDialogOpen] = useState(false);
+  const [isMovementDialogOpen, setIsMovementDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -145,18 +150,30 @@ const CashierPage = () => {
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
-            className="h-12 px-6 rounded-xl border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all"
+            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
+            onClick={() => setIsMovementDialogOpen(true)}
+          >
+            Crear Movimiento
+          </Button>
+          <Button
+            variant="outline"
+            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
             onClick={handleNavigateToSessionPayments}
           >
             Ver Historial
           </Button>
           <Button
             onClick={() => setIsCloseDialogOpen(true)}
-            className="h-12 px-8 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+            className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
           >
             Cerrar Caja
           </Button>
         </div>
+
+        <CreateCashMovement
+          isOpen={isMovementDialogOpen}
+          onOpenChange={setIsMovementDialogOpen}
+        />
 
         <CloseSessionDialog
           isOpen={isCloseDialogOpen}
@@ -330,7 +347,7 @@ const CashierPage = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-6">
-          <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl h-full border-t border-t-white/5">
+          <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl border-t border-t-white/5">
             <CardHeader className="border-b border-white/5">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
@@ -376,6 +393,84 @@ const CashierPage = () => {
                   </p>
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl">
+            <CardHeader className="border-b border-slate-700/30 pb-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                    <Activity className="w-6 h-6 text-amber-500" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl font-bold text-white">
+                      Movimientos Manuales
+                    </CardTitle>
+                    <CardDescription className="text-slate-400">
+                      Entradas y salidas manuales
+                    </CardDescription>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-8 space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-slate-900/30 rounded-2xl border border-slate-800/50 group hover:border-emerald-500/30 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <ArrowUp className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        Ingresos
+                      </p>
+                      <h4 className="text-lg font-black text-white">
+                        {formatPricePEN(
+                          session.movimientos_manuales.total_ingresos,
+                        )}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-slate-900/30 rounded-2xl border border-slate-800/50 group hover:border-red-500/30 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <ArrowDown className="w-5 h-5 text-red-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        Egresos
+                      </p>
+                      <h4 className="text-lg font-black text-white">
+                        {formatPricePEN(
+                          session.movimientos_manuales.total_egresos,
+                        )}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-slate-700/50">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-bold text-slate-400">
+                    Balance Neto
+                  </span>
+                  <span
+                    className={cn(
+                      "text-xl font-black",
+                      session.movimientos_manuales.neto >= 0
+                        ? "text-emerald-400"
+                        : "text-red-400",
+                    )}
+                  >
+                    {session.movimientos_manuales.neto > 0 ? "+" : ""}
+                    {formatPricePEN(session.movimientos_manuales.neto)}
+                  </span>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>

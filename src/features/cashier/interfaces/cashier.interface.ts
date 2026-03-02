@@ -12,6 +12,7 @@ export interface Session {
   cajero: Cajero;
   caja_fisica: CajaFisica;
   ventas_digitales: VentasDigitales;
+  movimientos_manuales: MovimientosManuales;
   resumen: Resumen;
 }
 
@@ -31,6 +32,12 @@ export interface VentasDigitales {
   yape: number;
   plin: number;
   tarjeta: number;
+}
+
+export interface MovimientosManuales {
+  total_ingresos: number;
+  total_egresos: number;
+  neto: number;
 }
 
 export interface Resumen {
