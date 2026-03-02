@@ -4,7 +4,7 @@ export const LoginPage = lazy(
   () => import("@/presentation/features/auth/page/LoginPage"),
 );
 export const DashboardHome = lazy(
-  () => import("@/features/dashboard/pages/DashboardHome"),
+  () => import("@/presentation/features/admin-dashboard/pages/DashboardHome"),
 );
 
 export const UsersPage = lazy(() => import("@/features/users/pages/UsersPage"));

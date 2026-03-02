@@ -1,9 +1,6 @@
 import AuthFallback from "@/components/common/AuthFallback";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
-import {
-  allNavItems,
-  type NavItem,
-} from "@/features/dashboard/components/NavItems";
+import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/lib/utils";
 import ProfileDialog from "@/features/users/components/ProfileDialog";
