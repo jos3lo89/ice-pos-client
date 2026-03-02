@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { AlertTriangle, Power, RefreshCcw } from "lucide-react";
-import type { Category } from "../interfaces/categories.interface";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
-import { useChangeCategorieState } from "../hooks/useCategorie";
+import type { Category } from "@/core/entities/categories.entity";
+import { useChangeCategorieState } from "@/application/hooks/useCategorie";
 
 interface ChangeStatusDialogProps {
   open: boolean;

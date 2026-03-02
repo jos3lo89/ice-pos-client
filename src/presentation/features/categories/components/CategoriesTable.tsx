@@ -1,6 +1,4 @@
 import { useState } from "react";
-import type { Category } from "../interfaces/categories.interface";
-import { UseCategorieList } from "../hooks/useCategorie";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import {
@@ -31,6 +29,8 @@ import {
 import { Button } from "@/components/ui/button";
 import ChangeStatusCatDialog from "./ChangeStatusCatDialog";
 import { useForm } from "react-hook-form";
+import type { Category } from "@/core/entities/categories.entity";
+import { UseCategorieList } from "@/application/hooks/useCategorie";
 
 const CategoriesTable = () => {
   const [selectedCategorie, setSelectedCategorie] = useState<Category | null>(
@@ -50,7 +50,7 @@ const CategoriesTable = () => {
     searchTerm,
   );
 
-  const allCategories = data?.categories ?? [];
+  const allCategories = data?.data ?? [];
   const meta = data?.meta;
 
   const { register, handleSubmit, reset } = useForm<{ search: string }>({

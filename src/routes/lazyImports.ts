@@ -12,10 +12,10 @@ export const CreateUserPage = lazy(
   () => import("@/features/users/pages/CreateUserPage"),
 );
 export const CategoriesPage = lazy(
-  () => import("@/features/categories/pages/CategoriesPage"),
+  () => import("@/presentation/features/categories/pages/CategoriesPage"),
 );
 export const CreateCategoryPage = lazy(
-  () => import("@/features/categories/pages/CreateCategoryPage"),
+  () => import("@/presentation/features/categories/pages/CreateCategoryPage"),
 );
 
 export const ProductsPage = lazy(

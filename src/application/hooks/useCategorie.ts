@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { categorieService } from "../services/categories.service";
+import { categorieService } from "../../infrastructure/api/categories.api";
 import { toast } from "sonner";
-import type { CreateCategorieT } from "../schemas/categorie.schema";
-import type { UpdateStateCategoryReq } from "../interfaces/categories.interface";
 import { getErrorMessage } from "@/utils/get-error-message";
+import type {
+  CreateCategorieT,
+  UpdateStateCategoryReq,
+} from "@/core/entities/categories.entity";
 
 export const UseCategorieList = (
   page: number,

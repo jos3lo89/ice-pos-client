@@ -1,9 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  createCategorieSchema,
-  type CreateCategorieT,
-} from "../schemas/categorie.schema";
 import { Tags, ArrowLeft, CheckCircle2, LinkIcon } from "lucide-react";
 import {
   Form,
@@ -18,7 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useCreateCategorie } from "../hooks/useCategorie";
+import {
+  createCategorieSchema,
+  type CreateCategorieT,
+} from "../schemas/categorie.schema";
+import { useCreateCategorie } from "@/application/hooks/useCategorie";
 
 const CreateCategoryPage = () => {
   const createCategorie = useCreateCategorie();
@@ -52,13 +52,19 @@ const CreateCategoryPage = () => {
   }, [categoryName, form]);
 
   const onSubmit = async (values: CreateCategorieT) => {
-    createCategorie.mutate(values, {
-      onSuccess: () => {
-        form.reset();
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 5000);
+    createCategorie.mutate(
+      {
+        ...values,
+        descripcion: values.descripcion || null,
       },
-    });
+      {
+        onSuccess: () => {
+          form.reset();
+          setShowSuccess(true);
+          setTimeout(() => setShowSuccess(false), 5000);
+        },
+      },
+    );
   };
 
   return (

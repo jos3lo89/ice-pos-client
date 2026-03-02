@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import CategoriesTable from "../components/CategoriesTable";
 import { Link } from "react-router-dom";
+import CategoriesTable from "../components/CategoriesTable";
 
 const CategoriesPage = () => {
   return (

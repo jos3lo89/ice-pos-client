@@ -100,3 +100,10 @@ export interface VariantesProducto {
   precio_adicional: string;
   esta_activa: boolean;
 }
+
+// crear categoria
+export interface CreateCategorieT {
+  nombre: string;
+  slug: string;
+  descripcion: string | null;
+}
