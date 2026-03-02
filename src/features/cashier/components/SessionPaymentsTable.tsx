@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useSessionPayments } from "../hooks/useCashier";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
@@ -51,12 +51,10 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Pagination and Search State
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); // A bit more than 5 as requested to show grouping better
+  const [limit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch payments with current params
   const { data, isLoading, isError, error, refetch } = useSessionPayments({
     sessionId,
     meta: {
@@ -128,10 +126,27 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
     );
   }
 
-  // Lógica de agrupamiento visual
-  // Vamos a renderizar la tabla pero omitiremos los datos de la orden si es la misma que la anterior
-  // para dar ese efecto de agrupación visual
-  let lastOrderNumber = "";
+  const pagosAgrupados = pagos.reduce(
+    (acumulador: Record<string, PaymentSession[]>, pago) => {
+      const numeroOrden = pago.ordenes.numero_orden;
+
+      if (!acumulador[numeroOrden]) {
+        acumulador[numeroOrden] = [];
+      }
+
+      acumulador[numeroOrden].push(pago);
+
+      return acumulador;
+    },
+    {} as Record<string, PaymentSession[]>,
+  );
+
+  const resultadoFinal = Object.entries(pagosAgrupados)
+    .map(([numeroOrden, listaDePagos]) => ({
+      numeroOrden: numeroOrden,
+      pagos: listaDePagos,
+    }))
+    .sort((a, b) => b.numeroOrden.localeCompare(a.numeroOrden));
 
   return (
     <div className="space-y-4">
@@ -209,130 +224,126 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {pagos.length > 0 ? (
-                pagos.map((pago: PaymentSession) => {
-                  const isNewOrder =
-                    pago.ordenes.numero_orden !== lastOrderNumber;
-                  if (isNewOrder) {
-                    lastOrderNumber = pago.ordenes.numero_orden;
-                  }
-
-                  return (
-                    <TableRow
-                      key={pago.id}
-                      className={cn(
-                        "border-slate-700/30 hover:bg-slate-700/20 transition-all duration-300 group",
-                        !isNewOrder && "border-t-0",
-                      )}
-                    >
-                      <TableCell className="align-top pt-4">
-                        {isNewOrder ? (
-                          <div className="space-y-1">
-                            <span className="text-cyan-400 font-black text-sm block">
-                              {pago.ordenes.numero_orden}
-                            </span>
-                            <span className="text-[10px] text-slate-500 uppercase font-bold">
-                              Mesa {pago.ordenes.mesa_historial.numero_mesa}
-                            </span>
-                          </div>
-                        ) : (
-                          <div className="flex justify-center">
-                            <div className="w-0.5 h-8 bg-slate-700/50 rounded-full" />
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-slate-300 font-mono text-xs">
-                          {pago.numero_pago}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center border border-slate-700/50">
-                            {getMethodIcon(pago.metodo)}
-                          </div>
-                          <span className="text-slate-200 text-sm font-medium">
-                            {getMethodLabel(pago.metodo)}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <span className="text-white font-bold">
-                            {formatPricePEN(pago.monto)}
-                          </span>
-                          <span className="text-[10px] text-slate-500">
-                            Recibido: {formatPricePEN(pago.monto_recibido)}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="outline"
-                          className="bg-slate-900/50 border-slate-700 text-slate-400 text-[10px] uppercase font-bold py-0 h-5"
+              {resultadoFinal.length > 0 ? (
+                resultadoFinal.map((grupo) => (
+                  <Fragment key={grupo.numeroOrden}>
+                    {grupo.pagos.map((pago, index) => {
+                      const isFirst = index === 0;
+                      return (
+                        <TableRow
+                          key={pago.id}
+                          className={cn(
+                            "border-slate-700/30 hover:bg-slate-700/20 transition-all duration-300 group",
+                            !isFirst && "border-t-0",
+                          )}
                         >
-                          {pago.tipo_documento}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <span className="text-slate-300 text-xs">
-                            {formatDateTime(pago.fecha_creacion, "date")}
-                          </span>
-                          <span className="text-slate-500 text-[10px]">
-                            {formatDateTime(pago.fecha_creacion, "time")}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right pr-6">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-9 w-9 text-slate-400 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all focus-visible:ring-cyan-500"
+                          <TableCell className="align-top pt-4">
+                            {isFirst ? (
+                              <div className="space-y-1">
+                                <span className="text-cyan-400 font-black text-sm block">
+                                  {pago.ordenes.numero_orden}
+                                </span>
+                                <span className="text-[10px] text-slate-500 uppercase font-bold">
+                                  Mesa {pago.ordenes.mesa_historial.numero_mesa}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="flex justify-center">
+                                <div className="w-0.5 h-8 bg-slate-700/50 rounded-full" />
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <span className="text-slate-300 font-mono text-xs">
+                              {pago.numero_pago}
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center border border-slate-700/50">
+                                {getMethodIcon(pago.metodo)}
+                              </div>
+                              <span className="text-slate-200 text-sm font-medium">
+                                {getMethodLabel(pago.metodo)}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="text-white font-bold">
+                                {formatPricePEN(pago.monto)}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant="outline"
+                              className="bg-slate-900/50 border-slate-700 text-slate-400 text-[10px] uppercase font-bold py-0 h-5"
                             >
-                              <MoreVertical className="w-4 h-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
+                              {pago.tipo_documento}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="text-slate-300 text-xs">
+                                {formatDateTime(pago.fecha_creacion, "date")}
+                              </span>
+                              <span className="text-slate-500 text-[10px]">
+                                {formatDateTime(pago.fecha_creacion, "time")}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right pr-6">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-9 w-9 text-slate-400 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all focus-visible:ring-cyan-500"
+                                >
+                                  <MoreVertical className="w-4 h-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
 
-                          <DropdownMenuContent
-                            align="end"
-                            className="bg-[#1e293b] border-slate-700 text-slate-200 w-52 shadow-2xl p-1.5 rounded-xl"
-                          >
-                            <DropdownMenuLabel className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em] px-3 py-2">
-                              Opciones de Pago
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
+                              <DropdownMenuContent
+                                align="end"
+                                className="bg-[#1e293b] border-slate-700 text-slate-200 w-52 shadow-2xl p-1.5 rounded-xl"
+                              >
+                                <DropdownMenuLabel className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em] px-3 py-2">
+                                  Opciones de Pago
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
 
-                            <DropdownMenuItem
-                              onClick={() => {
-                                setSelectedPaymentId(pago.id);
-                                setIsTicketDialogOpen(true);
-                              }}
-                              className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-emerald-500/10 hover:text-emerald-400 focus:bg-emerald-500/10 focus:text-emerald-400 gap-3 transition-colors text-sm font-medium"
-                            >
-                              <Receipt className="w-4 h-4" />
-                              <span>Ver Ticket</span>
-                            </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() => {
+                                    setSelectedPaymentId(pago.id);
+                                    setIsTicketDialogOpen(true);
+                                  }}
+                                  className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-emerald-500/10 hover:text-emerald-400 focus:bg-emerald-500/10 focus:text-emerald-400 gap-3 transition-colors text-sm font-medium"
+                                >
+                                  <Receipt className="w-4 h-4" />
+                                  <span>Ver Ticket</span>
+                                </DropdownMenuItem>
 
-                            <DropdownMenuItem
-                              onClick={() => {
-                                navigate(
-                                  `/punto-venta/cobrar/${pago.ordenes.id}`,
-                                );
-                              }}
-                              className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
-                            >
-                              <Ticket className="w-4 h-4" />
-                              <span>Ver Orden</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
+                                <DropdownMenuItem
+                                  onClick={() => {
+                                    navigate(
+                                      `/punto-venta/cobrar/${pago.ordenes.id}`,
+                                    );
+                                  }}
+                                  className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
+                                >
+                                  <Ticket className="w-4 h-4" />
+                                  <span>Ver Orden</span>
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </Fragment>
+                ))
               ) : (
                 <TableRow>
                   <TableCell

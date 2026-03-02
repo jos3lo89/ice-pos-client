@@ -70,11 +70,13 @@ export const useCloseSession = () => {
 export const useSessionPayments = (dto: {
   sessionId: string;
   meta: {
-    page?: number;
-    limit?: number;
+    page: number;
+    limit: number;
     search?: string;
   };
 }) => {
+  console.log(dto);
+
   return useQuery({
     queryKey: ["cash-register", "session", "payments", dto.sessionId],
     queryFn: () => cashierservice.getSessionPayments(dto),

@@ -7,7 +7,6 @@ import type {
   OpenSessionRes,
 } from "../interfaces/cashier.interface";
 import type { GetSessionPaymentsRes } from "../interfaces/session-payments.interface";
-import { da } from "zod/v4/locales";
 
 class CashierService {
   private readonly baseUrl = "cash-sessions";
@@ -41,8 +40,8 @@ class CashierService {
   async getSessionPayments(dto: {
     sessionId: string;
     meta: {
-      page?: number;
-      limit?: number;
+      page: number;
+      limit: number;
       search?: string;
     };
   }) {
