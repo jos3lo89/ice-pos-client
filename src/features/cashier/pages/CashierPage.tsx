@@ -33,7 +33,7 @@ import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
 import { useNavigate } from "react-router-dom";
-import CreateCashMovement from "@/presentation/features/cashier/components/CreateCashMovement";
+import CreateCashMovement from "@/presentation/features/cash-movement/components/CreateCashMovement";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();
@@ -132,6 +132,10 @@ const CashierPage = () => {
     navigate(`/pagos/${session.id}`);
   };
 
+  const handleNavigateToMovementsHistory = () => {
+    navigate(`/historial-movimientos/${session.id}`);
+  };
+
   return (
     <div className="space-y-8 pb-10">
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -147,7 +151,14 @@ const CashierPage = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-3">
+          <Button
+            variant="outline"
+            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
+            onClick={handleNavigateToMovementsHistory}
+          >
+            Historial de Movimientos
+          </Button>
           <Button
             variant="outline"
             className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"

@@ -4,12 +4,12 @@ import { UtensilsCrossed, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useCategoriesWithProducts } from "@/features/categories/hooks/useCategorie";
+import { useCategoriesWithProducts } from "@/application/hooks/useCategorie";
 import { useFloorsWithTables } from "@/features/floors/hooks/useFloor";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import { useMemo, useState } from "react";
-import type { Producto } from "@/features/categories/interfaces/categories.interface";
+import type { Producto } from "@/core/entities/categories.entity";
 import ProductSelectedDialog from "./ProductSelectedDialog";
 import { formatPricePEN } from "@/helpers/format-price";
 

@@ -2,8 +2,9 @@ import http from "@/config/axios";
 import type {
   CashMovementsEntity,
   CashMovementsResponse,
-} from "@/core/domain/cash-movements.entity";
-import type { CashMovementsRepository } from "@/core/ports/cash-movements.repository";
+  GetCashMovementsResponse,
+} from "@/core/entities/cash-movements.entity";
+import type { CashMovementsRepository } from "@/core/repositories/cash-movements.repository";
 
 class CashMovementsApi implements CashMovementsRepository {
   private readonly baseUrl = "cash-movements";
@@ -12,6 +13,21 @@ class CashMovementsApi implements CashMovementsRepository {
     cashMovements: CashMovementsEntity,
   ): Promise<CashMovementsResponse> {
     const { data } = await http.post(this.baseUrl, cashMovements);
+
+    return data;
+  }
+
+  async getCashMovements(
+    sessionId: string,
+    page: number,
+    limit: number,
+  ): Promise<GetCashMovementsResponse> {
+    const { data } = await http.get(`${this.baseUrl}/${sessionId}/movements`, {
+      params: {
+        page,
+        limit,
+      },
+    });
 
     return data;
   }

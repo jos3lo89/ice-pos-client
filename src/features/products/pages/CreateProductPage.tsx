@@ -35,7 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import type { CreateProductRes } from "../interfaces/product.interface";
-import { useCategorieListAll } from "@/features/categories/hooks/useCategorie";
+import { useCategorieListAll } from "@/application/hooks/useCategorie";
 import { useCreateProduct } from "../hooks/useProduct";
 import { formatPricePEN } from "@/helpers/format-price";
 

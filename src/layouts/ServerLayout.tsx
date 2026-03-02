@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/stores/auth.store";
-import ProfileDialog from "@/features/users/components/ProfileDialog";
+import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
 import {
   Menu,
   Utensils,
@@ -21,7 +21,7 @@ import {
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import AuthFallback from "@/components/common/AuthFallback";
-import { useLogout } from "@/features/auth/hooks/useAuth";
+import { useLogout } from "@/application/hooks/useAuth";
 
 const ServerLayout = () => {
   const { user } = useAuthStore();

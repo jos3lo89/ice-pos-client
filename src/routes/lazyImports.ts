@@ -1,19 +1,23 @@
 import { lazy } from "react";
 
-export const LoginPage = lazy(() => import("@/features/auth/pages/LoginPage"));
+export const LoginPage = lazy(
+  () => import("@/presentation/features/auth/page/LoginPage"),
+);
 export const DashboardHome = lazy(
-  () => import("@/features/dashboard/pages/DashboardHome"),
+  () => import("@/presentation/features/admin-dashboard/pages/DashboardHome"),
 );
 
-export const UsersPage = lazy(() => import("@/features/users/pages/UsersPage"));
+export const UsersPage = lazy(
+  () => import("@/presentation/features/employes/page/UsersPage"),
+);
 export const CreateUserPage = lazy(
-  () => import("@/features/users/pages/CreateUserPage"),
+  () => import("@/presentation/features/employes/page/CreateUserPage"),
 );
 export const CategoriesPage = lazy(
-  () => import("@/features/categories/pages/CategoriesPage"),
+  () => import("@/presentation/features/categories/pages/CategoriesPage"),
 );
 export const CreateCategoryPage = lazy(
-  () => import("@/features/categories/pages/CreateCategoryPage"),
+  () => import("@/presentation/features/categories/pages/CreateCategoryPage"),
 );
 
 export const ProductsPage = lazy(
@@ -41,7 +45,7 @@ export const CreateTablePage = lazy(
 );
 
 export const ProfilePage = lazy(
-  () => import("@/features/users/pages/ProfilePage"),
+  () => import("@/presentation/features/employes/page/ProfilePage"),
 );
 
 export const OrderEntryPage = lazy(
@@ -66,4 +70,9 @@ export const ChargePage = lazy(
 
 export const SessionPaymentsPage = lazy(
   () => import("@/features/cashier/pages/SessionPaymentsPage"),
+);
+
+export const MovementsHistoryPage = lazy(
+  () =>
+    import("@/presentation/features/cash-movement/pages/MovementsHistoryPage"),
 );

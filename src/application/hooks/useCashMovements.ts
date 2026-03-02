@@ -1,7 +1,7 @@
-import type { CashMovementsEntity } from "@/core/domain/cash-movements.entity";
+import type { CashMovementsEntity } from "@/core/entities/cash-movements.entity";
 import { cashMovementsApi } from "@/infrastructure/api/cash-movements.api";
 import { getErrorMessage } from "@/utils/get-error-message";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useCreateCashMovements = () => {
@@ -19,7 +19,6 @@ export const useCreateCashMovements = () => {
       toast.success("Movimiento de caja creado exitosamente", {
         id: "create-cash-movement",
       });
-      // invalidaciones
       queryClient.invalidateQueries({
         queryKey: ["cash-register", "session", "active"],
       });
@@ -33,5 +32,16 @@ export const useCreateCashMovements = () => {
         id: "create-cash-movement",
       });
     },
+  });
+};
+
+export const useGetCashMovements = (
+  sessionId: string,
+  page: number,
+  limit: number,
+) => {
+  return useQuery({
+    queryKey: ["cash-movements", "list", page, limit],
+    queryFn: () => cashMovementsApi.getCashMovements(sessionId, page, limit),
   });
 };

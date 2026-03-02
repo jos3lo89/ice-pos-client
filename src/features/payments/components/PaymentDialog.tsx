@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useCreatePayment } from "../hooks/usePayment";
-import { useGetDefaultClient } from "@/features/clients/hooks/useClient";
+import { useGetDefaultClient } from "@/application/hooks/useClient";
 import {
   paymentSchema,
   type PaymentFormValues,

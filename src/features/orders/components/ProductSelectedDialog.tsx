@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Producto } from "@/features/categories/interfaces/categories.interface";
+import type { Producto } from "@/core/entities/categories.entity";
 import { formatPricePEN } from "@/helpers/format-price";
 import { cn } from "@/lib/utils";
 import { Check, Loader2, Minus, Plus } from "lucide-react";

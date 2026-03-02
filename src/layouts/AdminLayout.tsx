@@ -1,12 +1,9 @@
 import AuthFallback from "@/components/common/AuthFallback";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
-import {
-  allNavItems,
-  type NavItem,
-} from "@/features/dashboard/components/NavItems";
+import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/lib/utils";
-import ProfileDialog from "@/features/users/components/ProfileDialog";
+import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
 import {
   ChevronDown,
   ChevronRight,
@@ -19,7 +16,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
-import { useLogout } from "@/features/auth/hooks/useAuth";
+import { useLogout } from "@/application/hooks/useAuth";
 
 /**
  * AdminLayout - Unified administration environment with responsive sidebars and sub-menus.
