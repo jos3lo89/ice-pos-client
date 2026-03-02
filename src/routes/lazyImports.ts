@@ -67,3 +67,8 @@ export const ChargePage = lazy(
 export const SessionPaymentsPage = lazy(
   () => import("@/features/cashier/pages/SessionPaymentsPage"),
 );
+
+export const MovementsHistoryPage = lazy(
+  () =>
+    import("@/presentation/features/cash-movement/pages/MovementsHistoryPage"),
+);
