@@ -1,6 +1,13 @@
 import type { UserRole } from "@/common/types/roles";
 
-export interface LoginRes {
+// login - request
+export interface LoginRequest {
+  userName: string;
+  password: string;
+}
+
+// login - response
+export interface LoginResponse {
   id: string;
   usuario: string;
   nombre_completo: string;
@@ -11,6 +18,7 @@ export interface LoginRes {
   fecha_actualizacion: string;
 }
 
-export interface LogoutRes {
+// logout - response
+export interface LogoutResponse {
   message: string;
 }

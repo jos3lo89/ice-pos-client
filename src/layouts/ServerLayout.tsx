@@ -21,7 +21,7 @@ import {
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import AuthFallback from "@/components/common/AuthFallback";
-import { useLogout } from "@/features/auth/hooks/useAuth";
+import { useLogout } from "@/application/hooks/useAuth";
 
 const ServerLayout = () => {
   const { user } = useAuthStore();

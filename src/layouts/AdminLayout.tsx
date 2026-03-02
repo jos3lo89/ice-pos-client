@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
-import { useLogout } from "@/features/auth/hooks/useAuth";
+import { useLogout } from "@/application/hooks/useAuth";
 
 /**
  * AdminLayout - Unified administration environment with responsive sidebars and sub-menus.

@@ -11,7 +11,7 @@ import { UtensilsCrossed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginT } from "../schemas/auth.schema";
-import { useLogin } from "../hooks/useAuth";
+import { useLogin } from "@/application/hooks/useAuth";
 
 const LoginPage = () => {
   const { mutate, isPending } = useLogin();

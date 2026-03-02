@@ -1,11 +1,11 @@
-import { authService } from "@/features/auth/services/auth.service";
+import { authApi } from "@/infrastructure/api/auth.api";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { LoginT } from "../schemas/auth.schema";
 import { roleBasedRedirection } from "@/utils/role-based-redirection";
 import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@/utils/get-error-message";
+import type { LoginRequest } from "@/core/entities/auth.entity";
 
 export const useLogin = () => {
   const { setUser } = useAuthStore();
@@ -14,7 +14,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationKey: ["login"],
-    mutationFn: (data: LoginT) => authService.login(data),
+    mutationFn: (data: LoginRequest) => authApi.login(data),
     onMutate: () => {
       toast.loading("Iniciando sesión...", { id: "login" });
     },
@@ -39,7 +39,7 @@ export const useLogout = () => {
 
   return useMutation({
     mutationKey: ["logout"],
-    mutationFn: () => authService.logout(),
+    mutationFn: () => authApi.logout(),
     onMutate: () => {
       toast.loading("Cerrando sesión...", { id: "logout" });
     },
