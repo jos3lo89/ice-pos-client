@@ -68,3 +68,12 @@ export interface GetProfileRes {
   fecha_creacion: string;
   fecha_actualizacion: string;
 }
+
+// create user
+export interface CreateUserT {
+  usuario: string;
+  contrasena: string;
+  nombre_completo: string;
+  rol: UserRole;
+  telefono: string;
+}

@@ -1,5 +1,4 @@
 import LoadingState from "@/components/common/LoadingState";
-import { useGetProfile } from "../hooks/useUsers";
 import ErrorState from "@/components/common/ErrorState";
 import {
   User,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useGetProfile } from "@/application/hooks/useEmploye";
 
 const ProfilePage = () => {
   const profileQuery = useGetProfile();

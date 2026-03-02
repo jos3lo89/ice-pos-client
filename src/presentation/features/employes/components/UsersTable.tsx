@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useUsersList } from "../hooks/useUsers";
 import { Badge } from "@/components/ui/badge";
 import { getRoleIcon } from "../helpers/getRoleIcon";
 import {
@@ -33,7 +32,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ChangeStatusDialog from "./ChangeStatusDialog";
 import { useForm } from "react-hook-form";
-import type { User } from "../interfaces/users.interface";
+import type { User } from "@/core/entities/employe.entity";
+import { useUsersList } from "@/application/hooks/useEmploye";
 
 const UsersTable = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -49,7 +49,7 @@ const UsersTable = () => {
     searchTerm,
   );
 
-  const allUsers = data?.users ?? [];
+  const allUsers = data?.data ?? [];
   const meta = data?.meta;
 
   const { register, handleSubmit, reset } = useForm<{ search: string }>({

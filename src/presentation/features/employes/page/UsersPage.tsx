@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import UsersTable from "../components/UsersTable";
 import { Link } from "react-router-dom";
+import UsersTable from "../components/UsersTable";
 
 const UsersPage = () => {
   return (

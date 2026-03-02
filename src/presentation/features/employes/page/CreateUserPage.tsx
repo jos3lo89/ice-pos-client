@@ -5,7 +5,6 @@ import {
   userRoles,
   type CreateUserT,
 } from "../schemas/user.schema";
-import { useCreateUser } from "../hooks/useUsers";
 import {
   UserPlus,
   ArrowLeft,
@@ -35,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useCreateUser } from "@/application/hooks/useEmploye";
 
 const CreateUserPage = () => {
   const createUser = useCreateUser();

@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCcw, Power, AlertTriangle } from "lucide-react";
-import type { User } from "../interfaces/users.interface";
-import { useUserChangeState } from "../hooks/useUsers";
+import { useUserChangeState } from "@/application/hooks/useEmploye";
+import type { User } from "@/core/entities/employe.entity";
 
 interface ChangeStatusDialogProps {
   open: boolean;

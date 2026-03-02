@@ -1,14 +1,16 @@
+import type {
+  ChangeUserStateReq,
+  CreateUserT,
+} from "@/core/entities/employe.entity";
+import { employeApi } from "@/infrastructure/api/employe.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { usersService } from "../services/users.service";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import type { CreateUserT } from "../schemas/user.schema";
-import type { ChangeUserStateReq } from "../interfaces/users.interface";
 
 export const useUsersList = (page: number, limit: number, search?: string) => {
   return useQuery({
     queryKey: ["users", "list", { page, limit, search }],
-    queryFn: () => usersService.getAllUsers(page, limit, search),
+    queryFn: () => employeApi.getAllUsers(page, limit, search),
   });
 };
 
@@ -17,7 +19,7 @@ export const useCreateUser = () => {
 
   return useMutation({
     mutationKey: ["create", "user"],
-    mutationFn: (data: CreateUserT) => usersService.createUser(data),
+    mutationFn: (data: CreateUserT) => employeApi.createUser(data),
     onMutate: () => {
       toast.loading("Creando usuario...", { id: "create-user" });
     },
@@ -47,8 +49,7 @@ export const useUserChangeState = () => {
   const qryClient = useQueryClient();
   return useMutation({
     mutationKey: ["change", "user", "state"],
-    mutationFn: (data: ChangeUserStateReq) =>
-      usersService.changeUserState(data),
+    mutationFn: (data: ChangeUserStateReq) => employeApi.changeUserState(data),
     onMutate: () => {
       toast.loading("Cambiando de estado...", { id: "change-user-state" });
     },
@@ -76,6 +77,6 @@ export const useUserChangeState = () => {
 export const useGetProfile = () => {
   return useQuery({
     queryKey: ["profile"],
-    queryFn: () => usersService.getProfile(),
+    queryFn: () => employeApi.getProfile(),
   });
 };
