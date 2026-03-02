@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { cashierservice } from "../services/cashier.service";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
 import type {
   CloseCashRegisterReq,
   OpenCashRegisterReq,
 } from "../interfaces/cashier.interface";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 // current session
 export const useCurrentSession = () => {
@@ -31,11 +31,9 @@ export const useOpenSession = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al abrir la sesion";
-      toast.error(message, { id: "open-session" });
+      toast.error(getErrorMessage(error, "Error al abrir la sesion"), {
+        id: "open-session",
+      });
     },
   });
 };
@@ -57,11 +55,9 @@ export const useCloseSession = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al cerrar la sesion";
-      toast.error(message, { id: "close-session" });
+      toast.error(getErrorMessage(error, "Error al cerrar la sesion"), {
+        id: "close-session",
+      });
     },
   });
 };

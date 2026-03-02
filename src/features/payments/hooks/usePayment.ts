@@ -20,6 +20,7 @@ export const useCreatePayment = () => {
       queryClient.invalidateQueries({
         queryKey: ["cash-register", "session", "active"],
       });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
       const message =
