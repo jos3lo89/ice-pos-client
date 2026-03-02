@@ -84,7 +84,7 @@ export const TicketVentaDialog = ({
     setIsGenerating(true);
     try {
       const dataEmpresa = {
-        logo: "/logo/logo.jpg",
+        logo: "/logo/logo-ice.png",
         ...ticketData,
       };
 

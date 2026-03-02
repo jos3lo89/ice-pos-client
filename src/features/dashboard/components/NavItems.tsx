@@ -1,13 +1,9 @@
 import type { UserRole } from "@/common/types/roles";
 import {
-  ChefHat,
-  ClipboardList,
   LayoutDashboard,
   ShoppingCart,
   Tags,
   UserRoundCogIcon,
-  UtensilsCrossed,
-  History,
   type LucideIcon,
   Plus,
   List,
@@ -137,48 +133,53 @@ export const allNavItems: NavGroup[] = [
         exact: true,
       },
       {
-        to: "/",
-        icon: LayoutDashboard,
-        label: "Dashboard",
-        exact: true,
-      },
-      {
-        label: "Operaciones",
+        to: "/punto-venta",
         icon: ShoppingCart,
-        children: [
-          {
-            to: "/punto-venta",
-            icon: ShoppingCart,
-            label: "Punto de Venta",
-          },
-          {
-            to: "/cocina",
-            icon: ChefHat,
-            label: "Cocina",
-          },
-        ],
+        label: "Punto de Venta",
       },
-      {
-        label: "Atención",
-        icon: UtensilsCrossed,
-        children: [
-          {
-            to: "/dashboard/tables",
-            icon: UtensilsCrossed,
-            label: "Mesas",
-          },
-          {
-            to: "/dashboard/orders",
-            icon: ClipboardList,
-            label: "Pedidos",
-          },
-        ],
-      },
-      {
-        to: "/history",
-        icon: History,
-        label: "Historial",
-      },
+      // {
+      //   to: "/",
+      //   icon: LayoutDashboard,
+      //   label: "Dashboard",
+      //   exact: true,
+      // },
+      // {
+      //   label: "Operaciones",
+      //   icon: ShoppingCart,
+      //   children: [
+      //     {
+      //       to: "/punto-venta",
+      //       icon: ShoppingCart,
+      //       label: "Punto de Venta",
+      //     },
+      //     // {
+      //     //   to: "/cocina",
+      //     //   icon: ChefHat,
+      //     //   label: "Cocina",
+      //     // },
+      //   ],
+      // },
+      // {
+      //   label: "Atención",
+      //   icon: UtensilsCrossed,
+      //   children: [
+      //     {
+      //       to: "/dashboard/tables",
+      //       icon: UtensilsCrossed,
+      //       label: "Mesas",
+      //     },
+      //     {
+      //       to: "/dashboard/orders",
+      //       icon: ClipboardList,
+      //       label: "Pedidos",
+      //     },
+      //   ],
+      // },
+      // {
+      //   to: "/history",
+      //   icon: History,
+      //   label: "Historial",
+      // },
     ],
   },
 ];

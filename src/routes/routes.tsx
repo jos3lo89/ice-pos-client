@@ -17,6 +17,7 @@ import {
   CashierPage,
   PointOfSalePage,
   ChargePage,
+  SessionPaymentsPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -122,6 +123,10 @@ export const routes = createBrowserRouter([
       {
         path: "/punto-venta/cobrar/:orderId",
         element: <ChargePage />,
+      },
+      {
+        path: "/punto-venta/pagos/:sessionId",
+        element: <SessionPaymentsPage />,
       },
     ],
   },

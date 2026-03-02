@@ -65,3 +65,19 @@ export const useCloseSession = () => {
     },
   });
 };
+
+// obtener pagos de la sesion
+export const useSessionPayments = (dto: {
+  sessionId: string;
+  meta: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  };
+}) => {
+  return useQuery({
+    queryKey: ["cash-register", "session", "payments", dto.sessionId],
+    queryFn: () => cashierservice.getSessionPayments(dto),
+    enabled: !!dto.sessionId,
+  });
+};

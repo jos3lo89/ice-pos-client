@@ -2,6 +2,8 @@ import type { GetTicketRes } from "@/features/payments/interfaces/payment.interf
 import { urlToBase64 } from "../url-to-base64";
 import createPdf from "./CreatePdf";
 import type { PdfResponse, TicketOutput } from "./ticket.interface";
+import { formatDateTime } from "../format-date-time";
+import { formatPricePEN } from "@/helpers/format-price";
 
 export interface DataEmpresa extends GetTicketRes {
   logo: string;
@@ -13,8 +15,8 @@ const TicketVenta = async (
 ): Promise<PdfResponse> => {
   const content: any[] = [];
 
+  // ── Logo ─────────────────────────────────────────
   const logoBase64 = await urlToBase64(data.logo);
-
   if (logoBase64) {
     content.push({
       image: logoBase64,
@@ -23,185 +25,254 @@ const TicketVenta = async (
       margin: [0, 0, 0, 4],
     });
   }
-  // ── Datos del negocio ─────────────────────────────
-  content.push(
-    { text: data.negocio.nombre, bold: true, alignment: "center", fontSize: 9 },
-    { text: `RUC: ${data.negocio.ruc}`, alignment: "center" },
-    { text: data.negocio.direccion, alignment: "center", margin: [0, 0, 0, 4] },
-  );
 
-  // ── Separador ─────────────────────────────────────
-  const separador = {
-    canvas: [
-      {
-        type: "line",
-        x1: 0,
-        y1: 0,
-        x2: 215,
-        y2: 0,
-        lineWidth: 0.5,
-        dash: { length: 3 },
-      },
-    ],
-    margin: [0, 2, 0, 2],
-  };
-  content.push(separador);
-
-  // ── Comprobante ───────────────────────────────────
+  // ── Cabecera del negocio ──────────────────────────
   content.push(
     {
-      text: data.comprobante.tipo_documento,
+      text: data.negocio.nombre,
+      fontSize: 9,
       bold: true,
-      alignment: "center",
-      fontSize: 8,
-    },
-    { text: `N°: ${data.comprobante.numero_pago}`, alignment: "center" },
-    { text: `Fecha: ${data.comprobante.fecha}`, alignment: "center" },
-    {
-      text: `Método de pago: ${data.comprobante.metodo}`,
-      alignment: "center",
-      margin: [0, 0, 0, 2],
-    },
-  );
-
-  content.push(separador);
-
-  // ── Orden ─────────────────────────────────────────
-  content.push({
-    text: `Orden: ${data.orden.numero_orden}  |  ${data.orden.tipo_orden}`,
-    alignment: "center",
-  });
-  if (data.orden.mesa)
-    content.push({ text: `Mesa: ${data.orden.mesa}`, alignment: "center" });
-  if (data.orden.mesero)
-    content.push({ text: `Mesero: ${data.orden.mesero}`, alignment: "center" });
-  if (data.orden.notas)
-    content.push({
-      text: `Notas: ${data.orden.notas}`,
-      alignment: "center",
-      margin: [0, 0, 0, 2],
-    });
-
-  content.push(separador);
-
-  // ── Cliente ───────────────────────────────────────
-  if (data.cliente.razon_social) {
-    content.push(
-      { text: `Cliente: ${data.cliente.razon_social}` },
-      {
-        text: `${data.cliente.tipo_documento}: ${data.cliente.numero_documento}`,
-      },
-    );
-    if (data.cliente.direccion)
-      content.push({ text: `Dir: ${data.cliente.direccion}` });
-    content.push({ text: "", margin: [0, 0, 0, 2] });
-  }
-
-  content.push(separador);
-
-  // ── Items ─────────────────────────────────────────
-  content.push({
-    text: "DETALLE",
-    bold: true,
-    alignment: "center",
-    margin: [0, 2, 0, 2],
-  });
-
-  const itemsBody: any[][] = [
-    [
-      { text: "Producto", bold: true },
-      { text: "Cant.", bold: true, alignment: "right" },
-      { text: "P.Unit", bold: true, alignment: "right" },
-      { text: "Total", bold: true, alignment: "right" },
-    ],
-  ];
-
-  for (const item of data.items) {
-    const nombreCompleto = item.nombre_variante
-      ? `${item.nombre_producto}\n(${item.nombre_variante})`
-      : item.nombre_producto;
-
-    itemsBody.push([
-      { text: nombreCompleto },
-      { text: item.cantidad.toString(), alignment: "right" },
-      { text: `S/ ${item.precio_unitario.toFixed(2)}`, alignment: "right" },
-      { text: `S/ ${item.total_linea.toFixed(2)}`, alignment: "right" },
-    ]);
-
-    // Modificadores si los hay
-    if (item.modificadores && item.modificadores.length > 0) {
-      for (const mod of item.modificadores) {
-        itemsBody.push([
-          {
-            text: `  + ${mod.nombre || mod}`,
-            italics: true,
-            colSpan: 4,
-            color: "#555555",
-          },
-          {},
-          {},
-          {},
-        ]);
-      }
-    }
-  }
-
-  content.push({
-    table: {
-      widths: ["*", "auto", "auto", "auto"],
-      body: itemsBody,
-    },
-    layout: "noBorders",
-    margin: [0, 0, 0, 4],
-  });
-
-  content.push(separador);
-
-  // ── Totales ───────────────────────────────────────
-  content.push({
-    table: {
-      widths: ["*", "auto"],
-      body: [
-        [
-          { text: "Subtotal:", bold: true },
-          {
-            text: `S/ ${data.totales.subtotal.toFixed(2)}`,
-            alignment: "right",
-          },
-        ],
-        [
-          { text: "Monto recibido:", bold: true },
-          {
-            text: `S/ ${data.totales.monto_recibido.toFixed(2)}`,
-            alignment: "right",
-          },
-        ],
-        [
-          { text: "Vuelto:", bold: true },
-          { text: `S/ ${data.totales.vuelto.toFixed(2)}`, alignment: "right" },
-        ],
-      ],
-    },
-    layout: "noBorders",
-    margin: [0, 2, 0, 4],
-  });
-
-  content.push(separador);
-
-  // ── Cajero / Pie ──────────────────────────────────
-  content.push(
-    {
-      text: `Atendido por: ${data.cajero}`,
       alignment: "center",
       margin: [0, 2, 0, 0],
     },
     {
-      text: "¡Gracias por su preferencia!",
+      text: data.negocio.direccion,
+      fontSize: 7,
       alignment: "center",
-      italics: true,
-      margin: [0, 2, 0, 4],
+      margin: [0, 0, 0, 0],
+    },
+    {
+      text: `RUC: ${data.negocio.ruc}`,
+      fontSize: 7,
+      alignment: "center",
+      margin: [0, 0, 0, 2],
     },
   );
+
+  // ── Tipo de comprobante ───────────────────────────
+  content.push(
+    {
+      text: data.comprobante.tipo_documento.toUpperCase(),
+      fontSize: 9,
+      bold: true,
+      alignment: "center",
+      margin: [0, 0, 0, 0],
+    },
+    {
+      text: `N°: ${data.comprobante.numero_pago}`,
+      fontSize: 8,
+      alignment: "center",
+      margin: [0, 0, 0, 2],
+    },
+  );
+
+  // ── Tabla unificada de metadata ───────────────────
+  // Se consolida todo en una sola tabla para eliminar
+  // los gaps entre tablas separadas.
+  const metaBody: any[][] = [
+    [
+      { text: "Fecha/Hora:", fontSize: 7, bold: true },
+      {
+        text: `${formatDateTime(data.comprobante.fecha, "date")} - ${formatDateTime(data.comprobante.fecha, "time")}`,
+        fontSize: 7,
+        colSpan: 3,
+      },
+      {},
+      {},
+    ],
+    [
+      { text: "Cajero:", fontSize: 7, bold: true },
+      { text: data.cajero, fontSize: 7, colSpan: 3 },
+      {},
+      {},
+    ],
+    [
+      { text: "Método:", fontSize: 7, bold: true },
+      { text: data.comprobante.metodo, fontSize: 7, colSpan: 3 },
+      {},
+      {},
+    ],
+  ];
+
+  if (data.orden.numero_orden && data.orden.mesa) {
+    metaBody.push([
+      { text: "Mesa:", fontSize: 7, bold: true },
+      { text: data.orden.mesa, fontSize: 7, colSpan: 3 },
+      {},
+      {},
+    ]);
+  }
+
+  metaBody.push([
+    { text: "Cliente:", fontSize: 7, bold: true },
+    { text: data.cliente.razon_social, fontSize: 7, colSpan: 3 },
+    {},
+    {},
+  ]);
+
+  content.push({
+    margin: [0, 0, 0, 0],
+    table: {
+      widths: ["25%", "75%", 0, 0],
+      body: metaBody,
+    },
+    layout: {
+      // Elimina todo padding interno vertical de las celdas
+      paddingTop: () => 1,
+      paddingBottom: () => 1,
+      hLineWidth: () => 0,
+      vLineWidth: () => 0,
+    },
+  });
+
+  // ── Encabezado de items ───────────────────────────
+  content.push({
+    margin: [0, 5, 0, 0],
+    table: {
+      widths: ["40%", "15%", "20%", "25%"],
+      body: [
+        [
+          { text: "Producto", fontSize: 7, bold: true },
+          { text: "Cant.", fontSize: 7, bold: true, alignment: "center" },
+          { text: "P.Unit", fontSize: 7, bold: true, alignment: "right" },
+          { text: "Total", fontSize: 7, bold: true, alignment: "right" },
+        ],
+      ],
+    },
+    layout: {
+      paddingTop: () => 0,
+      paddingBottom: () => 0,
+      hLineWidth: (i: number) => {
+        return i === 1 ? 0.5 : 0;
+      },
+      hLineStyle: () => ({ dash: { length: 2, space: 2 } }),
+      hLineColor: () => "#000000",
+      vLineWidth: () => 0,
+    },
+  });
+
+  // ── Items ─────────────────────────────────────────
+  const itemsBody: any[][] = [];
+
+  for (const item of data.items) {
+    const nombreCompleto = item.nombre_variante
+      ? `${item.nombre_producto} - ${item.nombre_variante}`
+      : item.nombre_producto;
+
+    itemsBody.push([
+      { text: nombreCompleto, fontSize: 7 },
+      { text: item.cantidad.toString(), fontSize: 7, alignment: "center" },
+      {
+        text: formatPricePEN(item.precio_unitario),
+        fontSize: 7,
+        alignment: "right",
+      },
+      {
+        text: formatPricePEN(item.total_linea),
+        fontSize: 7,
+        alignment: "right",
+      },
+    ]);
+
+    for (const mod of item.modificadores) {
+      itemsBody.push([
+        {
+          text: `  + ${mod.nombre}`,
+          fontSize: 6,
+          color: "#555555",
+          italics: true,
+        },
+        {},
+        {},
+        {
+          text: `S/ ${mod.precio?.toFixed(2) ?? "0.00"}`,
+          fontSize: 6,
+          alignment: "right",
+          color: "#555555",
+        },
+      ]);
+    }
+  }
+
+  content.push({
+    margin: [0, 4, 0, 4],
+    table: {
+      widths: ["40%", "15%", "20%", "25%"],
+      body: itemsBody,
+    },
+    layout: {
+      paddingTop: () => 1,
+      paddingBottom: () => 1,
+      hLineWidth: () => 0,
+      vLineWidth: () => 0,
+    },
+  });
+
+  // ── Totales ───────────────────────────────────────
+  content.push({
+    margin: [0, 0, 0, 0],
+    table: {
+      widths: ["60%", "40%"],
+      body: [
+        [
+          {
+            text: "Subtotal:",
+            fontSize: 8,
+            bold: true,
+            alignment: "right",
+          },
+          {
+            text: formatPricePEN(data.totales.subtotal),
+            fontSize: 8,
+            alignment: "right",
+          },
+        ],
+        [
+          {
+            text: "Monto recibido:",
+            fontSize: 8,
+            bold: true,
+            alignment: "right",
+          },
+          {
+            text: formatPricePEN(data.totales.monto_recibido),
+            fontSize: 8,
+            alignment: "right",
+          },
+        ],
+        [
+          {
+            text: "Vuelto:",
+            fontSize: 8,
+            bold: true,
+            alignment: "right",
+          },
+          {
+            text: formatPricePEN(data.totales.vuelto),
+            fontSize: 8,
+            alignment: "right",
+          },
+        ],
+      ],
+    },
+    layout: {
+      paddingTop: () => 1,
+      paddingBottom: () => 1,
+      hLineWidth: (i: number) => (i === 0 ? 0.5 : 0),
+      hLineStyle: () => ({ dash: { length: 2, space: 2 } }),
+      hLineColor: () => "#000000",
+      vLineWidth: () => 0,
+    },
+  });
+
+  // ── Pie de página ─────────────────────────────────
+  // content.push({
+  //   text: "¡Gracias por su compra!",
+  //   fontSize: 8,
+  //   bold: true,
+  //   alignment: "center",
+  //   margin: [0, 4, 0, 0],
+  // });
 
   // ── Generar PDF ───────────────────────────────────
   const response = await createPdf(content, output);

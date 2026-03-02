@@ -63,3 +63,7 @@ export const PointOfSalePage = lazy(
 export const ChargePage = lazy(
   () => import("@/features/cashier/pages/ChargePage"),
 );
+
+export const SessionPaymentsPage = lazy(
+  () => import("@/features/cashier/pages/SessionPaymentsPage"),
+);

@@ -29,11 +29,13 @@ import { OpenSessionDialog } from "../components/OpenSessionDialog";
 import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
+import { useNavigate } from "react-router-dom";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();
   const [isOpenDialogOpen, setIsOpenDialogOpen] = useState(false);
   const [isCloseDialogOpen, setIsCloseDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -121,6 +123,10 @@ const CashierPage = () => {
     );
   }
 
+  const handleNavigateToSessionPayments = () => {
+    navigate(`/punto-venta/pagos/${session.id}`);
+  };
+
   return (
     <div className="space-y-8 pb-10">
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -140,6 +146,7 @@ const CashierPage = () => {
           <Button
             variant="outline"
             className="h-12 px-6 rounded-xl border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all"
+            onClick={handleNavigateToSessionPayments}
           >
             Ver Historial
           </Button>

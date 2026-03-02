@@ -6,6 +6,8 @@ import type {
   OpenCashRegisterReq,
   OpenSessionRes,
 } from "../interfaces/cashier.interface";
+import type { GetSessionPaymentsRes } from "../interfaces/session-payments.interface";
+import { da } from "zod/v4/locales";
 
 class CashierService {
   private readonly baseUrl = "cash-sessions";
@@ -33,6 +35,27 @@ class CashierService {
       dto.values,
     );
     return data;
+  }
+
+  // obetener pagos de la sesion
+  async getSessionPayments(dto: {
+    sessionId: string;
+    meta: {
+      page?: number;
+      limit?: number;
+      search?: string;
+    };
+  }) {
+    const { data: res } = await http.get<GetSessionPaymentsRes>(
+      `${this.baseUrl}/${dto.sessionId}/payments`,
+      {
+        params: dto.meta,
+      },
+    );
+    return {
+      pagos: res.data,
+      meta: res.meta,
+    };
   }
 }
 
