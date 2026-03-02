@@ -2,8 +2,8 @@ import http from "@/config/axios";
 import type {
   CashMovementsEntity,
   CashMovementsResponse,
-} from "@/core/domain/cash-movements.entity";
-import type { CashMovementsRepository } from "@/core/ports/cash-movements.repository";
+} from "@/core/entities/cash-movements.entity";
+import type { CashMovementsRepository } from "@/core/repositories/cash-movements.repository";
 
 class CashMovementsApi implements CashMovementsRepository {
   private readonly baseUrl = "cash-movements";

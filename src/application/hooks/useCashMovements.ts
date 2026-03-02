@@ -1,4 +1,4 @@
-import type { CashMovementsEntity } from "@/core/domain/cash-movements.entity";
+import type { CashMovementsEntity } from "@/core/entities/cash-movements.entity";
 import { cashMovementsApi } from "@/infrastructure/api/cash-movements.api";
 import { getErrorMessage } from "@/utils/get-error-message";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
