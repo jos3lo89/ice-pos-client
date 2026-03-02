@@ -52,7 +52,7 @@ const CategoryWithProducts = () => {
 
   return (
     <>
-      <div className="flex-1 flex overflow-hidden bg-slate-950">
+      <div className="flex-1 flex overflow-hidden bg-slate-950/50">
         <aside className="w-24 lg:w-32 bg-slate-900/40 border-r border-slate-800/50 shadow-inner">
           <ScrollArea className="h-full">
             <div className="p-1 space-y-2">

@@ -61,5 +61,9 @@ export interface Mesa {
     estado: string;
     total: string;
     fecha_creacion: string;
+    usuarios: {
+      id: string;
+      nombre_completo: string;
+    };
   } | null;
 }

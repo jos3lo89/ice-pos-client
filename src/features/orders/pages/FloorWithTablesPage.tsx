@@ -12,12 +12,15 @@ import type { Mesa } from "@/features/floors/interfaces/floors.interface";
 import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
 import { formatPricePEN } from "@/helpers/format-price";
+import { toast } from "sonner";
+import { useAuthStore } from "@/stores/auth.store";
 
 const FloorWithTablesPage = () => {
   const navigate = useNavigate();
   const floorsQuery = useFloorsWithTables();
   const [openCreateOrderDialog, setOpenCreateOrderDialog] = useState(false);
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const { user } = useAuthStore();
 
   if (floorsQuery.isLoading) {
     return <LoadingState message="Cargando salones y mesas..." />;
@@ -48,6 +51,11 @@ const FloorWithTablesPage = () => {
       setSelectedTableId(table.id);
       setOpenCreateOrderDialog(true);
     } else if (table.estado === "ocupada" && table.orden_actual_id) {
+      if (table.orden_actual && table.orden_actual.usuarios.id !== user?.id) {
+        toast.error("No puedes atender esta mesa");
+        return;
+      }
+
       navigate(`/agregar-item/${table.orden_actual_id}`);
     }
   };
@@ -129,7 +137,10 @@ const FloorWithTablesPage = () => {
                       {table.estado === "ocupada" && table.orden_actual && (
                         <div className="mt-1 pt-2 border-t border-slate-700/50 w-full text-center">
                           <p className="text-[10px] font-bold text-orange-400">
-                            Total: S/ {formatPricePEN(table.orden_actual.total)}
+                            Total: {formatPricePEN(table.orden_actual.total)}
+                          </p>
+                          <p className="text-[10px] font-bold text-slate-400">
+                            Mozo: {table.orden_actual.usuarios.nombre_completo}
                           </p>
                         </div>
                       )}

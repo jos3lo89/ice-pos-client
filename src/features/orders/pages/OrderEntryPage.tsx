@@ -15,6 +15,7 @@ import CategoryWithProducts from "../components/CategoryWithProducts";
 import { useParams } from "react-router-dom";
 import CartProductsSheet from "../components/CartProductsSheet";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
+import OrderComplete from "../components/OrderComplete";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
@@ -50,6 +51,10 @@ const OrderEntryPage = () => {
     );
   }
 
+  if (currentOrderData.estado === "completado") {
+    return <OrderComplete currentOrderData={currentOrderData} />;
+  }
+
   const handleDeleteOrder = () => {
     deleteOrder.mutate(currentOrderData.id, {
       onSuccess: () => {
@@ -80,10 +85,10 @@ const OrderEntryPage = () => {
           </Button>
           <div>
             <h2 className="text-lg font-bold text-white leading-tight">
-              {`Mesa ${currentOrderData.mesa_actual.numero_mesa}`}
+              {`Mesa ${currentOrderData.mesa_actual?.numero_mesa ?? "---"}`}
             </h2>
             <p className="text-[10px] text-cyan-500 uppercase tracking-widest font-black">
-              {`Piso ${currentOrderData.mesa_actual.pisos.nivel}`}
+              {currentOrderData.mesa_actual?.pisos?.nombre ?? "Local"}
             </p>
           </div>
         </div>
