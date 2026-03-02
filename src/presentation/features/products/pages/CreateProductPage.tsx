@@ -34,10 +34,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import type { CreateProductRes } from "../interfaces/product.interface";
 import { useCategorieListAll } from "@/application/hooks/useCategorie";
-import { useCreateProduct } from "../hooks/useProduct";
 import { formatPricePEN } from "@/helpers/format-price";
+import { useCreateProduct } from "@/application/hooks/useProduct";
+import type { CreateProductRes } from "@/core/entities/product.entity";
 
 const CreateProductPage = () => {
   const createProduct = useCreateProduct();
@@ -61,14 +61,20 @@ const CreateProductPage = () => {
   });
 
   const onSubmit = async (values: CreateProductT) => {
-    createProduct.mutate(values, {
-      onSuccess: (data) => {
-        setCreatedProduct(data);
-        form.reset();
-        setShowSuccess(true);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    createProduct.mutate(
+      {
+        ...values,
+        description: values.description || null,
       },
-    });
+      {
+        onSuccess: (data) => {
+          setCreatedProduct(data);
+          form.reset();
+          setShowSuccess(true);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        },
+      },
+    );
   };
 
   return (

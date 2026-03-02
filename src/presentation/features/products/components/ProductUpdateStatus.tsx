@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RefreshCw, CheckCircle2, XCircle } from "lucide-react";
-import { useUpdateStattusProduct } from "../hooks/useProduct";
+import { useUpdateStattusProduct } from "@/application/hooks/useProduct";
 
 type Props = {
   productId: string;

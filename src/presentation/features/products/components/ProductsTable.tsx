@@ -34,12 +34,12 @@ import {
 import { useForm } from "react-hook-form";
 import { Dialog } from "@/components/ui/dialog";
 import ProductUpdateStatus from "./ProductUpdateStatus";
+import { toast } from "sonner";
+import { formatPricePEN } from "@/helpers/format-price";
+import type { Product } from "@/core/entities/product.entity";
+import { useProductList } from "@/application/hooks/useProduct";
 import CreateVariant from "./CreateVariant";
 import CreateModifier from "./CreateModifier";
-import type { Product } from "../interfaces/product.interface";
-import { toast } from "sonner";
-import { useProductList } from "../hooks/useProduct";
-import { formatPricePEN } from "@/helpers/format-price";
 
 const ProductsTable = () => {
   const [page, setPage] = useState(1);
@@ -56,7 +56,7 @@ const ProductsTable = () => {
     searchTerm,
   );
 
-  const allProducts = data?.products ?? [];
+  const allProducts = data?.data ?? [];
   const meta = data?.meta;
 
   const { register, handleSubmit, reset } = useForm<{ search: string }>({

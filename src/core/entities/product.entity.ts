@@ -109,3 +109,54 @@ export interface CreateModifierRes {
     fecha_actualizacion: string;
   };
 }
+
+// crear variante de producto
+export interface CreateVariantRes {
+  id: string;
+  producto_id: string;
+  nombre_variante: string;
+  precio_adicional: string;
+  esta_activa: boolean;
+  productos: {
+    id: string;
+    nombre: string;
+    precio: string;
+    categoria_id: string;
+    area_impresion: string;
+    descripcion: string | null;
+    esta_disponible: boolean;
+    fecha_creacion: string;
+    fecha_actualizacion: string;
+  };
+}
+
+// crear modificador de producto
+export interface CreateProductT {
+  name: string;
+  price: number;
+  category_id: string;
+  description: string | null;
+  area_impresion: "cocina" | "bar";
+}
+
+// // crear variante de producto
+// export interface CreateVariantT {
+//   producto_id: string;
+//   nombre_variante: string;
+//   precio_adicional: number;
+//   esta_activa: boolean;
+// }
+
+// crear variante de producto
+export interface CreateVariantI {
+  variant_name: string;
+  additional_price: number;
+  product_id: string;
+}
+
+// crear modificador de producto
+export interface CreateModifierT {
+  modifier_name: string;
+  additional_price: number;
+  product_id: string;
+}

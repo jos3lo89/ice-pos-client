@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { productService } from "../services/product.service";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { productApi } from "@/infrastructure/api/product.api";
 import type {
   CreateModifierT,
   CreateProductT,
-  CreateVariantT,
-} from "../schemas/product.schema";
+  CreateVariantI,
+} from "@/core/entities/product.entity";
 
 export const useProductList = (
   page: number,
@@ -17,7 +17,7 @@ export const useProductList = (
 ) => {
   return useQuery({
     queryKey: ["list", "products", { page, limit, search, category }],
-    queryFn: () => productService.getAllProducts(page, limit, search, category),
+    queryFn: () => productApi.getAllProducts(page, limit, search, category),
   });
 };
 
@@ -26,8 +26,7 @@ export const useCreateProduct = () => {
 
   return useMutation({
     mutationKey: ["create", "product"],
-    mutationFn: (product: CreateProductT) =>
-      productService.createProduct(product),
+    mutationFn: (product: CreateProductT) => productApi.createProduct(product),
     onMutate: () => {
       toast.loading("Creando producto...", { id: "create-product" });
     },
@@ -52,7 +51,7 @@ export const useUpdateStattusProduct = () => {
     mutationFn: (dto: {
       productId: string;
       values: { is_available: boolean };
-    }) => productService.updateStatus(dto),
+    }) => productApi.updateStatus(dto),
     onMutate: () => {
       toast.loading("Actualizando estado del producto...", {
         id: "update-product-status",
@@ -78,7 +77,7 @@ export const useCreateVariant = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["create", "variant"],
-    mutationFn: (data: CreateVariantT) => productService.createVariant(data),
+    mutationFn: (data: CreateVariantI) => productApi.createVariant(data),
     onMutate: () => {
       toast.loading("Creando variante...", { id: "create-variant" });
     },
@@ -101,7 +100,7 @@ export const useCreateModifier = () => {
 
   return useMutation({
     mutationKey: ["create", "modifier"],
-    mutationFn: (data: CreateModifierT) => productService.createModifier(data),
+    mutationFn: (data: CreateModifierT) => productApi.createModifier(data),
     onMutate: () => {
       toast.loading("Creando modificador...", { id: "create-modifier" });
     },

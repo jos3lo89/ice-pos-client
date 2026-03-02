@@ -21,11 +21,11 @@ export const CreateCategoryPage = lazy(
 );
 
 export const ProductsPage = lazy(
-  () => import("@/features/products/pages/ProductsPage"),
+  () => import("@/presentation/features/products/pages/ProductsPage"),
 );
 
 export const CreateProductPage = lazy(
-  () => import("@/features/products/pages/CreateProductPage"),
+  () => import("@/presentation/features/products/pages/CreateProductPage"),
 );
 
 export const FloorsPage = lazy(

@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useCreateVariant } from "../hooks/useProduct";
 import {
   createVariantSchema,
   type CreateVariantT,
@@ -24,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Layers, DollarSign, Package, CheckCircle2 } from "lucide-react";
+import { useCreateVariant } from "@/application/hooks/useProduct";
 
 type Props = {
   productId: string;

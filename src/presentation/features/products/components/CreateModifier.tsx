@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Wand2, DollarSign, Tag, CheckCircle2 } from "lucide-react";
-import { useCreateModifier } from "../hooks/useProduct";
+import { useCreateModifier } from "@/application/hooks/useProduct";
 
 type Props = {
   productId: string;
