@@ -14,6 +14,10 @@ import {
   CreateTablePage,
   OrderEntryPage,
   FloorWithTablesPage,
+  CashierPage,
+  PointOfSalePage,
+  ChargePage,
+  SessionPaymentsPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -22,6 +26,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import ServerLayout from "@/layouts/ServerLayout";
 import RoleGuard from "@/guards/RoleGuard";
 import GuestGuard from "@/guards/GuestGuard";
+import CashierLayout from "@/layouts/CashierLayout";
 
 export const routes = createBrowserRouter([
   {
@@ -95,6 +100,33 @@ export const routes = createBrowserRouter([
       {
         path: "/agregar-item/:orderId",
         element: <OrderEntryPage />,
+      },
+    ],
+  },
+  {
+    element: (
+      <AuthGuard>
+        <RoleGuard allowedRoles={["cajero"]}>
+          <CashierLayout />
+        </RoleGuard>
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: "/caja",
+        element: <CashierPage />,
+      },
+      {
+        path: "/punto-venta",
+        element: <PointOfSalePage />,
+      },
+      {
+        path: "/punto-venta/cobrar/:orderId",
+        element: <ChargePage />,
+      },
+      {
+        path: "/pagos/:sessionId",
+        element: <SessionPaymentsPage />,
       },
     ],
   },

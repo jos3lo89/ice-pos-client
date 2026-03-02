@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { categorieService } from "../services/categories.service";
-import { AxiosError } from "axios";
 import { toast } from "sonner";
 import type { CreateCategorieT } from "../schemas/categorie.schema";
 import type { UpdateStateCategoryReq } from "../interfaces/categories.interface";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export const UseCategorieList = (
   page: number,
@@ -35,13 +35,8 @@ export const useCreateCategorie = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear la categoria";
-
       toast.error("Error al crear la categoria", {
-        description: message,
+        description: getErrorMessage(error, "Error al crear la categoria"),
         id: "create-categorie",
       });
     },
@@ -66,13 +61,11 @@ export const useChangeCategorieState = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al cambiar el estado de la categoria";
-
       toast.error("Error al cambiar el estado de la categoria", {
-        description: message,
+        description: getErrorMessage(
+          error,
+          "Error al cambiar el estado de la categoria",
+        ),
         id: "change-state-category",
       });
     },

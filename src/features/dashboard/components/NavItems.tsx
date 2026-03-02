@@ -1,19 +1,16 @@
 import type { UserRole } from "@/common/types/roles";
 import {
-  ChefHat,
-  ClipboardList,
   LayoutDashboard,
   ShoppingCart,
   Tags,
   UserRoundCogIcon,
-  UtensilsCrossed,
-  History,
   type LucideIcon,
   Plus,
   List,
   Package,
   Layers,
   LayoutGrid,
+  Wallet,
 } from "lucide-react";
 
 export interface NavItem {
@@ -44,22 +41,6 @@ export const allNavItems: NavGroup[] = [
         label: "Dashboard",
         exact: true,
       },
-      // {
-      //   label: "Gestión",
-      //   icon: Package,
-      //   children: [
-      //     {
-      //       to: "/productos",
-      //       icon: Package,
-      //       label: "Productos",
-      //     },
-      //     {
-      //       to: "/categorias",
-      //       icon: Tags,
-      //       label: "Categorías",
-      //     },
-      //   ],
-      // },
       {
         label: "Empleados",
         icon: UserRoundCogIcon,
@@ -76,11 +57,6 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
-      // {
-      //   to: "/reportes",
-      //   icon: ClipboardList,
-      //   label: "Reportes",
-      // },
       {
         label: "Categorías",
         icon: Tags,
@@ -151,48 +127,59 @@ export const allNavItems: NavGroup[] = [
     role: "cajero",
     children: [
       {
-        to: "/",
-        icon: LayoutDashboard,
-        label: "Dashboard",
+        to: "/caja",
+        icon: Wallet,
+        label: "Caja",
         exact: true,
       },
       {
-        label: "Operaciones",
+        to: "/punto-venta",
         icon: ShoppingCart,
-        children: [
-          {
-            to: "/dashboard/pos",
-            icon: ShoppingCart,
-            label: "Punto de Venta",
-          },
-          {
-            to: "/dashboard/kitchen",
-            icon: ChefHat,
-            label: "Cocina",
-          },
-        ],
+        label: "Punto de Venta",
       },
-      {
-        label: "Atención",
-        icon: UtensilsCrossed,
-        children: [
-          {
-            to: "/dashboard/tables",
-            icon: UtensilsCrossed,
-            label: "Mesas",
-          },
-          {
-            to: "/dashboard/orders",
-            icon: ClipboardList,
-            label: "Pedidos",
-          },
-        ],
-      },
-      {
-        to: "/history",
-        icon: History,
-        label: "Historial",
-      },
+      // {
+      //   to: "/",
+      //   icon: LayoutDashboard,
+      //   label: "Dashboard",
+      //   exact: true,
+      // },
+      // {
+      //   label: "Operaciones",
+      //   icon: ShoppingCart,
+      //   children: [
+      //     {
+      //       to: "/punto-venta",
+      //       icon: ShoppingCart,
+      //       label: "Punto de Venta",
+      //     },
+      //     // {
+      //     //   to: "/cocina",
+      //     //   icon: ChefHat,
+      //     //   label: "Cocina",
+      //     // },
+      //   ],
+      // },
+      // {
+      //   label: "Atención",
+      //   icon: UtensilsCrossed,
+      //   children: [
+      //     {
+      //       to: "/dashboard/tables",
+      //       icon: UtensilsCrossed,
+      //       label: "Mesas",
+      //     },
+      //     {
+      //       to: "/dashboard/orders",
+      //       icon: ClipboardList,
+      //       label: "Pedidos",
+      //     },
+      //   ],
+      // },
+      // {
+      //   to: "/history",
+      //   icon: History,
+      //   label: "Historial",
+      // },
     ],
   },
 ];

@@ -1,11 +1,11 @@
 import { authService } from "@/features/auth/services/auth.service";
 import { useAuthStore } from "@/stores/auth.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { toast } from "sonner";
 import type { LoginT } from "../schemas/auth.schema";
 import { roleBasedRedirection } from "@/utils/role-based-redirection";
 import { useNavigate } from "react-router-dom";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export const useLogin = () => {
   const { setUser } = useAuthStore();
@@ -26,11 +26,9 @@ export const useLogin = () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (err) => {
-      const message =
-        err instanceof AxiosError
-          ? err.response?.data.message
-          : "Ocurrió un error al iniciar sesión";
-      toast.error(message, { id: "login" });
+      toast.error(getErrorMessage(err, "Ocurrió un error al iniciar sesión"), {
+        id: "login",
+      });
     },
   });
 };
@@ -51,11 +49,9 @@ export const useLogout = () => {
       navigate("/login", { replace: true });
     },
     onError: (err) => {
-      const message =
-        err instanceof AxiosError
-          ? err.response?.data.message
-          : "Ocurrió un error al cerrar sesión";
-      toast.error(message, { id: "logout" });
+      toast.error(getErrorMessage(err, "Ocurrió un error al cerrar sesión"), {
+        id: "logout",
+      });
     },
   });
 };

@@ -34,7 +34,8 @@ export interface CurrentOrderRes {
   };
   items_orden: ItemsOrden[];
   usuarios: Usuarios;
-  mesa_actual: MesaActual;
+  mesa_actual: MesaActual | null;
+  mesa_historial?: MesaActual;
 }
 
 export interface ItemsOrden {
@@ -80,7 +81,7 @@ export interface MesaActual {
   orden_actual_id: string;
   fecha_creacion: string;
   fecha_actualizacion: string;
-  pisos: Pisos;
+  pisos?: Pisos;
 }
 
 export interface Pisos {
