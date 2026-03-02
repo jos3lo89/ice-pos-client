@@ -23,6 +23,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -52,8 +59,13 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleLimitChange = (value: string) => {
+    setLimit(Number(value));
+    setPage(1);
+  };
 
   const { data, isLoading, isError, error, refetch } = useSessionPayments({
     sessionId,
@@ -149,8 +161,7 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
     .sort((a, b) => b.numeroOrden.localeCompare(a.numeroOrden));
 
   return (
-    <div className="space-y-4">
-      {/* Search Header */}
+    <div className="space-y-4 mb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/30 p-4 rounded-xl border border-slate-700/50 backdrop-blur-sm">
         <form
           onSubmit={handleSubmit(onSearchSubmit)}
@@ -194,7 +205,6 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
         </div>
       </div>
 
-      {/* Table Container */}
       <div className="rounded-xl border border-slate-700/50 bg-[#1e293b]/40 overflow-hidden shadow-2xl backdrop-blur-sm">
         <div className="overflow-x-auto">
           <Table>
@@ -358,12 +368,38 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
           </Table>
         </div>
 
-        {/* Pagination Footer */}
-        <div className="p-4 bg-slate-800/40 border-t border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-xs text-slate-400 font-medium">
-            Mostrando página{" "}
-            <span className="text-cyan-400 font-bold">{meta?.page}</span> de{" "}
-            <span className="text-slate-200">{meta?.lastPage}</span>
+        <div className="p-4 bg-slate-800/40 border-t border-slate-700/50 flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
+            <div className="text-xs text-slate-400 font-medium whitespace-nowrap order-2 sm:order-1">
+              Mostrando página{" "}
+              <span className="text-cyan-400 font-bold">{meta?.page}</span> de{" "}
+              <span className="text-slate-200">{meta?.lastPage}</span>
+            </div>
+
+            <div className="flex items-center gap-2 order-1 sm:order-2">
+              <span className="text-xs text-slate-500 font-bold uppercase tracking-wider whitespace-nowrap">
+                Filas
+              </span>
+              <Select
+                value={limit.toString()}
+                onValueChange={handleLimitChange}
+              >
+                <SelectTrigger className="w-[70px] h-8 bg-slate-900/50 border-slate-700 text-slate-200 focus:ring-cyan-500/20 rounded-lg text-xs font-bold">
+                  <SelectValue placeholder={limit.toString()} />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-slate-700 text-slate-200 min-w-[70px]">
+                  {[5, 10, 20, 50].map((v) => (
+                    <SelectItem
+                      key={v}
+                      value={v.toString()}
+                      className="text-xs focus:bg-cyan-500/10 focus:text-cyan-400 cursor-pointer font-bold"
+                    >
+                      {v}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <Pagination

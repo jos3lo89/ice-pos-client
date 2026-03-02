@@ -48,10 +48,6 @@ const PointOfSalePage = () => {
 
   const handleTableClick = (table: Mesa) => {
     if (table.estado === "ocupada" && table.orden_actual) {
-      // console.log(
-      //   `Navegando a cobrar mesa: ${table.numero_mesa}`,
-      //   table.orden_actual.id,
-      // );
       navigate(`/punto-venta/cobrar/${table.orden_actual.id}`);
     } else {
       console.log(

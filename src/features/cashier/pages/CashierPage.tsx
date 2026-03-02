@@ -124,7 +124,7 @@ const CashierPage = () => {
   }
 
   const handleNavigateToSessionPayments = () => {
-    navigate(`/punto-venta/pagos/${session.id}`);
+    navigate(`/pagos/${session.id}`);
   };
 
   return (

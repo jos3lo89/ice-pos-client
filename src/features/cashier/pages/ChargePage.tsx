@@ -24,6 +24,9 @@ import {
   ShieldCheck,
   Check,
   MoreVertical,
+  XCircle,
+  Timer,
+  CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/features/orders/utils/status-config";
@@ -159,7 +162,10 @@ const ChargePage = () => {
                     onClick={() => {
                       const all: Record<string, number> = {};
                       items.forEach((i) => {
-                        if (i.cantidad_pendiente > 0)
+                        if (
+                          i.cantidad_pendiente > 0 &&
+                          i.estado !== "cancelado"
+                        )
                           all[i.id] = i.cantidad_pendiente;
                       });
                       setSelectedItems(all);
@@ -174,7 +180,8 @@ const ChargePage = () => {
               <div className="divide-y divide-slate-700/30">
                 {items.map((item) => {
                   const isSelected = !!selectedItems[item.id];
-                  const canBePaid = item.cantidad_pendiente > 0;
+                  const isCancelled = item.estado === "cancelado";
+                  const canBePaid = item.cantidad_pendiente > 0 && !isCancelled;
                   const isFullyPaid = item.esta_pagado;
 
                   return (
@@ -185,7 +192,9 @@ const ChargePage = () => {
                         isSelected
                           ? "bg-emerald-500/5"
                           : "hover:bg-slate-800/20",
-                        !canBePaid && "opacity-60 grayscale-[0.5]",
+                        !canBePaid && "opacity-50 grayscale",
+                        isCancelled &&
+                          "border-l-4 border-l-red-500 shadow-inner",
                       )}
                       onClick={() =>
                         canBePaid &&
@@ -200,7 +209,8 @@ const ChargePage = () => {
                               ? "bg-emerald-500 border-emerald-500 shadow-md shadow-emerald-500/20"
                               : "border-slate-600 bg-slate-800",
                             !canBePaid &&
-                              "opacity-20 bg-slate-900 border-slate-800",
+                              "opacity-20 bg-slate-900 border-slate-800 cursor-not-allowed",
+                            isCancelled && "border-red-500/30",
                           )}
                         >
                           {isSelected && (
@@ -244,12 +254,37 @@ const ChargePage = () => {
                                 {item.cantidad_pagada} pagados
                               </Badge>
                             )}
-                            {item.cantidad_pendiente > 0 && !isFullyPaid && (
-                              <Badge
-                                variant="secondary"
-                                className="bg-orange-500/10 text-orange-400 text-[9px] border-orange-500/20"
-                              >
-                                {item.cantidad_pendiente} pendientes
+                            {item.cantidad_pendiente > 0 &&
+                              !isFullyPaid &&
+                              !isCancelled && (
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-orange-500/10 text-orange-400 text-[9px] border-orange-500/20"
+                                >
+                                  {item.cantidad_pendiente} pendientes
+                                </Badge>
+                              )}
+
+                            {/* Item State Badges */}
+                            {item.estado === "pendiente" && (
+                              <Badge className="bg-slate-700/50 text-slate-400 text-[9px] border-slate-600/30 gap-1 px-1.5 h-4">
+                                <Timer className="w-2.5 h-2.5" /> Pendiente
+                              </Badge>
+                            )}
+                            {item.estado === "preparando" && (
+                              <Badge className="bg-orange-500/10 text-orange-400 text-[9px] border-orange-500/20 gap-1 px-1.5 h-4">
+                                <Timer className="w-2.5 h-2.5 animate-spin-slow" />{" "}
+                                Preparando
+                              </Badge>
+                            )}
+                            {item.estado === "listo" && (
+                              <Badge className="bg-emerald-500/10 text-emerald-400 text-[9px] border-emerald-500/20 gap-1 px-1.5 h-4">
+                                <CheckCircle2 className="w-2.5 h-2.5" /> Listo
+                              </Badge>
+                            )}
+                            {isCancelled && (
+                              <Badge className="bg-red-500/10 text-red-400 text-[9px] border-red-500/20 gap-1 px-1.5 h-4">
+                                <XCircle className="w-2.5 h-2.5" /> Cancelado
                               </Badge>
                             )}
                           </div>

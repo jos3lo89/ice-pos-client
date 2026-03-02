@@ -125,7 +125,7 @@ export const routes = createBrowserRouter([
         element: <ChargePage />,
       },
       {
-        path: "/punto-venta/pagos/:sessionId",
+        path: "/pagos/:sessionId",
         element: <SessionPaymentsPage />,
       },
     ],

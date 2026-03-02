@@ -75,10 +75,16 @@ export const useSessionPayments = (dto: {
     search?: string;
   };
 }) => {
-  console.log(dto);
-
   return useQuery({
-    queryKey: ["cash-register", "session", "payments", dto.sessionId],
+    queryKey: [
+      "cash-register",
+      "session",
+      "payments",
+      dto.sessionId,
+      dto.meta.page,
+      dto.meta.limit,
+      dto.meta.search,
+    ],
     queryFn: () => cashierservice.getSessionPayments(dto),
     enabled: !!dto.sessionId,
   });

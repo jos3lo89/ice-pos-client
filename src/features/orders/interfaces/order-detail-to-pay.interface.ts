@@ -28,6 +28,7 @@ export interface Item {
   nombre_variante: string | null;
   precio_variante: number;
   cantidad: number;
+  estado: "pendiente" | "preparando" | "listo" | "cancelado";
   cantidad_pagada: number;
   cantidad_pendiente: number;
   precio_unitario: number;
