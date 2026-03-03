@@ -104,3 +104,18 @@ export interface SendComandRes {
   fecha_actualizacion: string;
   fecha_completado: string | null;
 }
+
+// crear orden request
+export interface CreateOrderI {
+  table_id: string;
+  notes?: string;
+}
+
+// agregar producto a la orden request
+export interface AddProductToOrderI {
+  productId: string;
+  quantity: number;
+  variant_id?: string;
+  modifier_ids?: string[];
+  notes?: string;
+}

@@ -19,18 +19,20 @@ import {
   CheckCircle2,
   Ban,
 } from "lucide-react";
+
+import { formatPricePEN } from "@/helpers/format-price";
+
+import { useParams } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import type {
   ItemsOrden,
   OrderItemStatus,
-} from "../interfaces/current-order.interface";
-import { formatPricePEN } from "@/helpers/format-price";
+} from "@/core/entities/current-order.entity";
 import {
   useCancelOrderItem,
   useDeleteOrderItem,
   useSendComand,
-} from "../hooks/useOrder";
-import { useParams } from "react-router-dom";
-import { cn } from "@/lib/utils";
+} from "@/application/hooks/useOrder";
 
 type Props = {
   isCartOpen: boolean;

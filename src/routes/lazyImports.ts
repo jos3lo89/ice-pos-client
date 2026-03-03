@@ -49,11 +49,11 @@ export const ProfilePage = lazy(
 );
 
 export const OrderEntryPage = lazy(
-  () => import("@/features/orders/pages/OrderEntryPage"),
+  () => import("@/presentation/features/orders/pages/OrderEntryPage"),
 );
 
 export const FloorWithTablesPage = lazy(
-  () => import("@/features/orders/pages/FloorWithTablesPage"),
+  () => import("@/presentation/features/orders/pages/FloorWithTablesPage"),
 );
 
 export const CashierPage = lazy(

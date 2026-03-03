@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useCreateOrder } from "../hooks/useOrder";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ClipboardList, Loader2, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCreateOrder } from "@/application/hooks/useOrder";
 
 type Props = {
   tableId: string;

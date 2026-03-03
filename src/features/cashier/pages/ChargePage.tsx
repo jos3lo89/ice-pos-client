@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetOrderDetails } from "@/features/orders/hooks/useOrder";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import {
@@ -29,12 +28,13 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { statusConfig } from "@/features/orders/utils/status-config";
+import { statusConfig } from "@/presentation/features/orders/utils/status-config";
 import { formatPricePEN } from "@/helpers/format-price";
 import { PaymentDialog } from "@/presentation/features/payments/components/PaymentDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { TicketVentaDialog } from "../components/TicketVentaDialog";
 import { Printer } from "lucide-react";
+import { useGetOrderDetails } from "@/application/hooks/useOrder";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();

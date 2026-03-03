@@ -1,17 +1,20 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { AddProductToOrderT, CreateOrderT } from "../schemas/order.schema";
-import { orderService } from "../services/order.service";
-import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useQueryClient } from "@tanstack/react-query";
-import type { SendComandT } from "../interfaces/order.interface";
+import { orderApi } from "@/infrastructure/api/order.api";
+import type {
+  AddProductToOrderI,
+  CreateOrderI,
+  SendComandT,
+} from "@/core/entities/order.entity";
+import { toast } from "sonner";
 
 // crear orden
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["create", "order"],
-    mutationFn: (order: CreateOrderT) => orderService.create(order),
+    mutationFn: (order: CreateOrderI) => orderApi.create(order),
     onMutate: () => {
       toast.loading("Creando orden...", { id: "create-order" });
     },
@@ -34,8 +37,8 @@ export const useAddProductToOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["add", "product", "to", "order"],
-    mutationFn: (dto: { orderId: string; order: AddProductToOrderT }) =>
-      orderService.addProductToOrder(dto),
+    mutationFn: (dto: { orderId: string; order: AddProductToOrderI }) =>
+      orderApi.addProductToOrder(dto),
     onMutate: () => {
       toast.loading("Agregando producto a la orden...", {
         id: "add-product-to-order",
@@ -62,7 +65,7 @@ export const useAddProductToOrder = () => {
 export const useGetCurrentOrderById = (orderId: string) => {
   return useQuery({
     queryKey: ["current", "order", orderId],
-    queryFn: () => orderService.getOrderById(orderId),
+    queryFn: () => orderApi.getOrderById(orderId),
     enabled: !!orderId,
   });
 };
@@ -73,7 +76,7 @@ export const useDeleteOrderItem = () => {
 
   return useMutation({
     mutationKey: ["delete", "order", "item"],
-    mutationFn: (itemId: string) => orderService.deleteOrderItem(itemId),
+    mutationFn: (itemId: string) => orderApi.deleteOrderItem(itemId),
     onMutate: () => {
       toast.loading("Eliminando producto de la orden...", {
         id: "delete-order-item",
@@ -101,7 +104,7 @@ export const useDeleteOrder = () => {
 
   return useMutation({
     mutationKey: ["delete", "order"],
-    mutationFn: (orderId: string) => orderService.deleteOrder(orderId),
+    mutationFn: (orderId: string) => orderApi.deleteOrder(orderId),
     onMutate: () => {
       toast.loading("Eliminando orden...", { id: "delete-order" });
     },
@@ -126,7 +129,7 @@ export const useSendComand = () => {
 
   return useMutation({
     mutationKey: ["send", "comand"],
-    mutationFn: (dto: SendComandT) => orderService.sendComand(dto),
+    mutationFn: (dto: SendComandT) => orderApi.sendComand(dto),
     onMutate: () => {
       toast.loading("Enviando comanda...", { id: "send-comand" });
     },
@@ -151,7 +154,7 @@ export const useCancelOrderItem = () => {
   return useMutation({
     mutationKey: ["cancel", "order", "item"],
     mutationFn: (dto: { orderId: string; itemId: string }) =>
-      orderService.cancelOrderItem(dto),
+      orderApi.cancelOrderItem(dto),
     onMutate: () => {
       toast.loading("Cancelando producto de la orden...", {
         id: "cancel-order-item",
@@ -179,7 +182,7 @@ export const useCancelOrder = () => {
 
   return useMutation({
     mutationKey: ["cancel", "order"],
-    mutationFn: (orderId: string) => orderService.cancelOrder(orderId),
+    mutationFn: (orderId: string) => orderApi.cancelOrder(orderId),
     onMutate: () => {
       toast.loading("Cancelando orden...", { id: "cancel-order" });
     },
@@ -202,7 +205,7 @@ export const useCancelOrder = () => {
 export const useGetOrderDetails = (orderId: string) => {
   return useQuery({
     queryKey: ["order", "details", orderId],
-    queryFn: () => orderService.getOrderDetails(orderId),
+    queryFn: () => orderApi.getOrderDetails(orderId),
     enabled: !!orderId,
   });
 };

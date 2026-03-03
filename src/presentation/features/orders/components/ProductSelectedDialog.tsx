@@ -13,10 +13,10 @@ import { formatPricePEN } from "@/helpers/format-price";
 import { cn } from "@/lib/utils";
 import { Check, Loader2, Minus, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useAddProductToOrder } from "../hooks/useOrder";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { useAddProductToOrder } from "@/application/hooks/useOrder";
 
 type Props = {
   product: Producto;

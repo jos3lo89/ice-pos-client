@@ -1,10 +1,10 @@
 import { ArrowLeft, Calendar, CheckCircle2, Receipt, User } from "lucide-react";
-import type { CurrentOrderRes } from "../interfaces/current-order.interface";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import type { CurrentOrderRes } from "@/core/entities/current-order.entity";
 
 type Props = {
   currentOrderData: CurrentOrderRes;

@@ -1,24 +1,26 @@
 import http from "@/config/axios";
-import type { AddProductToOrderT, CreateOrderT } from "../schemas/order.schema";
+import type { CurrentOrderRes } from "@/core/entities/current-order.entity";
+import type { OrderDetailToPayRes } from "@/core/entities/order-detail-to-pay.entity";
 import type {
+  AddProductToOrderI,
   AddProductToOrderRes,
+  CreateOrderI,
   CreateOrderRes,
   DeleteOrderItemRes,
   DeleteOrderRes,
   SendComandT,
-} from "../interfaces/order.interface";
-import type { CurrentOrderRes } from "../interfaces/current-order.interface";
-import type { OrderDetailToPayRes } from "../interfaces/order-detail-to-pay.interface";
+} from "@/core/entities/order.entity";
+import type { OrderRepository } from "@/core/repositories/order.repository";
 
-class OrderService {
+class OrderApi implements OrderRepository {
   private readonly baseUrl = "/orders";
 
-  async create(order: CreateOrderT) {
+  async create(order: CreateOrderI) {
     const { data } = await http.post<CreateOrderRes>(this.baseUrl, order);
     return data;
   }
 
-  async addProductToOrder(dto: { orderId: string; order: AddProductToOrderT }) {
+  async addProductToOrder(dto: { orderId: string; order: AddProductToOrderI }) {
     const { data } = await http.post<AddProductToOrderRes>(
       `${this.baseUrl}/${dto.orderId}/items`,
       dto.order,
@@ -82,4 +84,4 @@ class OrderService {
   }
 }
 
-export const orderService = new OrderService();
+export const orderApi = new OrderApi();

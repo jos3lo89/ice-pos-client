@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useCancelOrder,
-  useDeleteOrder,
-  useGetCurrentOrderById,
-} from "@/features/orders/hooks/useOrder";
+
 import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +12,11 @@ import { useParams } from "react-router-dom";
 import CartProductsSheet from "../components/CartProductsSheet";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import OrderComplete from "../components/OrderComplete";
+import {
+  useCancelOrder,
+  useDeleteOrder,
+  useGetCurrentOrderById,
+} from "@/application/hooks/useOrder";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
