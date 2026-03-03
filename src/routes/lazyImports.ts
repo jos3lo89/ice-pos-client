@@ -21,27 +21,27 @@ export const CreateCategoryPage = lazy(
 );
 
 export const ProductsPage = lazy(
-  () => import("@/features/products/pages/ProductsPage"),
+  () => import("@/presentation/features/products/pages/ProductsPage"),
 );
 
 export const CreateProductPage = lazy(
-  () => import("@/features/products/pages/CreateProductPage"),
+  () => import("@/presentation/features/products/pages/CreateProductPage"),
 );
 
 export const FloorsPage = lazy(
-  () => import("@/features/floors/pages/FloorsPage"),
+  () => import("@/presentation/features/floors/pages/FloorsPage"),
 );
 
 export const CreateFloorPage = lazy(
-  () => import("@/features/floors/pages/CreateFloorPage"),
+  () => import("@/presentation/features/floors/pages/CreateFloorPage"),
 );
 
 export const TablesPage = lazy(
-  () => import("@/features/tables/pages/TablesPage"),
+  () => import("@/presentation/features/tables/pages/TablesPage"),
 );
 
 export const CreateTablePage = lazy(
-  () => import("@/features/tables/pages/CreateTablePage"),
+  () => import("@/presentation/features/tables/pages/CreateTablePage"),
 );
 
 export const ProfilePage = lazy(
@@ -49,27 +49,27 @@ export const ProfilePage = lazy(
 );
 
 export const OrderEntryPage = lazy(
-  () => import("@/features/orders/pages/OrderEntryPage"),
+  () => import("@/presentation/features/orders/pages/OrderEntryPage"),
 );
 
 export const FloorWithTablesPage = lazy(
-  () => import("@/features/orders/pages/FloorWithTablesPage"),
+  () => import("@/presentation/features/orders/pages/FloorWithTablesPage"),
 );
 
 export const CashierPage = lazy(
-  () => import("@/features/cashier/pages/CashierPage"),
+  () => import("@/presentation/features/cashier/pages/CashierPage"),
 );
 
 export const PointOfSalePage = lazy(
-  () => import("@/features/cashier/pages/PointOfSalePage"),
+  () => import("@/presentation/features/cashier/pages/PointOfSalePage"),
 );
 
 export const ChargePage = lazy(
-  () => import("@/features/cashier/pages/ChargePage"),
+  () => import("@/presentation/features/cashier/pages/ChargePage"),
 );
 
 export const SessionPaymentsPage = lazy(
-  () => import("@/features/cashier/pages/SessionPaymentsPage"),
+  () => import("@/presentation/features/cashier/pages/SessionPaymentsPage"),
 );
 
 export const MovementsHistoryPage = lazy(

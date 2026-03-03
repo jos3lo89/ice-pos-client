@@ -19,10 +19,10 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
-import { useCurrentSession } from "@/features/cashier/hooks/useCashier";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
 import { useLogout } from "@/application/hooks/useAuth";
+import { useCurrentSession } from "@/application/hooks/useCashier";
 
 const CashierLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
