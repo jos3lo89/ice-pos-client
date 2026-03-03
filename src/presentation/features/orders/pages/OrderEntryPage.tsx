@@ -17,12 +17,16 @@ import {
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/application/hooks/useOrder";
+import OrderCanceled from "../components/OrderCanceled";
+import CancelOrderDialog from "../components/CancelOrderDialog";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
 
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [isCancelOrderDialogOpen, setIsCancelOrderDialogOpen] = useState(false);
 
   const currentOrder = useGetCurrentOrderById(orderId!);
   const deleteOrder = useDeleteOrder();
@@ -56,6 +60,10 @@ const OrderEntryPage = () => {
     return <OrderComplete currentOrderData={currentOrderData} />;
   }
 
+  if (currentOrderData.estado === "cancelado") {
+    return <OrderCanceled />;
+  }
+
   const handleDeleteOrder = () => {
     deleteOrder.mutate(currentOrderData.id, {
       onSuccess: () => {
@@ -64,13 +72,20 @@ const OrderEntryPage = () => {
     });
   };
 
-  const handleCancelOrder = () => {
-    cancelOrder.mutate(currentOrderData.id, {
-      onSuccess: () => {
-        navigate("/mesas");
-      },
-    });
-  };
+  // TODO: Agregar un dialog para pedir la razón de la cancelación
+  // const handleCancelOrder = () => {
+  //   cancelOrder.mutate(
+  //     {
+  //       orderId: currentOrderData.id,
+  //       reason: "", // TODO: Agregar la razón de la cancelación
+  //     },
+  //     {
+  //       onSuccess: () => {
+  //         navigate("/mesas");
+  //       },
+  //     },
+  //   );
+  // };
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
@@ -111,20 +126,15 @@ const OrderEntryPage = () => {
               </Button>
             </ConfirmDialog>
           ) : (
-            <ConfirmDialog
-              onConfirm={handleCancelOrder}
-              title="Cancelar orden"
-              description="¿Estas seguro de cancelar la orden?"
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative bg-orange-500/10 border-orange-500/20 hover:bg-orange-500 hover:border-orange-500 text-orange-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-orange-500/5 group"
+              disabled={cancelOrder.isPending}
+              onClick={() => setIsCancelOrderDialogOpen(true)}
             >
-              <Button
-                variant="outline"
-                size="icon"
-                className="relative bg-orange-500/10 border-orange-500/20 hover:bg-orange-500 hover:border-orange-500 text-orange-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-orange-500/5 group"
-                disabled={cancelOrder.isPending}
-              >
-                <X className="w-5 h-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
-              </Button>
-            </ConfirmDialog>
+              <X className="w-5 h-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
+            </Button>
           )}
 
           <Button
@@ -154,6 +164,15 @@ const OrderEntryPage = () => {
         items={currentOrderData.items_orden}
         total={currentOrderData.total}
       />
+
+      {isCancelOrderDialogOpen && (
+        <CancelOrderDialog
+          isOpen={isCancelOrderDialogOpen}
+          onClose={() => setIsCancelOrderDialogOpen(false)}
+          orderId={orderId!}
+          // onSuccess={() => navigate("/mesas")}
+        />
+      )}
     </div>
   );
 };

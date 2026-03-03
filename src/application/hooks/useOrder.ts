@@ -182,7 +182,8 @@ export const useCancelOrder = () => {
 
   return useMutation({
     mutationKey: ["cancel", "order"],
-    mutationFn: (orderId: string) => orderApi.cancelOrder(orderId),
+    mutationFn: (dto: { orderId: string; reason: string }) =>
+      orderApi.cancelOrder(dto),
     onMutate: () => {
       toast.loading("Cancelando orden...", { id: "cancel-order" });
     },
@@ -190,6 +191,7 @@ export const useCancelOrder = () => {
       toast.success("Orden cancelada correctamente", { id: "cancel-order" });
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
       const message =
