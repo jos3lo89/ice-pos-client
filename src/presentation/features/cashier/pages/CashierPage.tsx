@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
+} from "@/presentation/components/ui/card";
 import {
   Wallet,
   TrendingUp,
@@ -22,15 +22,15 @@ import {
   ArrowDown,
   Activity,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/presentation/components/ui/badge";
+import { Button } from "@/presentation/components/ui/button";
+import { Skeleton } from "@/presentation/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { OpenSessionDialog } from "../components/OpenSessionDialog";
 import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useNavigate } from "react-router-dom";
 import { useCurrentSession } from "@/application/hooks/useCashier";
 import CreateCashMovement from "../../cash-movement/components/CreateCashMovement";

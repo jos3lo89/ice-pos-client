@@ -8,10 +8,10 @@ export const DashboardHome = lazy(
 );
 
 export const UsersPage = lazy(
-  () => import("@/presentation/features/employes/page/UsersPage"),
+  () => import("@/presentation/features/employees/page/UsersPage"),
 );
 export const CreateUserPage = lazy(
-  () => import("@/presentation/features/employes/page/CreateUserPage"),
+  () => import("@/presentation/features/employees/page/CreateUserPage"),
 );
 export const CategoriesPage = lazy(
   () => import("@/presentation/features/categories/pages/CategoriesPage"),
@@ -45,7 +45,7 @@ export const CreateTablePage = lazy(
 );
 
 export const ProfilePage = lazy(
-  () => import("@/presentation/features/employes/page/ProfilePage"),
+  () => import("@/presentation/features/employees/page/ProfilePage"),
 );
 
 export const OrderEntryPage = lazy(

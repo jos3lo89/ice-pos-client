@@ -5,10 +5,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/presentation/components/ui/dialog";
+import { Button } from "@/presentation/components/ui/button";
+import { Label } from "@/presentation/components/ui/label";
+import { Textarea } from "@/presentation/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ClipboardList, Loader2, PlusCircle } from "lucide-react";

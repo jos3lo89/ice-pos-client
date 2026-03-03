@@ -3,7 +3,7 @@ import { urlToBase64 } from "../url-to-base64";
 import createPdf from "./CreatePdf";
 import type { PdfResponse, TicketOutput } from "./ticket.interface";
 import { formatDateTime } from "../format-date-time";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 
 export interface DataEmpresa extends GetTicketRes {
   logo: string;

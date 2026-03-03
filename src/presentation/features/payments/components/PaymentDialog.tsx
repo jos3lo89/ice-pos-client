@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/presentation/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -15,10 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/presentation/components/ui/form";
+import { Input } from "@/presentation/components/ui/input";
+import { Button } from "@/presentation/components/ui/button";
+import { Textarea } from "@/presentation/components/ui/textarea";
 import {
   Wallet,
   CreditCard,
@@ -30,14 +30,14 @@ import {
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import { useGetDefaultClient } from "@/application/hooks/useClient";
 import {
   paymentSchema,
   type PaymentFormValues,
 } from "../schemas/payment.schema";
 import { cn } from "@/lib/utils";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useMemo, useEffect } from "react";
 import { useCreatePayment } from "@/application/hooks/usePayment";
 

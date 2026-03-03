@@ -1,6 +1,4 @@
 import { useState, Fragment } from "react";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
 import {
   MoreVertical,
   Search,
@@ -11,8 +9,7 @@ import {
   CircleDollarSign,
   Ticket,
 } from "lucide-react";
-import Pagination from "@/components/common/Pagination";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/presentation/components/ui/input";
 import {
   Table,
   TableBody,
@@ -20,14 +17,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/presentation/components/ui/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/presentation/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,17 +32,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/presentation/components/ui/dropdown-menu";
+import { Button } from "@/presentation/components/ui/button";
 import { useForm } from "react-hook-form";
 import { TicketVentaDialog } from "./TicketVentaDialog";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import { cn } from "@/lib/utils";
-import type { PaymentSession } from "../../../../core/entities/session-payments.entity";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 import { useNavigate } from "react-router-dom";
 import { useSessionPayments } from "@/application/hooks/useCashier";
+import type { PaymentSession } from "@/core/entities/session-payments.entity";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
+import Pagination from "@/presentation/components/Pagination";
 
 interface SessionPaymentsTableProps {
   sessionId: string;

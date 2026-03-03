@@ -1,4 +1,4 @@
-import type { UserRole } from "@/common/types/roles";
+export type UserRole = "admin" | "cajero" | "mesero" | "cocinero" | "bartender";
 
 // obtener todos los usuarios
 export interface User {

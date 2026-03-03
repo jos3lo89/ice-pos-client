@@ -1,10 +1,10 @@
 import { RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "./components/theme/theme-provider";
 import { routes } from "./routes/routes";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "./config/tanstack-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "./presentation/components/theme/theme-provider";
 
 const App = () => {
   return (

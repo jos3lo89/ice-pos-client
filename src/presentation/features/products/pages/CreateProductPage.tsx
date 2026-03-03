@@ -21,21 +21,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/presentation/components/ui/form";
+import { Input } from "@/presentation/components/ui/input";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/presentation/components/ui/select";
+import { Textarea } from "@/presentation/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useCategorieListAll } from "@/application/hooks/useCategorie";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useCreateProduct } from "@/application/hooks/useProduct";
 import type { CreateProductRes } from "@/core/entities/product.entity";
 

@@ -1,18 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/presentation/components/ui/tabs";
+import { Card, CardContent } from "@/presentation/components/ui/card";
+import { Badge } from "@/presentation/components/ui/badge";
 import { Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "../utils/status-config";
 import type { Mesa } from "@/core/entities/floors.entity";
 import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
 import { useFloorsWithTables } from "@/application/hooks/useFloor";
 
 const FloorWithTablesPage = () => {

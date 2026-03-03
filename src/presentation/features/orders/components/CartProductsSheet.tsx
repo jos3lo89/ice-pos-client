@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/presentation/components/ui/button";
+import { ScrollArea } from "@/presentation/components/ui/scroll-area";
 import {
   Sheet,
   SheetContent,
@@ -7,8 +7,8 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
+} from "@/presentation/components/ui/sheet";
+import { Badge } from "@/presentation/components/ui/badge";
 import {
   ShoppingCart,
   Trash2,
@@ -20,7 +20,7 @@ import {
   Ban,
 } from "lucide-react";
 
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";

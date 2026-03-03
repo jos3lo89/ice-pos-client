@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/presentation/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -19,9 +19,9 @@ import {
   FormLabel,
   FormMessage,
   FormDescription,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/presentation/components/ui/form";
+import { Input } from "@/presentation/components/ui/input";
+import { Button } from "@/presentation/components/ui/button";
 import { Layers, DollarSign, Package, CheckCircle2 } from "lucide-react";
 import { useCreateVariant } from "@/application/hooks/useProduct";
 

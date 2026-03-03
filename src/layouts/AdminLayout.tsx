@@ -1,9 +1,9 @@
-import AuthFallback from "@/components/common/AuthFallback";
-import ConfirmDialog from "@/components/common/ConfirmDialog";
+import AuthFallback from "@/presentation/components/AuthFallback";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
 import { cn } from "@/lib/utils";
-import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
+import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
 import {
   ChevronDown,
   ChevronRight,
@@ -18,9 +18,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { useLogout } from "@/application/hooks/useAuth";
 
-/**
- * AdminLayout - Unified administration environment with responsive sidebars and sub-menus.
- */
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);

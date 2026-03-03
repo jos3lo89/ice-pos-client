@@ -5,8 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@/presentation/components/ui/table";
 import {
   CheckCircle2,
   MoreVertical,
@@ -18,11 +17,11 @@ import {
   Settings2,
   History,
 } from "lucide-react";
-import Pagination from "@/components/common/Pagination";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import Pagination from "@/presentation/components/Pagination";
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -31,10 +30,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/presentation/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
 import { useTableList } from "@/application/hooks/useTable";
-import type { TableStatusT } from "@/common/types/order";
+import type { TableStatusT } from "@/core/entities/table.entity";
+import { Badge } from "@/presentation/components/ui/badge";
 
 const TablesTable = () => {
   const [page, setPage] = useState(1);

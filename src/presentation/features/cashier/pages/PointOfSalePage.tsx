@@ -1,8 +1,13 @@
-import ErrorState from "@/components/common/ErrorState";
-import LoadingState from "@/components/common/LoadingState";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import ErrorState from "@/presentation/components/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/presentation/components/ui/tabs";
+import { Card, CardContent } from "@/presentation/components/ui/card";
+import { Badge } from "@/presentation/components/ui/badge";
 import { LayoutGrid, Wallet, HandCoins, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/presentation/features/orders/utils/status-config";

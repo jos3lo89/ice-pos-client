@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
 import { Navigate } from "react-router-dom";
 import { roleBasedRedirection } from "@/utils/role-based-redirection";
 

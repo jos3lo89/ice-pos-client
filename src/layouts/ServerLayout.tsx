@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useAuthStore } from "@/stores/auth.store";
-import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
+import { useAuthStore } from "@/application/stores/auth.store";
+import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
 import {
   Menu,
   Utensils,
@@ -9,7 +9,7 @@ import {
   LayoutDashboard,
   ChevronRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -17,10 +17,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import ConfirmDialog from "@/components/common/ConfirmDialog";
+} from "@/presentation/components/ui/sheet";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { cn } from "@/lib/utils";
-import AuthFallback from "@/components/common/AuthFallback";
+import AuthFallback from "@/presentation/components/AuthFallback";
 import { useLogout } from "@/application/hooks/useAuth";
 
 const ServerLayout = () => {

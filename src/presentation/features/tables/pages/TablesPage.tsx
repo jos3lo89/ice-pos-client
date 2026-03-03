@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { Plus, LayoutGrid } from "lucide-react";
 import TablesTable from "../components/TablesTable";
 import { Link } from "react-router-dom";

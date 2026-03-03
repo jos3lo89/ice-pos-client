@@ -1,5 +1,5 @@
-import type { UserRole } from "@/common/types/roles";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
+import type { UserRole } from "@/core/entities/employe.entity";
 import { roleBasedRedirection } from "@/utils/role-based-redirection";
 import type { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";

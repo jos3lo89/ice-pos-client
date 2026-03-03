@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { Link } from "react-router-dom";
 import FloorsTable from "../components/FloorsTable";
 

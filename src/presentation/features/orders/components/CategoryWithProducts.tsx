@@ -1,16 +1,16 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/presentation/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { UtensilsCrossed, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/presentation/components/ui/input";
+import { Card, CardContent } from "@/presentation/components/ui/card";
+import { Badge } from "@/presentation/components/ui/badge";
 import { useCategoriesWithProducts } from "@/application/hooks/useCategorie";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import { useMemo, useState } from "react";
 import type { Producto } from "@/core/entities/categories.entity";
 import ProductSelectedDialog from "./ProductSelectedDialog";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useFloorsWithTables } from "@/application/hooks/useFloor";
 
 const CategoryWithProducts = () => {

@@ -1,3 +1,11 @@
+export type OrderStatusT =
+  | "pendiente"
+  | "preparando"
+  | "listo"
+  | "servido"
+  | "completado"
+  | "cancelado";
+
 // crear orden response
 export interface CreateOrderRes {
   id: string;

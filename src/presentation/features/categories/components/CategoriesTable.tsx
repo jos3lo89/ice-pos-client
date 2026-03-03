@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import {
   CheckCircle2,
   MoreVertical,
@@ -8,8 +8,8 @@ import {
   Search,
   XCircle,
 } from "lucide-react";
-import Pagination from "@/components/common/Pagination";
-import { Input } from "@/components/ui/input";
+import Pagination from "@/presentation/components/Pagination";
+import { Input } from "@/presentation/components/ui/input";
 import {
   Table,
   TableBody,
@@ -17,7 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/presentation/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,8 +25,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/presentation/components/ui/dropdown-menu";
+import { Button } from "@/presentation/components/ui/button";
 import ChangeStatusCatDialog from "./ChangeStatusCatDialog";
 import { useForm } from "react-hook-form";
 import type { Category } from "@/core/entities/categories.entity";
