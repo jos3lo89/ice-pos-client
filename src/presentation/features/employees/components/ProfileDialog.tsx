@@ -14,7 +14,6 @@ import {
   BadgeCheck,
   Clock,
   Mail,
-  Smartphone,
   CheckCircle2,
   XCircle,
   Calendar,
