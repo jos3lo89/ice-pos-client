@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/application/stores/auth.store";
-import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
+import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
 import {
   Menu,
   Utensils,

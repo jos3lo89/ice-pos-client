@@ -3,7 +3,7 @@ import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
 import { useAuthStore } from "@/application/stores/auth.store";
 import { cn } from "@/lib/utils";
-import ProfileDialog from "@/presentation/features/employes/components/ProfileDialog";
+import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
 import {
   ChevronDown,
   ChevronRight,
