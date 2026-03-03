@@ -1,5 +1,5 @@
-import type { UserRole } from "@/common/types/roles";
 import { STORAGE_NAME } from "@/constants/auht.constant";
+import type { UserRole } from "@/core/entities/employe.entity";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 

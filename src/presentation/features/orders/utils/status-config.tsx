@@ -1,4 +1,4 @@
-import type { TableStatusT } from "@/common/types/order";
+import type { TableStatusT } from "@/core/entities/table.entity";
 import { Coffee, Info, User, Utensils, type LucideIcon } from "lucide-react";
 
 export const statusConfig: Record<

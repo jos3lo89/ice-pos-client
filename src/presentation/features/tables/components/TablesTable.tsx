@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
 import { useTableList } from "@/application/hooks/useTable";
-import type { TableStatusT } from "@/common/types/order";
+import type { TableStatusT } from "@/core/entities/table.entity";
 
 const TablesTable = () => {
   const [page, setPage] = useState(1);

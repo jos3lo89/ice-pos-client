@@ -1,4 +1,4 @@
-import type { UserRole } from "@/common/types/roles";
+import type { UserRole } from "@/core/entities/employe.entity";
 import { Banknote, ChefHat, Coffee, Shield, Utensils } from "lucide-react";
 
 export const getRoleIcon = (role: UserRole) => {
