@@ -61,7 +61,6 @@ export const useAddProductToOrder = () => {
 };
 
 // get current order by id
-
 export const useGetCurrentOrderById = (orderId: string) => {
   return useQuery({
     queryKey: ["current", "order", orderId],
@@ -165,6 +164,7 @@ export const useCancelOrderItem = () => {
         id: "cancel-order-item",
       });
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
       const message =

@@ -12,6 +12,12 @@ import {
 import { Badge } from "@/presentation/components/ui/badge";
 import { Button } from "@/presentation/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/presentation/components/ui/dropdown-menu";
+import {
   ArrowLeft,
   Receipt,
   User,
@@ -34,7 +40,11 @@ import { PaymentDialog } from "@/presentation/features/payments/components/Payme
 import { formatDateTime } from "@/utils/format-date-time";
 import { TicketVentaDialog } from "../components/TicketVentaDialog";
 import { Printer } from "lucide-react";
-import { useGetOrderDetails } from "@/application/hooks/useOrder";
+import {
+  useCancelOrderItem,
+  useGetOrderDetails,
+} from "@/application/hooks/useOrder";
+import { toast } from "sonner";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -45,6 +55,7 @@ const ChargePage = () => {
     isError,
     refetch,
   } = useGetOrderDetails(orderId!);
+  const cancelOrderItem = useCancelOrderItem();
 
   const [selectedItems, setSelectedItems] = useState<Record<string, number>>(
     {},
@@ -92,6 +103,18 @@ const ChargePage = () => {
   const orderStatus =
     statusConfig[orden.estado as keyof typeof statusConfig] ||
     statusConfig.disponible;
+
+  const handleCancelItemOder = (itemId: string) => {
+    if (!orderId) {
+      toast.error("No se pudo obtener el id de la orden");
+      return;
+    }
+
+    cancelOrderItem.mutate({
+      itemId,
+      orderId,
+    });
+  };
 
   return (
     <div className="space-y-8 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -265,7 +288,6 @@ const ChargePage = () => {
                                 </Badge>
                               )}
 
-                            {/* Item State Badges */}
                             {item.estado === "pendiente" && (
                               <Badge className="bg-slate-700/50 text-slate-400 text-[9px] border-slate-600/30 gap-1 px-1.5 h-4">
                                 <Timer className="w-2.5 h-2.5" /> Pendiente
@@ -300,13 +322,34 @@ const ChargePage = () => {
                             {formatPricePEN(item.total_linea)}
                           </p>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-slate-600 hover:text-white"
-                        >
-                          <MoreVertical className="w-5 h-5" />
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-slate-600 hover:text-white"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <MoreVertical className="w-5 h-5" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="bg-slate-900 border-slate-700 text-slate-300"
+                          >
+                            <DropdownMenuItem
+                              className="text-red-400 focus:text-red-300 focus:bg-red-500/10 cursor-pointer gap-2"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleCancelItemOder(item.id);
+                              }}
+                              disabled={isCancelled || isFullyPaid}
+                            >
+                              <XCircle className="w-4 h-4" />
+                              Cancelar Item
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
                   );
