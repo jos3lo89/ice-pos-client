@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { tableService } from "../services/table.service";
-import type { CreateTableT } from "../schemas/table.schema";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { tableApi } from "@/infrastructure/api/table.api";
+import type { CreateTableI } from "@/core/entities/table.entity";
 
 export const useTableList = (page: number, limit: number, search?: string) => {
   return useQuery({
     queryKey: ["tables", "list", { page, limit, search }],
-    queryFn: () => tableService.getTables(page, limit, search),
+    queryFn: () => tableApi.getTables(page, limit, search),
   });
 };
 
@@ -15,7 +15,7 @@ export const useCreateTable = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["tables", "create"],
-    mutationFn: (table: CreateTableT) => tableService.createTable(table),
+    mutationFn: (table: CreateTableI) => tableApi.createTable(table),
     onMutate: () => {
       toast.loading("Creando mesa...", {
         id: "create-table",

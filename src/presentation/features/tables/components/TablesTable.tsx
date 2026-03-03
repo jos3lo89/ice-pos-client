@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useTableList } from "../hooks/useTable";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
@@ -34,7 +33,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
-import type { TableStatusT } from "../interfaces/table.interface";
+import { useTableList } from "@/application/hooks/useTable";
+import type { TableStatusT } from "@/common/types/order";
 
 const TablesTable = () => {
   const [page, setPage] = useState(1);

@@ -53,3 +53,9 @@ export interface TableCreateRes {
     fecha_actualizacion: string;
   };
 }
+
+// crear tabla request
+export interface CreateTableI {
+  numero_mesa: string;
+  piso_id: string;
+}

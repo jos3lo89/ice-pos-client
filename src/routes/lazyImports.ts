@@ -37,11 +37,11 @@ export const CreateFloorPage = lazy(
 );
 
 export const TablesPage = lazy(
-  () => import("@/features/tables/pages/TablesPage"),
+  () => import("@/presentation/features/tables/pages/TablesPage"),
 );
 
 export const CreateTablePage = lazy(
-  () => import("@/features/tables/pages/CreateTablePage"),
+  () => import("@/presentation/features/tables/pages/CreateTablePage"),
 );
 
 export const ProfilePage = lazy(

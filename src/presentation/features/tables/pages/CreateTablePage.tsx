@@ -27,9 +27,9 @@ import {
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useCreateTable } from "../hooks/useTable";
-import type { TableCreateRes } from "../interfaces/table.interface";
 import { useAllFloors } from "@/application/hooks/useFloor";
+import { useCreateTable } from "@/application/hooks/useTable";
+import type { TableCreateRes } from "@/core/entities/table.entity";
 
 const CreateTablePage = () => {
   const { data: floorsData } = useAllFloors();

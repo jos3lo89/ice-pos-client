@@ -1,11 +1,12 @@
 import http from "@/config/axios";
-import type { CreateTableT } from "../schemas/table.schema";
 import type {
+  CreateTableI,
   TableCreateRes,
   TablesListRes,
-} from "../interfaces/table.interface";
+} from "@/core/entities/table.entity";
+import type { TableRepository } from "@/core/repositories/table.repository";
 
-class TableService {
+class TableApi implements TableRepository {
   private readonly baseUrl = "/tables";
 
   async getTables(page: number, limit: number, search?: string) {
@@ -15,10 +16,10 @@ class TableService {
     return data;
   }
 
-  async createTable(table: CreateTableT) {
+  async createTable(table: CreateTableI) {
     const { data } = await http.post<TableCreateRes>(this.baseUrl, table);
     return data;
   }
 }
 
-export const tableService = new TableService();
+export const tableApi = new TableApi();
