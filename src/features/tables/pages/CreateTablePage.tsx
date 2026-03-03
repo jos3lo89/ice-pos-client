@@ -28,8 +28,8 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useCreateTable } from "../hooks/useTable";
-import { useAllFloors } from "@/features/floors/hooks/useFloor";
 import type { TableCreateRes } from "../interfaces/table.interface";
+import { useAllFloors } from "@/application/hooks/useFloor";
 
 const CreateTablePage = () => {
   const { data: floorsData } = useAllFloors();

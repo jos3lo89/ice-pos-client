@@ -67,3 +67,9 @@ export interface Mesa {
     };
   } | null;
 }
+
+// create piso request
+export interface CreateFloorI {
+  nombre: string;
+  nivel: number;
+}

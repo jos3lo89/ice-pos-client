@@ -1,19 +1,19 @@
+import type { CreateFloorI } from "@/core/entities/floors.entity";
+import { floorApi } from "@/infrastructure/api/floor.api";
 import {
   keepPreviousData,
   useMutation,
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { floorService } from "../services/floor.service";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import type { CreateFloorT } from "../schemas/floor.schema";
 
 // listar todos los pisos con paginacion
 export const useFloors = (page: number, limit: number, search?: string) => {
   return useQuery({
     queryKey: ["floors", { page, limit, search }],
-    queryFn: () => floorService.getAllPaginated(page, limit, search),
+    queryFn: () => floorApi.getAllPaginated(page, limit, search),
     placeholderData: keepPreviousData,
   });
 };
@@ -22,7 +22,7 @@ export const useFloors = (page: number, limit: number, search?: string) => {
 export const useAllFloors = () => {
   return useQuery({
     queryKey: ["floors", "all"],
-    queryFn: () => floorService.getAll(),
+    queryFn: () => floorApi.getAll(),
   });
 };
 
@@ -32,7 +32,7 @@ export const useCreateFloor = () => {
 
   return useMutation({
     mutationKey: ["create", "floor"],
-    mutationFn: (data: CreateFloorT) => floorService.create(data),
+    mutationFn: (data: CreateFloorI) => floorApi.create(data),
     onMutate: () => {
       toast.loading("Creando piso...", { id: "create-floor" });
     },
@@ -54,6 +54,6 @@ export const useCreateFloor = () => {
 export const useFloorsWithTables = () => {
   return useQuery({
     queryKey: ["floors", "with-tables"],
-    queryFn: () => floorService.getAllWithTables(),
+    queryFn: () => floorApi.getAllWithTables(),
   });
 };

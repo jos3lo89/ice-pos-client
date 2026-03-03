@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFloorSchema, type CreateFloorT } from "../schemas/floor.schema";
+
 import { Layers, ArrowLeft, CheckCircle2, Hash, Type } from "lucide-react";
 import {
   Form,
@@ -14,8 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import type { CreateFloorRes } from "../interfaces/floors.interface";
-import { useCreateFloor } from "../hooks/useFloor";
+import { useCreateFloor } from "@/application/hooks/useFloor";
+import type { CreateFloorRes } from "@/core/entities/floors.entity";
+import { createFloorSchema, type CreateFloorT } from "../schemas/floor.schema";
 
 const CreateFloorPage = () => {
   const createFloor = useCreateFloor();

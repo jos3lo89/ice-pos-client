@@ -1,15 +1,15 @@
 import ErrorState from "@/components/common/ErrorState";
 import LoadingState from "@/components/common/LoadingState";
-import { useFloorsWithTables } from "@/features/floors/hooks/useFloor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LayoutGrid, Wallet, HandCoins, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/features/orders/utils/status-config";
-import type { Mesa } from "@/features/floors/interfaces/floors.interface";
+import type { Mesa } from "@/core/entities/floors.entity";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useFloorsWithTables } from "@/application/hooks/useFloor";
 
 const PointOfSalePage = () => {
   const navigate = useNavigate();

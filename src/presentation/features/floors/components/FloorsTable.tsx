@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useFloors } from "../hooks/useFloor";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
@@ -35,6 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useFloors } from "@/application/hooks/useFloor";
 
 const FloorsTable = () => {
   const [page, setPage] = useState(1);

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useFloorsWithTables } from "@/features/floors/hooks/useFloor";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,12 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "../utils/status-config";
-import type { Mesa } from "@/features/floors/interfaces/floors.interface";
+import type { Mesa } from "@/core/entities/floors.entity";
 import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
 import { formatPricePEN } from "@/helpers/format-price";
 import { toast } from "sonner";
 import { useAuthStore } from "@/stores/auth.store";
+import { useFloorsWithTables } from "@/application/hooks/useFloor";
 
 const FloorWithTablesPage = () => {
   const navigate = useNavigate();

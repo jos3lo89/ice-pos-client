@@ -1,16 +1,17 @@
 import http from "@/config/axios";
 import type {
+  CreateFloorI,
   CreateFloorRes,
   GetAllFloorsRes,
   GetAllFloorsWithTablesRes,
   GetFloorsRes,
-} from "../interfaces/floors.interface";
-import type { CreateFloorT } from "../schemas/floor.schema";
+} from "@/core/entities/floors.entity";
+import type { FloorRepository } from "@/core/repositories/floors.repository";
 
-class FloorService {
+class FloorApi implements FloorRepository {
   private readonly baseUrl = "/floors";
 
-  async create(dto: CreateFloorT) {
+  async create(dto: CreateFloorI) {
     const { data } = await http.post<CreateFloorRes>(this.baseUrl, dto);
     return data;
   }
@@ -36,4 +37,4 @@ class FloorService {
   }
 }
 
-export const floorService = new FloorService();
+export const floorApi = new FloorApi();
