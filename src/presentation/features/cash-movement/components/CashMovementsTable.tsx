@@ -2,14 +2,14 @@ import { useGetCashMovements } from "@/application/hooks/useCashMovements";
 import ErrorState from "@/presentation/components/ErrorState";
 import LoadingState from "@/presentation/components/LoadingState";
 import Pagination from "@/presentation/components/Pagination";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/presentation/components/ui/select";
 import {
   Table,
   TableBody,
@@ -17,7 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/presentation/components/ui/table";
 import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 import {

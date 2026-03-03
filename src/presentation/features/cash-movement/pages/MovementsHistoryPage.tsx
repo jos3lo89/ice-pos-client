@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { ChevronLeft, Activity } from "lucide-react";
 import CashMovementsTable from "../components/CashMovementsTable";
 import ErrorState from "@/presentation/components/ErrorState";

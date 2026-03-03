@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "@/presentation/components/ui/dialog";
+import { ScrollArea } from "@/presentation/components/ui/scroll-area";
 import type { Producto } from "@/core/entities/categories.entity";
 import { formatPricePEN } from "@/utils/format-price";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ import { Check, Loader2, Minus, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/presentation/components/ui/textarea";
 import { useAddProductToOrder } from "@/application/hooks/useOrder";
 
 type Props = {

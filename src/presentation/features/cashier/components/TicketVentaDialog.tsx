@@ -1,13 +1,13 @@
 import ErrorState from "@/presentation/components/ErrorState";
 import LoadingState from "@/presentation/components/LoadingState";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/presentation/components/ui/dialog";
 import type { TicketOutput } from "@/utils/ticket/ticket.interface";
 import TicketVenta from "@/utils/ticket/TicketVenta";
 import { Printer, Receipt, Eye, X, FileText } from "lucide-react";

@@ -1,8 +1,8 @@
 import { ArrowLeft, Calendar, CheckCircle2, Receipt, User } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/utils/format-price";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import type { CurrentOrderRes } from "@/core/entities/current-order.entity";
 

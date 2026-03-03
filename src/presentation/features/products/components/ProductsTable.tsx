@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@/presentation/components/ui/table";
+import { Badge } from "@/presentation/components/ui/badge";
 import {
   CheckCircle2,
   MoreVertical,
@@ -18,8 +18,8 @@ import {
   Eye,
 } from "lucide-react";
 import Pagination from "@/presentation/components/Pagination";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
@@ -30,9 +30,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/presentation/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog } from "@/presentation/components/ui/dialog";
 import ProductUpdateStatus from "./ProductUpdateStatus";
 import { toast } from "sonner";
 import { formatPricePEN } from "@/utils/format-price";

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,11 +6,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Switch } from "@/components/ui/switch";
+} from "@/presentation/components/ui/dialog";
+import { Switch } from "@/presentation/components/ui/switch";
 import { AlertTriangle, Power, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/presentation/components/ui/label";
 import type { Category } from "@/core/entities/categories.entity";
 import { useChangeCategorieState } from "@/application/hooks/useCategorie";
 

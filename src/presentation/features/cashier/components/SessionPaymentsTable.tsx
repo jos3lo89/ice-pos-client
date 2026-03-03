@@ -9,7 +9,7 @@ import {
   CircleDollarSign,
   Ticket,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/presentation/components/ui/input";
 import {
   Table,
   TableBody,
@@ -17,14 +17,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/presentation/components/ui/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/presentation/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,11 +32,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/presentation/components/ui/dropdown-menu";
+import { Button } from "@/presentation/components/ui/button";
 import { useForm } from "react-hook-form";
 import { TicketVentaDialog } from "./TicketVentaDialog";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";

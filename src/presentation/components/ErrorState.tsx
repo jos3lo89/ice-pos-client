@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { AlertCircle, RefreshCcw } from "lucide-react";
 
 type ErrorStateProps = {

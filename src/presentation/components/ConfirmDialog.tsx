@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/presentation/components/ui/alert-dialog";
 
 interface ConfirmDialogProps {
   children: React.ReactNode;

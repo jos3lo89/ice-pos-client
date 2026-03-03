@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@/presentation/components/ui/table";
+import { Badge } from "@/presentation/components/ui/badge";
 import { getRoleIcon } from "../helpers/getRoleIcon";
 import {
   CheckCircle2,
@@ -17,8 +17,8 @@ import {
   XCircle,
 } from "lucide-react";
 import Pagination from "@/presentation/components/Pagination";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
@@ -29,7 +29,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/presentation/components/ui/dropdown-menu";
 import ChangeStatusDialog from "./ChangeStatusDialog";
 import { useForm } from "react-hook-form";
 import type { User } from "@/core/entities/employe.entity";

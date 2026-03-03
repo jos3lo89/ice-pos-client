@@ -9,7 +9,7 @@ import {
   LayoutDashboard,
   ChevronRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/presentation/components/ui/sheet";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import AuthFallback from "@/presentation/components/AuthFallback";

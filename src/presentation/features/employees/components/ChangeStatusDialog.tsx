@@ -6,10 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+} from "@/presentation/components/ui/dialog";
+import { Button } from "@/presentation/components/ui/button";
+import { Switch } from "@/presentation/components/ui/switch";
+import { Label } from "@/presentation/components/ui/label";
 import { RefreshCcw, Power, AlertTriangle } from "lucide-react";
 import { useUserChangeState } from "@/application/hooks/useEmploye";
 import type { User } from "@/core/entities/employe.entity";
