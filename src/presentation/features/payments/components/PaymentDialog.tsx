@@ -271,9 +271,10 @@ export const PaymentDialog = ({
                                 className="pl-10 h-12 bg-slate-900/50 border-slate-700/50 rounded-xl text-lg font-black text-white focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder:text-slate-700"
                                 {...field}
                                 value={field.value ?? ""}
-                                onChange={(e) =>
-                                  field.onChange(e.target.valueAsNumber || 0)
-                                }
+                                onChange={(e) => {
+                                  const value = parseFloat(e.target.value);
+                                  field.onChange(isNaN(value) ? "" : value);
+                                }}
                               />
                             </div>
                           </FormControl>

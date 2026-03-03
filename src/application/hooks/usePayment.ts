@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { useQueryClient } from "@tanstack/react-query";
 import type { CreatePaymentDto } from "@/core/entities/payment.entity";
 import { paymentApi } from "@/infrastructure/api/payment.api";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export const useCreatePayment = () => {
   const queryClient = useQueryClient();
@@ -23,11 +23,9 @@ export const useCreatePayment = () => {
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear el pago";
-      toast.error(message, { id: "create-payment" });
+      toast.error(getErrorMessage(error, "Error al crear el pago"), {
+        id: "create-payment",
+      });
     },
   });
 };

@@ -2,10 +2,13 @@ import { z } from "zod";
 
 export const paymentSchema = z
   .object({
-    orderId: z.string().uuid(),
+    orderId: z.string(),
     method: z.enum(["efectivo", "tarjeta", "yape", "plin"]),
     tipoDocumento: z.enum(["ticket", "boleta", "factura"]),
-    montoRecibido: z.number().nullable().optional(),
+    montoRecibido: z
+      .number("El monto debe ser un número")
+      .nullable()
+      .optional(),
     transactionId: z.string().nullable().optional(),
     clienteId: z.string().optional(),
     notes: z
@@ -15,7 +18,7 @@ export const paymentSchema = z
       .optional(),
     lines: z.array(
       z.object({
-        orderItemId: z.string().uuid(),
+        orderItemId: z.string(),
       }),
     ),
   })
