@@ -1,5 +1,4 @@
 import { useState, Fragment } from "react";
-import { useSessionPayments } from "../hooks/useCashier";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 import {
@@ -42,10 +41,11 @@ import { useForm } from "react-hook-form";
 import { TicketVentaDialog } from "./TicketVentaDialog";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import type { PaymentSession } from "../interfaces/session-payments.interface";
+import type { PaymentSession } from "../../../../core/entities/session-payments.entity";
 import { formatPricePEN } from "@/helpers/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 import { useNavigate } from "react-router-dom";
+import { useSessionPayments } from "@/application/hooks/useCashier";
 
 interface SessionPaymentsTableProps {
   sessionId: string;

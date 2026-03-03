@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Wallet, Coins, NotebookPen, Loader2 } from "lucide-react";
-import { useOpenSession } from "../hooks/useCashier";
 import { useQueryClient } from "@tanstack/react-query";
+import { useOpenSession } from "@/application/hooks/useCashier";
 
 const openSessionSchema = z.object({
   openingBalance: z.number().min(0, "El monto no puede ser negativo"),

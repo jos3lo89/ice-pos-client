@@ -5,10 +5,10 @@ import type {
   CurrentSessionRes,
   OpenCashRegisterReq,
   OpenSessionRes,
-} from "../interfaces/cashier.interface";
-import type { GetSessionPaymentsRes } from "../interfaces/session-payments.interface";
+} from "@/core/entities/cashier.entity";
+import type { GetSessionPaymentsRes } from "@/core/entities/session-payments.entity";
 
-class CashierService {
+class CashierApi {
   private readonly baseUrl = "cash-sessions";
 
   async getCurrent() {
@@ -58,4 +58,4 @@ class CashierService {
   }
 }
 
-export const cashierservice = new CashierService();
+export const cashierApi = new CashierApi();

@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Ban, Coins, NotebookPen, Loader2, AlertCircle } from "lucide-react";
-import { useCloseSession } from "../hooks/useCashier";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCloseSession } from "@/application/hooks/useCashier";
 
 const closeSessionSchema = z.object({
   actualBalance: z.number().min(0, "El monto no puede ser negativo"),

@@ -1,4 +1,3 @@
-import { useCurrentSession } from "../hooks/useCashier";
 import {
   Card,
   CardContent,
@@ -33,7 +32,8 @@ import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { formatPricePEN } from "@/helpers/format-price";
 import { useNavigate } from "react-router-dom";
-import CreateCashMovement from "@/presentation/features/cash-movement/components/CreateCashMovement";
+import { useCurrentSession } from "@/application/hooks/useCashier";
+import CreateCashMovement from "../../cash-movement/components/CreateCashMovement";
 
 const CashierPage = () => {
   const { data: sessionData, isLoading, isError } = useCurrentSession();

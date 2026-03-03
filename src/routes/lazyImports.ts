@@ -57,19 +57,19 @@ export const FloorWithTablesPage = lazy(
 );
 
 export const CashierPage = lazy(
-  () => import("@/features/cashier/pages/CashierPage"),
+  () => import("@/presentation/features/cashier/pages/CashierPage"),
 );
 
 export const PointOfSalePage = lazy(
-  () => import("@/features/cashier/pages/PointOfSalePage"),
+  () => import("@/presentation/features/cashier/pages/PointOfSalePage"),
 );
 
 export const ChargePage = lazy(
-  () => import("@/features/cashier/pages/ChargePage"),
+  () => import("@/presentation/features/cashier/pages/ChargePage"),
 );
 
 export const SessionPaymentsPage = lazy(
-  () => import("@/features/cashier/pages/SessionPaymentsPage"),
+  () => import("@/presentation/features/cashier/pages/SessionPaymentsPage"),
 );
 
 export const MovementsHistoryPage = lazy(

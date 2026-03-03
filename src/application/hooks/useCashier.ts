@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { cashierservice } from "../services/cashier.service";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
+import { cashierApi } from "@/infrastructure/api/cashier.api";
 import type {
   CloseCashRegisterReq,
   OpenCashRegisterReq,
-} from "../interfaces/cashier.interface";
-import { getErrorMessage } from "@/utils/get-error-message";
+} from "@/core/entities/cashier.entity";
 
 // current session
 export const useCurrentSession = () => {
   return useQuery({
     queryKey: ["cash-register", "session", "active"],
-    queryFn: () => cashierservice.getCurrent(),
+    queryFn: () => cashierApi.getCurrent(),
   });
 };
 
@@ -19,7 +19,7 @@ export const useCurrentSession = () => {
 export const useOpenSession = () => {
   return useMutation({
     mutationKey: ["cash-register", "session", "open"],
-    mutationFn: (dto: OpenCashRegisterReq) => cashierservice.openSession(dto),
+    mutationFn: (dto: OpenCashRegisterReq) => cashierApi.openSession(dto),
     onMutate: () => {
       toast.loading("Abriendo sesion...", {
         id: "open-session",
@@ -43,7 +43,7 @@ export const useCloseSession = () => {
   return useMutation({
     mutationKey: ["cash-register", "session", "close"],
     mutationFn: (dto: { sessionId: string; values: CloseCashRegisterReq }) =>
-      cashierservice.closeSession(dto),
+      cashierApi.closeSession(dto),
     onMutate: () => {
       toast.loading("Cerrando sesion...", {
         id: "close-session",
@@ -81,7 +81,7 @@ export const useSessionPayments = (dto: {
       dto.meta.limit,
       dto.meta.search,
     ],
-    queryFn: () => cashierservice.getSessionPayments(dto),
+    queryFn: () => cashierApi.getSessionPayments(dto),
     enabled: !!dto.sessionId,
   });
 };
