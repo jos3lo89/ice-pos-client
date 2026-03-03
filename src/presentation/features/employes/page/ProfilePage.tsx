@@ -1,5 +1,5 @@
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import {
   User,
   Phone,

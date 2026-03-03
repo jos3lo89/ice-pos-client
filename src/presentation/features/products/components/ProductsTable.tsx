@@ -17,11 +17,11 @@ import {
   Wand2,
   Eye,
 } from "lucide-react";
-import Pagination from "@/components/common/Pagination";
+import Pagination from "@/presentation/components/Pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -35,7 +35,7 @@ import { useForm } from "react-hook-form";
 import { Dialog } from "@/components/ui/dialog";
 import ProductUpdateStatus from "./ProductUpdateStatus";
 import { toast } from "sonner";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import type { Product } from "@/core/entities/product.entity";
 import { useProductList } from "@/application/hooks/useProduct";
 import CreateVariant from "./CreateVariant";

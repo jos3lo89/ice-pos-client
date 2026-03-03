@@ -1,7 +1,7 @@
 import { useGetCashMovements } from "@/application/hooks/useCashMovements";
-import ErrorState from "@/components/common/ErrorState";
-import LoadingState from "@/components/common/LoadingState";
-import Pagination from "@/components/common/Pagination";
+import ErrorState from "@/presentation/components/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import Pagination from "@/presentation/components/Pagination";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 import {
   ArrowUpCircle,

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import {
   CheckCircle2,
   MoreVertical,
@@ -8,7 +8,7 @@ import {
   Search,
   XCircle,
 } from "lucide-react";
-import Pagination from "@/components/common/Pagination";
+import Pagination from "@/presentation/components/Pagination";
 import { Input } from "@/components/ui/input";
 import {
   Table,

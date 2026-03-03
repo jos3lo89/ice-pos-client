@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Activity } from "lucide-react";
 import CashMovementsTable from "../components/CashMovementsTable";
-import ErrorState from "@/components/common/ErrorState";
+import ErrorState from "@/presentation/components/ErrorState";
 
 const MovementsHistoryPage = () => {
   const { sessionId } = useParams();

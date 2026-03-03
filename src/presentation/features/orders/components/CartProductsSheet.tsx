@@ -20,7 +20,7 @@ import {
   Ban,
 } from "lucide-react";
 
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";

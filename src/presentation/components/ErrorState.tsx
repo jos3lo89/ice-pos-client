@@ -1,5 +1,5 @@
+import { Button } from "@/components/ui/button";
 import { AlertCircle, RefreshCcw } from "lucide-react";
-import { Button } from "../ui/button";
 
 type ErrorStateProps = {
   title?: string;

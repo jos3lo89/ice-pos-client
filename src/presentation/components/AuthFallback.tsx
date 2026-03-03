@@ -1,6 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { ShieldAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 
 const AuthFallback = () => {
   const navigate = useNavigate();

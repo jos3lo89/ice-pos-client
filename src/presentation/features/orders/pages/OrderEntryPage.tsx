@@ -5,12 +5,12 @@ import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import LoadingState from "@/components/common/LoadingState";
-import ErrorState from "@/components/common/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
 import CategoryWithProducts from "../components/CategoryWithProducts";
 import { useParams } from "react-router-dom";
 import CartProductsSheet from "../components/CartProductsSheet";
-import ConfirmDialog from "@/components/common/ConfirmDialog";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import OrderComplete from "../components/OrderComplete";
 import {
   useCancelOrder,

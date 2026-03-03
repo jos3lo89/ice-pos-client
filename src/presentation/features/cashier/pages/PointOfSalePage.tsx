@@ -1,5 +1,5 @@
-import ErrorState from "@/components/common/ErrorState";
-import LoadingState from "@/components/common/LoadingState";
+import ErrorState from "@/presentation/components/ErrorState";
+import LoadingState from "@/presentation/components/LoadingState";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

@@ -22,12 +22,12 @@ import {
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
-import NotFound from "@/components/common/NotFound";
 import AdminLayout from "@/layouts/AdminLayout";
 import ServerLayout from "@/layouts/ServerLayout";
 import RoleGuard from "@/guards/RoleGuard";
 import GuestGuard from "@/guards/GuestGuard";
 import CashierLayout from "@/layouts/CashierLayout";
+import NotFound from "@/presentation/components/NotFound";
 
 export const routes = createBrowserRouter([
   {

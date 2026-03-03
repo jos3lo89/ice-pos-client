@@ -1,5 +1,5 @@
-import AuthFallback from "@/components/common/AuthFallback";
-import ConfirmDialog from "@/components/common/ConfirmDialog";
+import AuthFallback from "@/presentation/components/AuthFallback";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
 import { useAuthStore } from "@/application/stores/auth.store";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,7 @@ import {
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { formatDateTime } from "@/utils/format-date-time";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useLogout } from "@/application/hooks/useAuth";
 import { useCurrentSession } from "@/application/hooks/useCashier";
 

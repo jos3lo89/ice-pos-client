@@ -37,7 +37,7 @@ import {
   type PaymentFormValues,
 } from "../schemas/payment.schema";
 import { cn } from "@/lib/utils";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useMemo, useEffect } from "react";
 import { useCreatePayment } from "@/application/hooks/usePayment";
 

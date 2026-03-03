@@ -18,9 +18,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import ConfirmDialog from "@/components/common/ConfirmDialog";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import { cn } from "@/lib/utils";
-import AuthFallback from "@/components/common/AuthFallback";
+import AuthFallback from "@/presentation/components/AuthFallback";
 import { useLogout } from "@/application/hooks/useAuth";
 
 const ServerLayout = () => {

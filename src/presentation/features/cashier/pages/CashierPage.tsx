@@ -30,7 +30,7 @@ import { useState } from "react";
 import { OpenSessionDialog } from "../components/OpenSessionDialog";
 import { CloseSessionDialog } from "../components/CloseSessionDialog";
 import { formatDateTime } from "@/utils/format-date-time";
-import { formatPricePEN } from "@/helpers/format-price";
+import { formatPricePEN } from "@/utils/format-price";
 import { useNavigate } from "react-router-dom";
 import { useCurrentSession } from "@/application/hooks/useCashier";
 import CreateCashMovement from "../../cash-movement/components/CreateCashMovement";
