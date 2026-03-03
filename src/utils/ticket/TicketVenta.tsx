@@ -1,4 +1,4 @@
-import type { GetTicketRes } from "@/features/payments/interfaces/payment.interface";
+import type { GetTicketRes } from "@/core/entities/payment.entity";
 import { urlToBase64 } from "../url-to-base64";
 import createPdf from "./CreatePdf";
 import type { PdfResponse, TicketOutput } from "./ticket.interface";

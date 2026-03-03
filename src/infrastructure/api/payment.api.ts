@@ -3,12 +3,13 @@ import type {
   CreatePaymentDto,
   CreatePaymentRes,
   GetTicketRes,
-} from "../interfaces/payment.interface";
+} from "@/core/entities/payment.entity";
+import type { PaymentRepository } from "@/core/repositories/payment.repository";
 
-class PaymentService {
+class PaymentApi implements PaymentRepository {
   private readonly baseUrl = "payments/";
 
-  async createPayment(dto: CreatePaymentDto) {
+  async createPayment(dto: CreatePaymentDto): Promise<CreatePaymentRes> {
     const payload = {
       orderId: dto.orderId,
       method: dto.method,
@@ -23,7 +24,7 @@ class PaymentService {
     return data;
   }
 
-  async getTicket(paymentId: string) {
+  async getTicket(paymentId: string): Promise<GetTicketRes> {
     const { data } = await http.get<GetTicketRes>(
       `${this.baseUrl}${paymentId}/ticket`,
     );
@@ -31,4 +32,4 @@ class PaymentService {
   }
 }
 
-export const paymentService = new PaymentService();
+export const paymentApi = new PaymentApi();

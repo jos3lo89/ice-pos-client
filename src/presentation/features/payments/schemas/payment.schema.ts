@@ -1,4 +1,4 @@
-import * as z from "zod";
+import { z } from "zod";
 
 export const paymentSchema = z
   .object({
@@ -7,7 +7,7 @@ export const paymentSchema = z
     tipoDocumento: z.enum(["ticket", "boleta", "factura"]),
     montoRecibido: z.number().nullable().optional(),
     transactionId: z.string().nullable().optional(),
-    clienteId: z.string().optional(), // We'll handle the default in the component if needed
+    clienteId: z.string().optional(),
     notes: z
       .string()
       .max(200, "Las notas no pueden exceder los 200 caracteres")

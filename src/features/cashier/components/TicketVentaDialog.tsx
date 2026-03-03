@@ -8,12 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useGetTicket } from "@/features/payments/hooks/usePayment";
 import type { TicketOutput } from "@/utils/ticket/ticket.interface";
 import TicketVenta from "@/utils/ticket/TicketVenta";
 import { Printer, Receipt, Eye, X, FileText } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useGetTicket } from "@/application/hooks/usePayment";
 
 interface TicketVentaDialogProps {
   isTicketDialogOpen: boolean;

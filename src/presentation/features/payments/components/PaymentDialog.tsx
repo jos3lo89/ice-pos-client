@@ -31,7 +31,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useCreatePayment } from "../hooks/usePayment";
 import { useGetDefaultClient } from "@/application/hooks/useClient";
 import {
   paymentSchema,
@@ -40,6 +39,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatPricePEN } from "@/helpers/format-price";
 import { useMemo, useEffect } from "react";
+import { useCreatePayment } from "@/application/hooks/usePayment";
 
 interface PaymentDialogProps {
   isOpen: boolean;

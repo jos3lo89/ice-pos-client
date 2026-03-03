@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { paymentService } from "../services/payment.service";
-import type { CreatePaymentDto } from "../interfaces/payment.interface";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import type { CreatePaymentDto } from "@/core/entities/payment.entity";
+import { paymentApi } from "@/infrastructure/api/payment.api";
 
 export const useCreatePayment = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["create-payment"],
     mutationFn: (payment: CreatePaymentDto) =>
-      paymentService.createPayment(payment),
+      paymentApi.createPayment(payment),
     onMutate: () => {
       toast.loading("Creando pago...", { id: "create-payment" });
     },
@@ -35,7 +35,7 @@ export const useCreatePayment = () => {
 export const useGetTicket = (paymentId: string) => {
   return useQuery({
     queryKey: ["ticket", paymentId],
-    queryFn: () => paymentService.getTicket(paymentId),
+    queryFn: () => paymentApi.getTicket(paymentId),
     enabled: !!paymentId,
   });
 };
