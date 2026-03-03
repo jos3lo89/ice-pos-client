@@ -1,5 +1,5 @@
 import { authApi } from "@/infrastructure/api/auth.api";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { roleBasedRedirection } from "@/utils/role-based-redirection";

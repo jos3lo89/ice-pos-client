@@ -12,7 +12,7 @@ import { useState } from "react";
 import CreateOrderDialog from "../components/CreateOrderDialog";
 import { formatPricePEN } from "@/helpers/format-price";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/application/stores/auth.store";
 import { useFloorsWithTables } from "@/application/hooks/useFloor";
 
 const FloorWithTablesPage = () => {
