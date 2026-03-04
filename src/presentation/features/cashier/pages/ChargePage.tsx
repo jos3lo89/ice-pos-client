@@ -33,7 +33,6 @@ import { statusConfig } from "@/presentation/features/orders/utils/status-config
 import { formatPricePEN } from "@/utils/format-price";
 import { PaymentDialog } from "@/presentation/features/payments/components/PaymentDialog";
 import { formatDateTime } from "@/utils/format-date-time";
-import { TicketVentaDialog } from "../components/TicketVentaDialog";
 import {
   useCancelOrderItem,
   useGetOrderDetails,
@@ -41,6 +40,7 @@ import {
 import { toast } from "sonner";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import CancelOrderDialog from "@/presentation/features/orders/components/CancelOrderDialog";
+import { TicketVentaDialog } from "@/presentation/features/payments/components/TicketVentaDialog";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -588,7 +588,6 @@ const ChargePage = () => {
           isOpen={isCancelOrderDialogOpen}
           onClose={() => setIsCancelOrderDialogOpen(false)}
           orderId={orderId!}
-          // onSuccess={() => navigate("/mesas")}
         />
       )}
     </div>
