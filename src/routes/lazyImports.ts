@@ -90,6 +90,22 @@ export const CashSessionReportPage = lazy(
   () => import("@/presentation/features/reports/pages/CashSessionReportPage"),
 );
 
+export const RankingProductosPage = lazy(
+  () => import("@/presentation/features/reports/pages/RankingProductosPage"),
+);
+export const VentasDiaPage = lazy(
+  () => import("@/presentation/features/reports/pages/VentasDiaPage"),
+);
+export const VentasSemanaPage = lazy(
+  () => import("@/presentation/features/reports/pages/VentasSemanaPage"),
+);
+export const VentasMesPage = lazy(
+  () => import("@/presentation/features/reports/pages/VentasMesPage"),
+);
+export const HistorialSesionesPage = lazy(
+  () => import("@/presentation/features/reports/pages/HistorialSesionesPage"),
+);
+
 export const TicketVentaDialog = lazy(
   () => import("@/presentation/features/payments/components/TicketVentaDialog"),
 );
