@@ -12,6 +12,11 @@ import {
   LayoutGrid,
   Wallet,
   History,
+  ArrowRightLeft,
+  Trophy,
+  CalendarDays,
+  CalendarRange,
+  CalendarCheck,
 } from "lucide-react";
 
 export interface NavItem {
@@ -119,6 +124,38 @@ export const allNavItems: NavGroup[] = [
             to: "/crear-mesa",
             icon: Plus,
             label: "Crear Mesa",
+          },
+        ],
+      },
+
+      {
+        label: "Reportes",
+        icon: ArrowRightLeft,
+        children: [
+          {
+            to: "/reportes/ranking-productos",
+            icon: Trophy,
+            label: "Ranking de productos",
+          },
+          {
+            to: "/reportes/ventas-dia",
+            icon: CalendarDays,
+            label: "Ventas por día",
+          },
+          {
+            to: "/reportes/ventas-semana",
+            icon: CalendarRange,
+            label: "Ventas por semana",
+          },
+          {
+            to: "/reportes/ventas-mes",
+            icon: CalendarCheck,
+            label: "Ventas por mes",
+          },
+          {
+            to: "/reportes/historial-sesiones",
+            icon: History,
+            label: "Historial de sesiones",
           },
         ],
       },
