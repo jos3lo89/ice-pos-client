@@ -85,3 +85,11 @@ export const CashSessionOrdersPage = lazy(
   () =>
     import("@/presentation/features/cash-session/pages/CashSessionOrdersPage"),
 );
+
+export const CashSessionReportPage = lazy(
+  () => import("@/presentation/features/reports/pages/CashSessionReportPage"),
+);
+
+export const TicketVentaDialog = lazy(
+  () => import("@/presentation/features/payments/components/TicketVentaDialog"),
+);

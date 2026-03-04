@@ -1,0 +1,168 @@
+import { StyleSheet } from "@react-pdf/renderer"
+
+export const ticketStyles = StyleSheet.create({
+  page: {
+    padding: 5.66,
+    fontFamily: "Helvetica",
+    backgroundColor: "#ffffff",
+  },
+  logo: {
+    width: 141.73,
+    height: 56.692,
+    alignSelf: "center",
+    marginBottom: 4,
+  },
+  businessName: {
+    fontSize: 9,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "center",
+    marginBottom: 2,
+  },
+  businessInfo: {
+    fontSize: 7,
+    color: "#000000",
+    textAlign: "center",
+    marginBottom: 1,
+  },
+  documentType: {
+    fontSize: 9,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "center",
+    marginTop: 4,
+    marginBottom: 2,
+  },
+  documentNumber: {
+    fontSize: 8,
+    color: "#000000",
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  separator: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#000000",
+    borderStyle: "dashed",
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  metaRow: {
+    flexDirection: "row",
+    marginBottom: 2,
+  },
+  metaLabel: {
+    width: "30%",
+    fontSize: 7,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+  },
+  metaValue: {
+    width: "70%",
+    fontSize: 7,
+    color: "#000000",
+  },
+  tableHeader: {
+    flexDirection: "row",
+    marginBottom: 2,
+    marginTop: 2,
+  },
+  colProduct: {
+    flex: 1,
+    fontSize: 7,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+  },
+  colQty: {
+    width: "12%",
+    fontSize: 7,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "center",
+  },
+  colUnit: {
+    width: "20%",
+    fontSize: 7,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "right",
+  },
+  colTotal: {
+    width: "23%",
+    fontSize: 7,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "right",
+  },
+  itemRow: {
+    flexDirection: "row",
+    marginBottom: 1,
+  },
+  itemProduct: {
+    flex: 1,
+    fontSize: 7,
+    color: "#000000",
+  },
+  itemQty: {
+    width: "12%",
+    fontSize: 7,
+    color: "#000000",
+    textAlign: "center",
+  },
+  itemUnit: {
+    width: "20%",
+    fontSize: 7,
+    color: "#000000",
+    textAlign: "right",
+  },
+  itemTotal: {
+    width: "23%",
+    fontSize: 7,
+    color: "#000000",
+    textAlign: "right",
+  },
+  modifierRow: {
+    flexDirection: "row",
+    marginBottom: 1,
+  },
+  modifierName: {
+    flex: 1,
+    fontSize: 6,
+    fontFamily: "Helvetica-Oblique",
+    color: "#555555",
+    marginLeft: 8,
+  },
+  modifierPrice: {
+    fontSize: 6,
+    color: "#555555",
+    textAlign: "right",
+  },
+  totalsSection: {
+    borderTopWidth: 0.5,
+    borderTopColor: "#000000",
+    borderStyle: "dashed",
+    marginTop: 4,
+    paddingTop: 4,
+  },
+  totalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 2,
+  },
+  totalLabel: {
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+  },
+  totalValue: {
+    fontSize: 8,
+    color: "#000000",
+    textAlign: "right",
+  },
+  thankYou: {
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    textAlign: "center",
+    marginTop: 6,
+  },
+})

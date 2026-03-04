@@ -25,7 +25,7 @@ import {
 } from "@/presentation/components/ui/select";
 import { Button } from "@/presentation/components/ui/button";
 import { Badge } from "@/presentation/components/ui/badge";
-import { MoreVertical, Receipt, History } from "lucide-react";
+import { MoreVertical, Receipt, History, FileText } from "lucide-react";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import Pagination from "@/presentation/components/Pagination";
@@ -238,18 +238,15 @@ const CashSessionTable = ({ userId }: Props) => {
                             <span>Historial de órdenes</span>
                           </DropdownMenuItem>
 
-                          {/* <DropdownMenuItem
+                          <DropdownMenuItem
                             onClick={() =>
-                              console.log(
-                                "Ver historial de órdenes canceladas de sesión:",
-                                session.id,
-                              )
+                              navigate(`/historial-caja/${session.id}/reporte`)
                             }
-                            className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-rose-500/10 hover:text-rose-400 focus:bg-rose-500/10 focus:text-rose-400 gap-3 transition-colors text-sm font-semibold"
+                            className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-yellow-500/10 hover:text-yellow-400 focus:bg-yellow-500/10 focus:text-yellow-400 gap-3 transition-colors text-sm font-semibold"
                           >
-                            <XCircle className="w-4 h-4" />
-                            <span>Órdenes canceladas</span>
-                          </DropdownMenuItem> */}
+                            <FileText className="w-4 h-4" />
+                            <span>Reporte de la sesión</span>
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

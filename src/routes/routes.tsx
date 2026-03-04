@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import { Suspense } from "react";
+import LazyLoadingPage from "@/presentation/components/LazyLoadingPage";
 import {
   CategoriesPage,
   DashboardHome,
@@ -21,6 +23,7 @@ import {
   MovementsHistoryPage,
   CashSessionHistoryPage,
   CashSessionOrdersPage,
+  CashSessionReportPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -36,7 +39,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["admin"]}>
-          <AdminLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <AdminLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -91,7 +96,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["mesero"]}>
-          <ServerLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <ServerLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -110,7 +117,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["cajero"]}>
-          <CashierLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <CashierLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -143,12 +152,18 @@ export const routes = createBrowserRouter([
         path: "/historial-caja/:sessionId/ordenes",
         element: <CashSessionOrdersPage />,
       },
+      {
+        path: "/historial-caja/:sessionId/reporte",
+        element: <CashSessionReportPage />,
+      },
     ],
   },
   {
     element: (
       <GuestGuard>
-        <AuthLayout />
+        <Suspense fallback={<LazyLoadingPage />}>
+          <AuthLayout />
+        </Suspense>
       </GuestGuard>
     ),
     children: [
@@ -160,6 +175,10 @@ export const routes = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: (
+      <Suspense fallback={<LazyLoadingPage />}>
+        <NotFound />
+      </Suspense>
+    ),
   },
 ]);

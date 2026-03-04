@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, Suspense } from "react";
 import {
   MoreVertical,
   Search,
@@ -35,7 +35,6 @@ import {
 } from "@/presentation/components/ui/dropdown-menu";
 import { Button } from "@/presentation/components/ui/button";
 import { useForm } from "react-hook-form";
-import { TicketVentaDialog } from "./TicketVentaDialog";
 import { Badge } from "@/presentation/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatPricePEN } from "@/utils/format-price";
@@ -46,6 +45,7 @@ import type { PaymentSession } from "@/core/entities/session-payments.entity";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import Pagination from "@/presentation/components/Pagination";
+import { TicketVentaDialog } from "@/routes/lazyImports";
 
 interface SessionPaymentsTableProps {
   sessionId: string;
@@ -413,11 +413,13 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
       </div>
 
       {selectedPaymentId && (
-        <TicketVentaDialog
-          isTicketDialogOpen={isTicketDialogOpen}
-          setIsTicketDialogOpen={setIsTicketDialogOpen}
-          paymentId={selectedPaymentId}
-        />
+        <Suspense fallback={null}>
+          <TicketVentaDialog
+            isTicketDialogOpen={isTicketDialogOpen}
+            setIsTicketDialogOpen={setIsTicketDialogOpen}
+            paymentId={selectedPaymentId}
+          />
+        </Suspense>
       )}
     </div>
   );
