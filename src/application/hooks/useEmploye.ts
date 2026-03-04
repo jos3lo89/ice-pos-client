@@ -4,8 +4,8 @@ import type {
 } from "@/core/entities/employe.entity";
 import { employeApi } from "@/infrastructure/api/employe.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export const useUsersList = (page: number, limit: number, search?: string) => {
   return useQuery({
@@ -32,13 +32,8 @@ export const useCreateUser = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error desconocido al crear usuario";
-
       toast.error("Error al crear usuario", {
-        description: message,
+        description: getErrorMessage(error, "Error desconocido al crear usuario"),
         id: "create-user",
       });
     },
@@ -60,13 +55,8 @@ export const useUserChangeState = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error desconocido al cambiar el estado";
-
       toast.error("Error al cambiar el estado", {
-        description: message,
+        description: getErrorMessage(error, "Error desconocido al cambiar el estado"),
         id: "change-user-state",
       });
     },

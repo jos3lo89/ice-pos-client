@@ -1,81 +1,261 @@
 ```
 └── 📁ice-pos-client
+    └── 📁.vscode
+        ├── settings.json
     └── 📁public
-        ├── vite.svg
+        └── 📁logo
+            ├── logo-ice.png
+            ├── logo.jpg
+        ├── logo.svg
     └── 📁src
-        └── 📁assets
-            ├── react.svg
-        └── 📁common
-            └── 📁types
-                ├── roles.ts
-        └── 📁components
-            └── 📁common
-                ├── AuthFallback.tsx
-                ├── ConfirmDialog.tsx
-            └── 📁theme
-                ├── mode-toggle.tsx
-                ├── theme-provider.tsx
-            └── 📁ui
-                ├── alert-dialog.tsx
-                ├── button.tsx
-                ├── card.tsx
-                ├── dropdown-menu.tsx
-                ├── input.tsx
+        └── 📁application
+            └── 📁hooks
+                ├── useAuth.ts
+                ├── useCashier.ts
+                ├── useCashMovements.ts
+                ├── useCashSession.ts
+                ├── useCategorie.ts
+                ├── useClient.ts
+                ├── useEmploye.ts
+                ├── useFloor.ts
+                ├── useOrder.ts
+                ├── usePayment.ts
+                ├── useProduct.ts
+                ├── useTable.ts
+            └── 📁stores
+                ├── auth.store.ts
+                ├── cart-order.store.ts
         └── 📁config
             ├── axios.ts
             ├── tanstack-query.ts
-        └── 📁features
-            └── 📁auth
-                └── 📁hooks
-                    ├── useAuth.ts
-                └── 📁interfaces
-                    ├── auth.interface.ts
-                └── 📁pages
-                    ├── LoginPage.tsx
-                └── 📁schemas
-                    ├── auth.schema.ts
-                └── 📁services
-                    ├── auth.service.ts
-            └── 📁dashboard
-                └── 📁components
-                    ├── NavItems.tsx
-                └── 📁pages
-                    ├── DashboardHome.tsx
-            └── 📁users
-                └── 📁pages
-                    ├── UsersPage.tsx
+        └── 📁constants
+            ├── auht.constant.ts
+        └── 📁core
+            └── 📁entities
+                ├── auth.entity.ts
+                ├── cash-movements.entity.ts
+                ├── cash-session.entity.ts
+                ├── cashier.entity.ts
+                ├── categories.entity.ts
+                ├── client.entity.ts
+                ├── current-order.entity.ts
+                ├── employe.entity.ts
+                ├── floors.entity.ts
+                ├── order-detail-to-pay.entity.ts
+                ├── order.entity.ts
+                ├── payment.entity.ts
+                ├── product.entity.ts
+                ├── session-payments.entity.ts
+                ├── table.entity.ts
+            └── 📁repositories
+                ├── auth.repository.ts
+                ├── cash-movements.repository.ts
+                ├── cash-session.repository.ts
+                ├── categories.repository.ts
+                ├── client.repository.ts
+                ├── employe.repository.ts
+                ├── floors.repository.ts
+                ├── order.repository.ts
+                ├── payment.repository.ts
+                ├── product.repository.ts
+                ├── table.repository.ts
         └── 📁guards
             ├── AuthGuard.tsx
+            ├── GuestGuard.tsx
             ├── RoleGuard.tsx
-        └── 📁interfaces
-            ├── auth-store.interface.ts
+        └── 📁infrastructure
+            └── 📁api
+                ├── auth.api.ts
+                ├── cash-movements.api.ts
+                ├── cash-session.api.ts
+                ├── cashier.api.ts
+                ├── categories.api.ts
+                ├── client.api.ts
+                ├── employe.api.ts
+                ├── floor.api.ts
+                ├── order.api.ts
+                ├── payment.api.ts
+                ├── product.api.ts
+                ├── table.api.ts
         └── 📁layouts
+            ├── AdminLayout.tsx
             ├── AuthLayout.tsx
-            ├── DashboardLayout.tsx
+            ├── CashierLayout.tsx
+            ├── ServerLayout.tsx
         └── 📁lib
             ├── utils.ts
+        └── 📁presentation
+            └── 📁components
+                └── 📁theme
+                    ├── mode-toggle.tsx
+                    ├── theme-provider.tsx
+                └── 📁ui
+                    ├── alert-dialog.tsx
+                    ├── badge.tsx
+                    ├── button.tsx
+                    ├── card.tsx
+                    ├── dialog.tsx
+                    ├── dropdown-menu.tsx
+                    ├── form.tsx
+                    ├── input.tsx
+                    ├── label.tsx
+                    ├── scroll-area.tsx
+                    ├── select.tsx
+                    ├── sheet.tsx
+                    ├── skeleton.tsx
+                    ├── switch.tsx
+                    ├── table.tsx
+                    ├── tabs.tsx
+                    ├── textarea.tsx
+                    ├── tooltip.tsx
+                ├── AuthFallback.tsx
+                ├── ConfirmDialog.tsx
+                ├── ErrorState.tsx
+                ├── LoadingState.tsx
+                ├── NavItems.tsx
+                ├── NotFound.tsx
+                ├── Pagination.tsx
+            └── 📁features
+                └── 📁admin-dashboard
+                    └── 📁pages
+                        ├── DashboardHome.tsx
+                └── 📁auth
+                    └── 📁page
+                        ├── LoginPage.tsx
+                    └── 📁schemas
+                        ├── auth.schema.ts
+                └── 📁cash-movement
+                    └── 📁components
+                        ├── CashMovementsTable.tsx
+                        ├── CreateCashMovement.tsx
+                    └── 📁pages
+                        ├── MovementsHistoryPage.tsx
+                    └── 📁schemas
+                        ├── created-movement.schema.ts
+                └── 📁cash-session
+                    └── 📁components
+                        ├── CashsessionOrdersTable.tsx
+                    └── 📁pages
+                        ├── CashSessionOrdersPage.tsx
+                └── 📁cashier
+                    └── 📁components
+                        ├── CashSessionTable.tsx
+                        ├── CloseSessionDialog.tsx
+                        ├── OpenSessionDialog.tsx
+                        ├── SessionPaymentsTable.tsx
+                        ├── TicketVentaDialog.tsx
+                    └── 📁pages
+                        ├── CashierPage.tsx
+                        ├── CashSessionHistoryPage.tsx
+                        ├── ChargePage.tsx
+                        ├── PointOfSalePage.tsx
+                        ├── SessionPaymentsPage.tsx
+                └── 📁categories
+                    └── 📁components
+                        ├── CategoriesTable.tsx
+                        ├── ChangeStatusCatDialog.tsx
+                    └── 📁pages
+                        ├── CategoriesPage.tsx
+                        ├── CreateCategoryPage.tsx
+                    └── 📁schemas
+                        ├── categorie.schema.ts
+                └── 📁employees
+                    └── 📁components
+                        ├── ChangeStatusDialog.tsx
+                        ├── ProfileDialog.tsx
+                        ├── UsersTable.tsx
+                    └── 📁helpers
+                        ├── getRoleIcon.tsx
+                    └── 📁page
+                        ├── CreateUserPage.tsx
+                        ├── ProfilePage.tsx
+                        ├── UsersPage.tsx
+                    └── 📁schemas
+                        ├── user.schema.ts
+                └── 📁floors
+                    └── 📁components
+                        ├── FloorsTable.tsx
+                    └── 📁pages
+                        ├── CreateFloorPage.tsx
+                        ├── FloorsPage.tsx
+                    └── 📁schemas
+                        ├── floor.schema.ts
+                └── 📁orders
+                    └── 📁components
+                        ├── CancelOrderDialog.tsx
+                        ├── CartProductsSheet.tsx
+                        ├── CategoryWithProducts.tsx
+                        ├── CreateOrderDialog.tsx
+                        ├── OrderCanceled.tsx
+                        ├── OrderComplete.tsx
+                        ├── ProductSelectedDialog.tsx
+                    └── 📁pages
+                        ├── FloorWithTablesPage.tsx
+                        ├── OrderEntryPage.tsx
+                    └── 📁schemas
+                        ├── order.schema.ts
+                    └── 📁utils
+                        ├── status-config.tsx
+                └── 📁payments
+                    └── 📁components
+                        ├── PaymentDialog.tsx
+                    └── 📁schemas
+                        ├── payment.schema.ts
+                └── 📁products
+                    └── 📁components
+                        ├── CreateModifier.tsx
+                        ├── CreateVariant.tsx
+                        ├── ProductsTable.tsx
+                        ├── ProductUpdateStatus.tsx
+                    └── 📁pages
+                        ├── CreateProductPage.tsx
+                        ├── ProductsPage.tsx
+                    └── 📁schemas
+                        ├── product.schema.ts
+                └── 📁tables
+                    └── 📁components
+                        ├── TablesTable.tsx
+                    └── 📁pages
+                        ├── CreateTablePage.tsx
+                        ├── TablesPage.tsx
+                    └── 📁schemas
+                        ├── table.schema.ts
         └── 📁routes
             ├── lazyImports.ts
             ├── routes.tsx
-        └── 📁stores
-            ├── auth.store.ts
+        └── 📁utils
+            └── 📁ticket
+                ├── CreatePdf.tsx
+                ├── ticket.interface.ts
+                ├── TicketVenta.tsx
+            ├── format-date-time.ts
+            ├── format-price.ts
+            ├── get-error-message.ts
+            ├── role-based-redirection.ts
+            ├── url-to-base64.ts
         ├── App.tsx
         ├── index.css
         ├── main.tsx
+    ├── .dockerignore
     ├── .env
     ├── .env.example
     ├── .gitignore
     ├── AGENTS.md
     ├── components.json
+    ├── compose.yml
+    ├── Dockerfile
     ├── eslint.config.js
     ├── index.html
+    ├── nginx.conf
     ├── package.json
     ├── pnpm-lock.yaml
     ├── pnpm-workspace.yaml
     ├── README.md
+    ├── skills-lock.json
     ├── structure.md
     ├── tsconfig.app.json
     ├── tsconfig.json
     ├── tsconfig.node.json
+    ├── vercel.json
     └── vite.config.ts
 ```

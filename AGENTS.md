@@ -38,25 +38,37 @@ Do not run these commands in this environment. Instruct user to run locally.
 
 ## Project Structure
 
+Clean Architecture layers — dependency direction: `presentation → application → core ← infrastructure`
+
 ```
 src/
-├── components/          # UI and shared components
-│   ├── ui/              # Reusable primitives (button, input, dialog, etc.)
-│   └── common/          # Shared components (Pagination, LoadingState, etc.)
-├── config/              # Axios and TanStack Query configuration
-├── features/*/          # Feature-based modules
-│   ├── pages/           # Page components
-│   ├── components/      # Feature-specific components
-│   ├── hooks/           # Custom hooks (use*)
-│   ├── services/        # API service classes
-│   ├── schemas/         # Zod schemas
-│   └── interfaces/      # TypeScript interfaces
-├── guards/              # Route guards (AuthGuard, RoleGuard, GuestGuard)
-├── interfaces/          # Shared types/interfaces
-├── layouts/             # Layout wrappers
-├── lib/                 # Utilities (cn helper)
-├── routes/              # Router setup and lazy imports
-└── stores/              # Zustand stores
+├── core/
+│   ├── entities/        # TypeScript interfaces/types (domain model)
+│   └── repositories/    # Repository interfaces (contracts, no implementation)
+├── infrastructure/
+│   └── api/             # Concrete API classes implementing repository interfaces
+│                        # Each exports a singleton: export const entityApi = new EntityApi()
+├── application/
+│   ├── hooks/           # TanStack Query hooks (useQuery/useMutation wrappers)
+│   └── stores/          # Zustand stores (auth.store.ts, cart-order.store.ts)
+├── presentation/
+│   ├── features/        # Feature modules (orders, cashier, products, etc.)
+│   │   └── <feature>/
+│   │       ├── pages/       # Page components
+│   │       ├── components/  # Feature-specific components
+│   │       └── schemas/     # Zod validation schemas
+│   └── components/
+│       ├── ui/          # Shadcn/Radix primitives
+│       └── (shared)     # Pagination, LoadingState, ErrorState, ConfirmDialog
+├── layouts/             # AdminLayout, ServerLayout, CashierLayout, AuthLayout
+├── guards/              # AuthGuard, RoleGuard, GuestGuard
+├── routes/
+│   ├── routes.tsx       # createBrowserRouter — all routes defined here
+│   └── lazyImports.ts  # All page components lazy-loaded here
+├── config/              # Axios instance and TanStack Query client
+├── constants/           # Auth storage key constant
+├── lib/utils.ts         # cn() helper (clsx + tailwind-merge)
+└── utils/               # Format helpers, PDF ticket generation (pdfmake)
 ```
 
 ## TypeScript Configuration
@@ -75,7 +87,7 @@ src/
 - Use `@/` alias for src/ imports
 - External imports before local imports
 - Prefer `import type` for type-only imports (required by verbatimModuleSyntax)
-- Example: `import type { UserRole } from "@/common/types/roles"`
+- Example: `import type { UserRole } from "@/core/entities/employe.entity"`
 
 ### Formatting
 
@@ -96,7 +108,7 @@ src/
 - Hooks: camelCase with `use` prefix (e.g., `useUsersList`)
 - Types/Interfaces: PascalCase
 - Variables: camelCase
-- Services: PascalCase class with singleton export
+- API classes: PascalCase implementing repository interface, exported as singleton (`entityApi`)
 
 ## React Patterns
 
@@ -122,18 +134,25 @@ src/
 - Example: `["users", "list", { page, limit, search }]`
 - Use `invalidateQueries` to refresh after mutations
 
-### Service Class Pattern
+### API Class Pattern
+
+Each entity follows three files:
+
+1. `src/core/repositories/<entity>.repository.ts` — interface contract
+2. `src/infrastructure/api/<entity>.api.ts` — implements the interface
+3. `src/application/hooks/use<Entity>.ts` — TanStack Query hooks consuming the API
 
 ```typescript
-class EntityService {
+// src/infrastructure/api/entity.api.ts
+class EntityApi implements EntityRepository {
   private readonly baseUrl = "/entity";
 
-  async getAll(params) {
+  async getAll(params: GetAllParams) {
     const { data } = await http.get<ResponseType>(this.baseUrl, { params });
     return data;
   }
 }
-export const entityService = new EntityService();
+export const entityApi = new EntityApi();
 ```
 
 ## Forms and Validation
@@ -144,7 +163,7 @@ export const entityService = new EntityService();
 
 ## State Management
 
-- Zustand stores in `src/stores/`
+- Zustand stores in `src/application/stores/`
 - Use persist middleware for localStorage-backed state
 - Prefer selectors when reading store state
 

@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+# ICE POS — Cliente Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de punto de venta (POS) para restaurantes. Interfaz en español con tres roles de usuario.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript** + **Vite**
+- **TanStack Query** — data fetching y caché
+- **Zustand** — estado global (auth, carrito)
+- **Tailwind CSS 4** — tema oscuro con acentos cyan
+- **Shadcn/Radix UI** — componentes primitivos
+- **Axios** — cliente HTTP (`withCredentials: true`)
+- **Zod** — validación de formularios
+- **Sonner** — notificaciones toast
 
-## React Compiler
+## Roles
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+| Rol | Acceso |
+|---|---|
+| `admin` | Empleados, categorías, productos, pisos, mesas |
+| `mesero` | Pisos, mesas, gestión de órdenes |
+| `cajero` | Sesiones de caja, POS, pagos, cobros |
 
-## Expanding the ESLint configuration
+## Arquitectura
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Clean Architecture en 4 capas:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+core/entities → core/repositories → infrastructure/api → application/hooks → presentation/features
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Configuración
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+cp .env.example .env
+# Editar VITE_API_BASE_URL con la URL del backend
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Comandos
+
+```bash
+pnpm dev        # Servidor de desarrollo
+pnpm build      # Build de producción (tsc + vite)
+pnpm lint       # ESLint
+pnpm preview    # Vista previa del build
 ```
