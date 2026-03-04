@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { getErrorMessage } from "@/utils/get-error-message";
 import { orderApi } from "@/infrastructure/api/order.api";
 import type {
   AddProductToOrderI,
@@ -23,11 +23,7 @@ export const useCreateOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear la orden";
-      toast.error(message, { id: "create-order" });
+      toast.error(getErrorMessage(error, "Error al crear la orden"), { id: "create-order" });
     },
   });
 };
@@ -51,11 +47,7 @@ export const useAddProductToOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al agregar el producto a la orden";
-      toast.error(message, { id: "add-product-to-order" });
+      toast.error(getErrorMessage(error, "Error al agregar el producto a la orden"), { id: "add-product-to-order" });
     },
   });
 };
@@ -88,11 +80,7 @@ export const useDeleteOrderItem = () => {
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al eliminar el producto de la orden";
-      toast.error(message, { id: "delete-order-item" });
+      toast.error(getErrorMessage(error, "Error al eliminar el producto de la orden"), { id: "delete-order-item" });
     },
   });
 };
@@ -113,11 +101,7 @@ export const useDeleteOrder = () => {
       // queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al eliminar la orden";
-      toast.error(message, { id: "delete-order" });
+      toast.error(getErrorMessage(error, "Error al eliminar la orden"), { id: "delete-order" });
     },
   });
 };
@@ -137,11 +121,7 @@ export const useSendComand = () => {
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al enviar la comanda";
-      toast.error(message, { id: "send-comand" });
+      toast.error(getErrorMessage(error, "Error al enviar la comanda"), { id: "send-comand" });
     },
   });
 };
@@ -167,11 +147,7 @@ export const useCancelOrderItem = () => {
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al cancelar el producto de la orden";
-      toast.error(message, { id: "cancel-order-item" });
+      toast.error(getErrorMessage(error, "Error al cancelar el producto de la orden"), { id: "cancel-order-item" });
     },
   });
 };
@@ -194,11 +170,7 @@ export const useCancelOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al cancelar la orden";
-      toast.error(message, { id: "cancel-order" });
+      toast.error(getErrorMessage(error, "Error al cancelar la orden"), { id: "cancel-order" });
     },
   });
 };

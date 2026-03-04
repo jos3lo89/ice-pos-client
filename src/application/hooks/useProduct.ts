@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
+import { getErrorMessage } from "@/utils/get-error-message";
 import { productApi } from "@/infrastructure/api/product.api";
 import type {
   CreateModifierT,
@@ -35,11 +35,7 @@ export const useCreateProduct = () => {
       toast.success("Producto creado exitosamente", { id: "create-product" });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear el producto";
-      toast.error(message, { id: "create-product" });
+      toast.error(getErrorMessage(error, "Error al crear el producto"), { id: "create-product" });
     },
   });
 };
@@ -64,11 +60,7 @@ export const useUpdateStattusProduct = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al actualizar el estado del producto";
-      toast.error(message, { id: "update-product-status" });
+      toast.error(getErrorMessage(error, "Error al actualizar el estado del producto"), { id: "update-product-status" });
     },
   });
 };
@@ -86,11 +78,7 @@ export const useCreateVariant = () => {
       toast.success("Variante creada exitosamente", { id: "create-variant" });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear la variante";
-      toast.error(message, { id: "create-variant" });
+      toast.error(getErrorMessage(error, "Error al crear la variante"), { id: "create-variant" });
     },
   });
 };
@@ -111,11 +99,7 @@ export const useCreateModifier = () => {
       });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear el modificador";
-      toast.error(message, { id: "create-modifier" });
+      toast.error(getErrorMessage(error, "Error al crear el modificador"), { id: "create-modifier" });
     },
   });
 };

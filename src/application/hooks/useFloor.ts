@@ -6,8 +6,8 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 // listar todos los pisos con paginacion
 export const useFloors = (page: number, limit: number, search?: string) => {
@@ -41,11 +41,7 @@ export const useCreateFloor = () => {
       toast.success("Piso creado correctamente", { id: "create-floor" });
     },
     onError: (error) => {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : "Error al crear el piso";
-      toast.error(message, { id: "create-floor" });
+      toast.error(getErrorMessage(error, "Error al crear el piso"), { id: "create-floor" });
     },
   });
 };
