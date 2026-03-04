@@ -45,6 +45,7 @@ import Pagination from "@/presentation/components/Pagination";
 import { cn } from "@/lib/utils";
 import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   sessionId: string;
@@ -54,6 +55,7 @@ const CashsessionOrdersTable = ({ sessionId }: Props) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const { data, isLoading, isError, refetch } = useCashSessionOrders({
     sessionId,
@@ -303,10 +305,7 @@ const CashsessionOrdersTable = ({ sessionId }: Props) => {
 
                           <DropdownMenuItem
                             onClick={() =>
-                              console.log(
-                                "Ver detalles completos de orden:",
-                                order.id,
-                              )
+                              navigate(`/punto-venta/cobrar/${order.id}`)
                             }
                             className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-semibold"
                           >
