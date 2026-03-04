@@ -1,4 +1,4 @@
-import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFViewer, PDFDownloadLink, pdf } from "@react-pdf/renderer";
 import { useReportBySessionId } from "@/application/hooks/useReports";
 import { formatDateTime } from "@/utils/format-date-time";
 import ReporteSesionPDF from "./ReporteSesionPdf";
@@ -42,6 +42,12 @@ const ReporteSesionViewer = ({ sesionId }: Props) => {
   )
     .toISOString()
     .slice(0, 10)}.pdf`;
+
+  const handleOpenInNewTab = async () => {
+    const blob = await pdf(<ReporteSesionPDF data={data} />).toBlob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-2rem)] space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -101,14 +107,7 @@ const ReporteSesionViewer = ({ sesionId }: Props) => {
           <Button
             variant="outline"
             className="hidden lg:flex h-11 px-4 rounded-xl border-slate-700 bg-slate-800/50 text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95 gap-2"
-            onClick={() =>
-              window.open(
-                window.URL.createObjectURL(
-                  new Blob([], { type: "application/pdf" }),
-                ),
-                "_blank",
-              )
-            }
+            onClick={handleOpenInNewTab}
           >
             <ExternalLink className="w-4 h-4" />
           </Button>
