@@ -21,7 +21,7 @@ interface TicketVentaDialogV2Props {
   paymentId: string;
 }
 
-export const TicketVentaDialog = ({
+const TicketVentaDialog = ({
   isTicketDialogOpen,
   setIsTicketDialogOpen,
   paymentId,
@@ -132,3 +132,5 @@ export const TicketVentaDialog = ({
     </Dialog>
   );
 };
+
+export default TicketVentaDialog;

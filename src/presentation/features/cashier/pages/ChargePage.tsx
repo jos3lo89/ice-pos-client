@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
@@ -40,7 +40,7 @@ import {
 import { toast } from "sonner";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import CancelOrderDialog from "@/presentation/features/orders/components/CancelOrderDialog";
-import { TicketVentaDialog } from "@/presentation/features/payments/components/TicketVentaDialog";
+import { TicketVentaDialog } from "@/routes/lazyImports";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -576,11 +576,13 @@ const ChargePage = () => {
       />
 
       {isTicketDialogOpen && (
-        <TicketVentaDialog
-          isTicketDialogOpen={isTicketDialogOpen}
-          setIsTicketDialogOpen={setIsTicketDialogOpen}
-          paymentId={paymentId}
-        />
+        <Suspense fallback={null}>
+          <TicketVentaDialog
+            isTicketDialogOpen={isTicketDialogOpen}
+            setIsTicketDialogOpen={setIsTicketDialogOpen}
+            paymentId={paymentId}
+          />
+        </Suspense>
       )}
 
       {isCancelOrderDialogOpen && (

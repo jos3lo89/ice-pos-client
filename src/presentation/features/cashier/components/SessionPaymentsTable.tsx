@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, Suspense } from "react";
 import {
   MoreVertical,
   Search,
@@ -45,7 +45,7 @@ import type { PaymentSession } from "@/core/entities/session-payments.entity";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import Pagination from "@/presentation/components/Pagination";
-import { TicketVentaDialog } from "@/presentation/features/payments/components/TicketVentaDialog";
+import { TicketVentaDialog } from "@/routes/lazyImports";
 
 interface SessionPaymentsTableProps {
   sessionId: string;
@@ -413,11 +413,13 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
       </div>
 
       {selectedPaymentId && (
-        <TicketVentaDialog
-          isTicketDialogOpen={isTicketDialogOpen}
-          setIsTicketDialogOpen={setIsTicketDialogOpen}
-          paymentId={selectedPaymentId}
-        />
+        <Suspense fallback={null}>
+          <TicketVentaDialog
+            isTicketDialogOpen={isTicketDialogOpen}
+            setIsTicketDialogOpen={setIsTicketDialogOpen}
+            paymentId={selectedPaymentId}
+          />
+        </Suspense>
       )}
     </div>
   );
