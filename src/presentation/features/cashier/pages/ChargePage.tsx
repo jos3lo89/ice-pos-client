@@ -169,14 +169,10 @@ const ChargePage = () => {
             </div>
           ) : (
             <Button
-              variant="destructive"
               onClick={() => setIsCancelOrderDialogOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-95 shrink-0 group"
+              className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
             >
-              <XCircle className="w-4 h-4 text-red-200 transition-transform group-hover:rotate-90" />
-              <span className="text-xs lg:text-sm font-bold text-red-200 leading-tight">
-                Anular Pedido
-              </span>
+              Cancelar Pedido
             </Button>
           )}
         </div>

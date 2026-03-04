@@ -12,7 +12,6 @@ import {
   LayoutGrid,
   Wallet,
   History,
-  ClipboardList,
 } from "lucide-react";
 
 export interface NavItem {

@@ -76,3 +76,12 @@ export const MovementsHistoryPage = lazy(
   () =>
     import("@/presentation/features/cash-movement/pages/MovementsHistoryPage"),
 );
+
+export const CashSessionHistoryPage = lazy(
+  () => import("@/presentation/features/cashier/pages/CashSessionHistoryPage"),
+);
+
+export const CashSessionOrdersPage = lazy(
+  () =>
+    import("@/presentation/features/cash-session/pages/CashSessionOrdersPage"),
+);
