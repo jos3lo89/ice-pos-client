@@ -220,7 +220,7 @@ const CashierLayout = () => {
           {(!sidebarCollapsed || sidebarOpen) && (
             <div className="overflow-hidden animate-in fade-in slide-in-from-left-2 duration-500">
               <h1 className="text-lg font-bold text-white leading-none">
-                Ice POS
+                Ice Mankora
               </h1>
               <p className="text-[10px] uppercase tracking-widest text-emerald-500 font-black mt-1">
                 Cajero

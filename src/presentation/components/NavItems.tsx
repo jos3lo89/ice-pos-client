@@ -12,8 +12,6 @@ import {
   LayoutGrid,
   Wallet,
   History,
-  ArrowRightLeft,
-  Database,
 } from "lucide-react";
 
 export interface NavItem {
@@ -151,17 +149,17 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
-      {
-        label: "Reportes",
-        icon: ArrowRightLeft,
-        children: [
-          {
-            to: "#",
-            icon: Database,
-            label: "Reportes",
-          },
-        ],
-      },
+      // {
+      //   label: "Reportes",
+      //   icon: ArrowRightLeft,
+      //   children: [
+      //     {
+      //       to: "#",
+      //       icon: Database,
+      //       label: "Reportes",
+      //     },
+      //   ],
+      // },
     ],
   },
 ];
