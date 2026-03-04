@@ -230,7 +230,7 @@ const CashierPage = () => {
             className="h-10 px-4 rounded-xl bg-rose-500/10 text-rose-500 border border-rose-500/20 font-black hover:bg-rose-500 hover:text-white transition-all shadow-lg shadow-rose-900/10 cursor-pointer gap-2 active:scale-95"
           >
             <LogOut className="w-4 h-4" />
-            <span>Cerrar Sesión</span>
+            <span>Cerrar Caja</span>
           </Button>
         </div>
 

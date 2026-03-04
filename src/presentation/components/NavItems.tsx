@@ -12,6 +12,8 @@ import {
   LayoutGrid,
   Wallet,
   History,
+  ArrowRightLeft,
+  Database,
 } from "lucide-react";
 
 export interface NavItem {
@@ -136,7 +138,7 @@ export const allNavItems: NavGroup[] = [
       {
         to: "/punto-venta",
         icon: ShoppingCart,
-        label: "Punto de Venta",
+        label: "Cobrar",
       },
       {
         label: "Historial",
@@ -146,6 +148,17 @@ export const allNavItems: NavGroup[] = [
             to: "/historial-caja",
             icon: Wallet,
             label: "Sesiones de caja",
+          },
+        ],
+      },
+      {
+        label: "Reportes",
+        icon: ArrowRightLeft,
+        children: [
+          {
+            to: "#",
+            icon: Database,
+            label: "Reportes",
           },
         ],
       },
