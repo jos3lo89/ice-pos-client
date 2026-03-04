@@ -17,6 +17,9 @@ import {
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { useLogout } from "@/application/hooks/useAuth";
+import { formatDateTime } from "@/utils/format-date-time";
+import { usePeruTime } from "@/application/hooks/usePeruTime";
+import { useIsMobile } from "@/application/hooks/useMobile";
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,6 +30,8 @@ const AdminLayout = () => {
   const location = useLocation();
   const { user } = useAuthStore();
   const logout = useLogout();
+  const time = usePeruTime();
+  const isMobile = useIsMobile();
 
   if (!user) {
     return <AuthFallback />;
@@ -210,7 +215,7 @@ const AdminLayout = () => {
           {(!sidebarCollapsed || sidebarOpen) && (
             <div className="overflow-hidden animate-in fade-in slide-in-from-left-2 duration-500">
               <h1 className="text-lg font-bold text-white leading-none">
-                Ice POS
+                Ice Mankora
               </h1>
               <p className="text-[10px] uppercase tracking-widest text-cyan-500 font-black mt-1">
                 Gestión
@@ -315,9 +320,7 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 flex flex-col relative overflow-hidden bg-[#0f172a]">
-        {/* Desktop/Mobile Header */}
         <header className="h-16 bg-[#1e293b]/50 backdrop-blur-md border-b border-slate-700/50 flex items-center px-6 justify-between shrink-0 z-30">
           <button
             className="lg:hidden p-2 -ml-2 text-gray-400 hover:text-white transition-colors"
@@ -326,28 +329,27 @@ const AdminLayout = () => {
             <Menu className="w-6 h-6" />
           </button>
 
-          <div className="flex items-center gap-4 ml-auto">
-            <div className="hidden sm:flex flex-col text-right">
-              <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-wider">
-                Hoy
-              </span>
-              <span className="text-xs text-gray-300 font-medium">
-                {new Date().toLocaleDateString("es-PE", { dateStyle: "full" })}
-              </span>
+          {!isMobile && (
+            <div className="flex items-center gap-4 ml-auto">
+              <div className="flex flex-col text-right">
+                <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-wider">
+                  Hoy
+                </span>
+                <span className="text-xs text-gray-300 font-medium">
+                  {formatDateTime(new Date(), "date")} - {time}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </header>
 
-        {/* Top Gradient Line */}
         <div className="h-[2px] w-full bg-linear-to-r from-cyan-500/50 via-blue-600/50 to-transparent shrink-0" />
 
-        {/* View Port */}
         <div className="flex-1 overflow-y-auto scroll-smooth relative p-4 lg:p-8">
           <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Outlet />
           </div>
 
-          {/* Background Texture Overlay */}
           <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
         </div>
       </main>
