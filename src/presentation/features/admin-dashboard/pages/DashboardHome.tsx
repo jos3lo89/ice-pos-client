@@ -1,121 +1,93 @@
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/presentation/components/ui/card";
 import {
-  Clock,
-  DollarSign,
-  ShoppingCart,
-  TrendingDown,
+  Trophy,
+  CalendarDays,
+  CalendarRange,
+  CalendarCheck,
+  History,
+  ArrowRight,
   TrendingUp,
-  UtensilsCrossed,
 } from "lucide-react";
 
 const DashboardHome = () => {
-  const stats = [
+  const reportLinks = [
     {
-      title: "Ingresos Hoy",
-      value: "$1,250.00",
-      change: "+12%",
-      trend: "up",
-      icon: DollarSign,
-      color: "bg-green-500",
+      to: "/reportes/ranking-productos",
+      title: "Ranking de Productos",
+      description: "Analiza cuáles son tus artículos más vendidos",
+      icon: Trophy,
+      color: "emerald",
     },
     {
-      title: "Pedidos Totales",
-      value: "45",
-      change: "+5%",
-      trend: "up",
-      icon: ShoppingCart,
-      color: "bg-blue-500",
+      to: "/reportes/ventas-dia",
+      title: "Ventas por Día",
+      description: "Seguimiento detallado de ingresos diarios",
+      icon: CalendarDays,
+      color: "cyan",
     },
     {
-      title: "Mesas Activas",
-      value: "8/12",
-      change: "66%",
-      trend: "neutral",
-      icon: UtensilsCrossed,
-      color: "bg-purple-500",
+      to: "/reportes/ventas-semana",
+      title: "Ventas por Semana",
+      description: "Evolución y rendimiento semanal",
+      icon: CalendarRange,
+      color: "blue",
     },
     {
-      title: "Ticket Promedio",
-      value: "$27.80",
-      change: "-2%",
-      trend: "down",
-      icon: Clock,
-      color: "bg-orange-500",
+      to: "/reportes/ventas-mes",
+      title: "Ventas por Mes",
+      description: "Balance y métricas mensuales",
+      icon: CalendarCheck,
+      color: "indigo",
+    },
+    {
+      to: "/reportes/historial-sesiones",
+      title: "Historial de Sesiones",
+      description: "Registro sistemático de aperturas y cierres",
+      icon: History,
+      color: "purple",
     },
   ];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      <div>
-        <h1 className="text-2xl font-bold text-white">Resumen</h1>
-        <p className="text-gray-400">
-          Vista general del rendimiento del restaurante
-        </p>
-      </div>
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reportLinks.map((link, index) => (
+          <Link key={index} to={link.to} className="group">
+            <Card className="h-full bg-slate-900/40 backdrop-blur-md border-white/5 hover:border-emerald-500/30 transition-all duration-300 overflow-hidden relative group">
+              <div className="absolute inset-0 bg-linear-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      {/* Grid de Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, index) => (
-          <Card
-            key={index}
-            className="bg-slate-800 border-slate-700 text-slate-100"
-          >
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-400">
-                    {stat.title}
-                  </p>
-                  <p className="text-2xl font-bold text-white mt-1">
-                    {stat.value}
-                  </p>
-                </div>
-                <div className={`p-3 rounded-lg ${stat.color} bg-opacity-20`}>
-                  <stat.icon
-                    className={`w-5 h-5 text-${stat.color.replace("bg-", "")}-400`}
-                  />
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-2 text-sm">
-                {stat.trend === "up" ? (
-                  <TrendingUp className="w-4 h-4 text-green-400" />
-                ) : stat.trend === "down" ? (
-                  <TrendingDown className="w-4 h-4 text-red-400" />
-                ) : null}
-                <span
-                  className={
-                    stat.trend === "up"
-                      ? "text-green-400"
-                      : stat.trend === "down"
-                        ? "text-red-400"
-                        : "text-gray-400"
-                  }
+              <CardContent className="p-8 relative z-10 flex flex-col h-full">
+                <div
+                  className={`w-14 h-14 rounded-2xl bg-${link.color}-500/10 flex items-center justify-center mb-6 border border-${link.color}-500/20 group-hover:scale-110 transition-transform duration-500`}
                 >
-                  {stat.change}
-                </span>
-                <span className="text-gray-500">vs ayer</span>
+                  <link.icon className={`w-7 h-7 text-${link.color}-400`} />
+                </div>
+
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  {link.title}
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  {link.description}
+                </p>
+
+                <div className="mt-auto flex items-center gap-2 text-emerald-500 font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                  Ver Reporte <ArrowRight className="w-3 h-3" />
+                </div>
+              </CardContent>
+
+              <div className="absolute top-0 right-0 p-4 opacity-10">
+                <TrendingUp className="w-12 h-12 rotate-[-10deg]" />
               </div>
-            </CardContent>
-          </Card>
+            </Card>
+          </Link>
         ))}
       </div>
 
-      {/* Aquí podrías agregar las tablas de "Recent Orders" del archivo original */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-slate-800 rounded-xl border border-slate-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-4">
-            Pedidos Recientes
-          </h3>
-          <div className="text-gray-400 text-sm text-center py-10">
-            Datos de la tabla aquí...
-          </div>
-        </div>
-        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-          <h3 className="text-lg font-bold text-white mb-4">Top Productos</h3>
-          <div className="text-gray-400 text-sm text-center py-10">
-            Lista de productos aquí...
-          </div>
-        </div>
+      {/* Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px]" />
       </div>
     </div>
   );
