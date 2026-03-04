@@ -25,13 +25,7 @@ import {
 } from "@/presentation/components/ui/select";
 import { Button } from "@/presentation/components/ui/button";
 import { Badge } from "@/presentation/components/ui/badge";
-import {
-  MoreVertical,
-  Receipt,
-  History,
-  XCircle,
-  Database,
-} from "lucide-react";
+import { MoreVertical, Receipt, History, Database } from "lucide-react";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import Pagination from "@/presentation/components/Pagination";
