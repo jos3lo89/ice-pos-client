@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import { Suspense } from "react";
+import LazyLoadingPage from "@/presentation/components/LazyLoadingPage";
 import {
   CategoriesPage,
   DashboardHome,
@@ -37,7 +39,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["admin"]}>
-          <AdminLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <AdminLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -92,7 +96,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["mesero"]}>
-          <ServerLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <ServerLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -111,7 +117,9 @@ export const routes = createBrowserRouter([
     element: (
       <AuthGuard>
         <RoleGuard allowedRoles={["cajero"]}>
-          <CashierLayout />
+          <Suspense fallback={<LazyLoadingPage />}>
+            <CashierLayout />
+          </Suspense>
         </RoleGuard>
       </AuthGuard>
     ),
@@ -153,7 +161,9 @@ export const routes = createBrowserRouter([
   {
     element: (
       <GuestGuard>
-        <AuthLayout />
+        <Suspense fallback={<LazyLoadingPage />}>
+          <AuthLayout />
+        </Suspense>
       </GuestGuard>
     ),
     children: [
@@ -165,6 +175,10 @@ export const routes = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: (
+      <Suspense fallback={<LazyLoadingPage />}>
+        <NotFound />
+      </Suspense>
+    ),
   },
 ]);
