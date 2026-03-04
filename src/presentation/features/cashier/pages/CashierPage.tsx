@@ -165,7 +165,6 @@ const CashierPage = () => {
         </div>
 
         <div className="flex items-center flex-wrap gap-2">
-          {/* Dropdown de Historiales y Reportes */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -214,7 +213,6 @@ const CashierPage = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Botón Principal: Crear Movimiento */}
           <Button
             variant="outline"
             className="h-10 px-4 rounded-xl border-cyan-500/20 bg-cyan-500/5 text-cyan-400 font-bold hover:bg-cyan-500/10 hover:text-cyan-300 transition-all shadow-lg active:scale-95 gap-2"
@@ -224,7 +222,6 @@ const CashierPage = () => {
             <span className="hidden sm:inline">Crear Movimiento</span>
           </Button>
 
-          {/* Botón Crítico: Cerrar Caja */}
           <Button
             onClick={() => setIsCloseDialogOpen(true)}
             className="h-10 px-4 rounded-xl bg-rose-500/10 text-rose-500 border border-rose-500/20 font-black hover:bg-rose-500 hover:text-white transition-all shadow-lg shadow-rose-900/10 cursor-pointer gap-2 active:scale-95"
@@ -279,9 +276,8 @@ const CashierPage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column - Detailed Breakdown */}
         <div className="lg:col-span-8 space-y-6">
-          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl">
+          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl">
             <CardHeader className="border-b border-slate-700/30 pb-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -297,7 +293,6 @@ const CashierPage = () => {
             </CardHeader>
             <CardContent className="pt-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Cash Progress */}
                 <PaymentDetail
                   label="Efectivo"
                   amount={session.caja_fisica.ventas_efectivo}
@@ -344,31 +339,11 @@ const CashierPage = () => {
                   }
                 />
               </div>
-
-              {/* <div className="mt-12 p-6 bg-slate-900/40 rounded-2xl border border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                    <CreditCard className="w-6 h-6 text-orange-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-slate-300">
-                      Pagos con Tarjeta
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      Crédito y Débito (Visa/MC)
-                    </p>
-                  </div>
-                </div>
-                <div className="text-2xl font-black text-white">
-                  S/ {session.ventas_digitales.tarjeta.toFixed(2)}
-                </div>
-              </div> */}
             </CardContent>
           </Card>
 
-          {/* User & Session Info Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-[#1e293b]/50 border-slate-700/50 rounded-3xl p-6">
+            <Card className="bg-[#1e293b]/50 border-slate-700/50 rounded-xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-linear-to-br from-slate-700 to-slate-800 flex items-center justify-center border border-slate-600 shadow-inner">
                   <span className="text-xl font-bold text-white">
@@ -382,14 +357,11 @@ const CashierPage = () => {
                   <h3 className="text-lg font-bold text-white">
                     {session.cajero.nombre}
                   </h3>
-                  {/* <p className="text-xs text-slate-400">
-                    ID: {session.cajero.usuario}
-                  </p> */}
                 </div>
               </div>
             </Card>
 
-            <Card className="bg-[#1e293b]/50 border-slate-700/50 rounded-3xl p-6">
+            <Card className="bg-[#1e293b]/50 border-slate-700/50 rounded-xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center">
                   <Clock className="w-7 h-7 text-blue-400" />
@@ -411,7 +383,7 @@ const CashierPage = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-6">
-          <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl border-t border-t-white/5">
+          <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-xl overflow-hidden shadow-2xl border-t border-t-white/5">
             <CardHeader className="border-b border-white/5">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
@@ -460,7 +432,7 @@ const CashierPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl">
+          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl">
             <CardHeader className="border-b border-slate-700/30 pb-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -516,25 +488,6 @@ const CashierPage = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="pt-6 border-t border-slate-700/50">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-bold text-slate-400">
-                    Balance Neto
-                  </span>
-                  <span
-                    className={cn(
-                      "text-xl font-black",
-                      session.movimientos_manuales.neto >= 0
-                        ? "text-emerald-400"
-                        : "text-red-400",
-                    )}
-                  >
-                    {session.movimientos_manuales.neto > 0 ? "+" : ""}
-                    {formatPricePEN(session.movimientos_manuales.neto)}
-                  </span>
-                </div>
-              </div> */}
             </CardContent>
           </Card>
         </div>
@@ -542,8 +495,6 @@ const CashierPage = () => {
     </div>
   );
 };
-
-// --- Sub-components for better organization ---
 
 const StatCard = ({ title, value, icon: Icon, description, variant }: any) => {
   const themes: any = {
@@ -556,7 +507,7 @@ const StatCard = ({ title, value, icon: Icon, description, variant }: any) => {
   return (
     <Card
       className={cn(
-        "rounded-3xl border transition-all hover:scale-[1.02] duration-300 group overflow-hidden",
+        "rounded-xl border transition-all hover:scale-[1.02] duration-300 group overflow-hidden",
         themes[variant] || themes.primary,
         variant !== "primary" ? "border-slate-700/50" : "border-none",
       )}
@@ -583,7 +534,7 @@ const StatCard = ({ title, value, icon: Icon, description, variant }: any) => {
           </div>
           <div
             className={cn(
-              "p-3 rounded-2xl transition-transform group-hover:scale-110 group-hover:rotate-6",
+              "p-3 rounded-xl transition-transform group-hover:scale-110 group-hover:rotate-6",
               variant === "primary"
                 ? "bg-white/10 text-white"
                 : "bg-slate-800 text-slate-300 border border-slate-700",
