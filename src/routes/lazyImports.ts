@@ -85,3 +85,7 @@ export const CashSessionOrdersPage = lazy(
   () =>
     import("@/presentation/features/cash-session/pages/CashSessionOrdersPage"),
 );
+
+export const CashSessionReportPage = lazy(
+  () => import("@/presentation/features/reports/pages/CashSessionReportPage"),
+);

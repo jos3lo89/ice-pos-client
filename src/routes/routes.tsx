@@ -21,6 +21,7 @@ import {
   MovementsHistoryPage,
   CashSessionHistoryPage,
   CashSessionOrdersPage,
+  CashSessionReportPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -142,6 +143,10 @@ export const routes = createBrowserRouter([
       {
         path: "/historial-caja/:sessionId/ordenes",
         element: <CashSessionOrdersPage />,
+      },
+      {
+        path: "/historial-caja/:sessionId/reporte",
+        element: <CashSessionReportPage />,
       },
     ],
   },
