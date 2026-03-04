@@ -22,10 +22,11 @@ import {
   Smartphone,
   ShieldCheck,
   Check,
-  MoreVertical,
   XCircle,
   Timer,
   CheckCircle2,
+  X,
+  Printer,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/presentation/features/orders/utils/status-config";
@@ -33,8 +34,13 @@ import { formatPricePEN } from "@/utils/format-price";
 import { PaymentDialog } from "@/presentation/features/payments/components/PaymentDialog";
 import { formatDateTime } from "@/utils/format-date-time";
 import { TicketVentaDialog } from "../components/TicketVentaDialog";
-import { Printer } from "lucide-react";
-import { useGetOrderDetails } from "@/application/hooks/useOrder";
+import {
+  useCancelOrderItem,
+  useGetOrderDetails,
+} from "@/application/hooks/useOrder";
+import { toast } from "sonner";
+import ConfirmDialog from "@/presentation/components/ConfirmDialog";
+import CancelOrderDialog from "@/presentation/features/orders/components/CancelOrderDialog";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -45,12 +51,14 @@ const ChargePage = () => {
     isError,
     refetch,
   } = useGetOrderDetails(orderId!);
+  const cancelOrderItem = useCancelOrderItem();
 
   const [selectedItems, setSelectedItems] = useState<Record<string, number>>(
     {},
   );
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+  const [isCancelOrderDialogOpen, setIsCancelOrderDialogOpen] = useState(false);
   const [paymentId, setPaymentId] = useState<string>("");
 
   const toggleItemSelection = (itemId: string, maxQty: number) => {
@@ -93,6 +101,18 @@ const ChargePage = () => {
     statusConfig[orden.estado as keyof typeof statusConfig] ||
     statusConfig.disponible;
 
+  const handleCancelItemOder = (itemId: string) => {
+    if (!orderId) {
+      toast.error("No se pudo obtener el id de la orden");
+      return;
+    }
+
+    cancelOrderItem.mutate({
+      itemId,
+      orderId,
+    });
+  };
+
   return (
     <div className="space-y-8 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-2 border-b border-slate-700/30">
@@ -101,7 +121,7 @@ const ChargePage = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="w-12 h-12 rounded-2xl bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-all"
+            className="w-12 h-12 rounded-xl bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-all"
           >
             <ArrowLeft className="w-6 h-6" />
           </Button>
@@ -133,17 +153,34 @@ const ChargePage = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-slate-900/50 rounded-2xl border border-slate-800/50 flex flex-col items-end">
-            <span className="text-sm font-bold text-white capitalize">
-              {orden.tipo_order.replace("_", " ")}
-            </span>
-          </div>
+          {orden.estado === "cancelado" ? (
+            <div className="h-12 px-6 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-2 animate-in fade-in zoom-in-95 duration-500">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-xs font-black uppercase tracking-[0.15em] text-red-500">
+                Orden Anulada
+              </span>
+            </div>
+          ) : orden.estado === "completado" ? (
+            <div className="h-12 px-6 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center gap-2 animate-in fade-in zoom-in-95 duration-500">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs font-black uppercase tracking-[0.15em] text-green-500">
+                Orden Completada
+              </span>
+            </div>
+          ) : (
+            <Button
+              onClick={() => setIsCancelOrderDialogOpen(true)}
+              className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+            >
+              Cancelar Pedido
+            </Button>
+          )}
         </div>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8 space-y-3">
-          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-[2rem] overflow-hidden shadow-2xl">
+          <Card className="bg-[#1e293b]/50 border-slate-700/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl">
             <CardHeader className="px-4 border-b border-slate-700/30">
               <div className="flex items-center justify-between">
                 <div>
@@ -196,15 +233,18 @@ const ChargePage = () => {
                         isCancelled &&
                           "border-l-4 border-l-red-500 shadow-inner",
                       )}
-                      onClick={() =>
-                        canBePaid &&
-                        toggleItemSelection(item.id, item.cantidad_pendiente)
-                      }
                     >
-                      <div className="flex items-center gap-5 flex-1 cursor-pointer">
+                      <div className="flex items-center gap-5 flex-1">
                         <div
+                          onClick={() =>
+                            canBePaid &&
+                            toggleItemSelection(
+                              item.id,
+                              item.cantidad_pendiente,
+                            )
+                          }
                           className={cn(
-                            "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",
+                            "w-6 h-6 cursor-pointer rounded-lg border-2 flex items-center justify-center transition-all",
                             isSelected
                               ? "bg-emerald-500 border-emerald-500 shadow-md shadow-emerald-500/20"
                               : "border-slate-600 bg-slate-800",
@@ -265,7 +305,6 @@ const ChargePage = () => {
                                 </Badge>
                               )}
 
-                            {/* Item State Badges */}
                             {item.estado === "pendiente" && (
                               <Badge className="bg-slate-700/50 text-slate-400 text-[9px] border-slate-600/30 gap-1 px-1.5 h-4">
                                 <Timer className="w-2.5 h-2.5" /> Pendiente
@@ -300,13 +339,33 @@ const ChargePage = () => {
                             {formatPricePEN(item.total_linea)}
                           </p>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-slate-600 hover:text-white"
-                        >
-                          <MoreVertical className="w-5 h-5" />
-                        </Button>
+                        <div className="flex items-center gap-3">
+                          {!isCancelled && !isFullyPaid && (
+                            <ConfirmDialog
+                              title="¿Cancelar este ítem?"
+                              description="Esta acción cancelará el producto de la orden y no se puede deshacer."
+                              confirmText="Sí, cancelar"
+                              cancelText="No"
+                              onConfirm={() => handleCancelItemOder(item.id)}
+                            >
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="w-10 h-10 rounded-xl text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
+                              >
+                                <X className="w-5 h-5" />
+                              </Button>
+                            </ConfirmDialog>
+                          )}
+
+                          {/* <Button
+                            variant="ghost"
+                            size="icon"
+                            className="w-10 h-10 rounded-xl text-slate-600 hover:text-white hover:bg-slate-800/50 transition-all duration-300"
+                          >
+                            <MoreVertical className="w-5 h-5" />
+                          </Button> */}
+                        </div>
                       </div>
                     </div>
                   );
@@ -389,7 +448,7 @@ const ChargePage = () => {
 
         <div className="lg:col-span-4 space-y-6">
           <div className="sticky top-8 space-y-6">
-            <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-[2.5rem] overflow-hidden shadow-2xl border-t border-t-white/5">
+            <Card className="bg-linear-to-br from-slate-800 to-slate-900 border-slate-700/50 rounded-xl overflow-hidden shadow-2xl border-t border-t-white/5">
               <CardHeader className="p-2 border-b border-white/5">
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
@@ -458,7 +517,7 @@ const ChargePage = () => {
 
             <div
               className={cn(
-                "p-8 rounded-[2.5rem] bg-slate-800/80 border transition-all duration-500 animate-in zoom-in-95",
+                "p-8 rounded-xl bg-slate-800/80 border transition-all duration-500 animate-in zoom-in-95",
                 selectedTotal > 0
                   ? "border-emerald-500 shadow-2xl shadow-emerald-500/10 scale-100"
                   : "border-slate-700/50",
@@ -523,11 +582,18 @@ const ChargePage = () => {
           paymentId={paymentId}
         />
       )}
+
+      {isCancelOrderDialogOpen && (
+        <CancelOrderDialog
+          isOpen={isCancelOrderDialogOpen}
+          onClose={() => setIsCancelOrderDialogOpen(false)}
+          orderId={orderId!}
+          // onSuccess={() => navigate("/mesas")}
+        />
+      )}
     </div>
   );
 };
-
-// --- Helper Components ---
 
 const SummaryRow = ({ label, amount, colorClass = "text-white" }: any) => (
   <div className="flex justify-between items-center">

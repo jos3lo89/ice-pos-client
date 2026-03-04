@@ -23,9 +23,12 @@ import { Textarea } from "@/presentation/components/ui/textarea";
 import { Ban, Coins, NotebookPen, Loader2, AlertCircle } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCloseSession } from "@/application/hooks/useCashier";
+import { formatPricePEN } from "@/utils/format-price";
 
 const closeSessionSchema = z.object({
-  actualBalance: z.number().min(0, "El monto no puede ser negativo"),
+  actualBalance: z
+    .number("El monto debe ser un número")
+    .min(0, "El monto no puede ser negativo"),
   notes: z
     .string()
     .max(200, "Las notas no pueden exceder los 200 caracteres")
@@ -85,10 +88,10 @@ export const CloseSessionDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[450px] bg-[#0f172a] border-slate-800 text-white overflow-hidden p-0 rounded-3xl border shadow-2xl">
+      <DialogContent className="sm:max-w-[450px] bg-[#0f172a] border-slate-800 text-white overflow-hidden p-0 rounded-xl border shadow-2xl">
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-red-500 via-orange-500 to-rose-500" />
 
-        <div className="p-8 space-y-6">
+        <div className="p-4 space-y-6">
           <DialogHeader>
             <div className="flex items-center gap-4 mb-2">
               <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
@@ -96,11 +99,10 @@ export const CloseSessionDialog = ({
               </div>
               <div className="text-left">
                 <DialogTitle className="text-2xl font-black tracking-tight text-white">
-                  Arqueo y Cierre
+                  Cierre de caja
                 </DialogTitle>
                 <DialogDescription className="text-slate-400 font-medium">
-                  Finaliza el turno actual y registra el dinero real contado en
-                  caja.
+                  Registra el dinero real contado en caja.
                 </DialogDescription>
               </div>
             </div>
@@ -112,7 +114,7 @@ export const CloseSessionDialog = ({
                 Saldo Esperado
               </p>
               <p className="text-xl font-black text-white">
-                S/ {expectedBalance.toFixed(2)}
+                {formatPricePEN(expectedBalance)}
               </p>
             </div>
             <div className="h-10 w-px bg-slate-800" />
@@ -123,7 +125,7 @@ export const CloseSessionDialog = ({
               <p
                 className={`text-xl font-black ${difference >= 0 ? (isBalanced ? "text-emerald-400" : "text-blue-400") : "text-red-400"}`}
               >
-                {difference > 0 ? "+" : ""}S/ {difference.toFixed(2)}
+                {formatPricePEN(difference)}
               </p>
             </div>
           </div>
@@ -150,9 +152,10 @@ export const CloseSessionDialog = ({
                           step="0.10"
                           className="pl-10 h-14 bg-slate-900/50 border-slate-700/50 rounded-2xl text-lg font-black text-white focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder:text-slate-600"
                           {...field}
-                          onChange={(e) =>
-                            field.onChange(e.target.valueAsNumber || 0)
-                          }
+                          onChange={(e) => {
+                            const value = parseFloat(e.target.value);
+                            field.onChange(isNaN(value) ? "" : value);
+                          }}
                         />
                       </div>
                     </FormControl>

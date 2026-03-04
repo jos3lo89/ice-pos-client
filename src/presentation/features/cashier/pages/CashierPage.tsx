@@ -21,7 +21,20 @@ import {
   ArrowUp,
   ArrowDown,
   Activity,
+  ChevronDown,
+  History,
+  LogOut,
+  Database,
+  ArrowRightLeft,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/presentation/components/ui/dropdown-menu";
 import { Badge } from "@/presentation/components/ui/badge";
 import { Button } from "@/presentation/components/ui/button";
 import { Skeleton } from "@/presentation/components/ui/skeleton";
@@ -151,33 +164,73 @@ const CashierPage = () => {
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap gap-3">
+        <div className="flex items-center flex-wrap gap-2">
+          {/* Dropdown de Historiales y Reportes */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-10 px-4 rounded-xl border-slate-700/50 bg-slate-800/40 text-slate-300 font-bold hover:bg-slate-700/60 hover:text-white transition-all shadow-lg active:scale-95 gap-2 backdrop-blur-sm"
+              >
+                <History className="w-4 h-4 text-cyan-400" />
+                <span className="hidden sm:inline">Historiales</span>
+                <ChevronDown className="w-4 h-4 text-slate-500" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-64 bg-[#1e293b] border-slate-700 text-slate-200 p-1.5 rounded-2xl shadow-2xl backdrop-blur-md"
+            >
+              <DropdownMenuLabel className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em] px-3 py-2">
+                Consultas y Registros
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-slate-700/50" />
+
+              <DropdownMenuItem
+                onClick={handleNavigateToSessionPayments}
+                className="cursor-pointer rounded-xl px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-semibold"
+              >
+                <Receipt className="w-4 h-4" />
+                <span>Pagos de esta Sesión</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={handleNavigateToMovementsHistory}
+                className="cursor-pointer rounded-xl px-3 py-2.5 hover:bg-amber-500/10 hover:text-amber-400 focus:bg-amber-500/10 focus:text-amber-400 gap-3 transition-colors text-sm font-semibold"
+              >
+                <ArrowRightLeft className="w-4 h-4" />
+                <span>Movimientos de la Sesión</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator className="bg-slate-700/50" />
+
+              <DropdownMenuItem
+                onClick={() => navigate("/historial-caja")}
+                className="cursor-pointer rounded-xl px-3 py-2.5 hover:bg-blue-500/10 hover:text-blue-400 focus:bg-blue-500/10 focus:text-blue-400 gap-3 transition-colors text-sm font-semibold"
+              >
+                <Database className="w-4 h-4" />
+                <span>Historial General de Sesiones</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Botón Principal: Crear Movimiento */}
           <Button
             variant="outline"
-            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
-            onClick={handleNavigateToMovementsHistory}
-          >
-            Historial de Movimientos
-          </Button>
-          <Button
-            variant="outline"
-            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
+            className="h-10 px-4 rounded-xl border-cyan-500/20 bg-cyan-500/5 text-cyan-400 font-bold hover:bg-cyan-500/10 hover:text-cyan-300 transition-all shadow-lg active:scale-95 gap-2"
             onClick={() => setIsMovementDialogOpen(true)}
           >
-            Crear Movimiento
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Crear Movimiento</span>
           </Button>
-          <Button
-            variant="outline"
-            className="h-10 px-4 rounded-lg border-slate-700 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:text-white transition-all shadow-lg active:scale-95"
-            onClick={handleNavigateToSessionPayments}
-          >
-            Ver Historial
-          </Button>
+
+          {/* Botón Crítico: Cerrar Caja */}
           <Button
             onClick={() => setIsCloseDialogOpen(true)}
-            className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+            className="h-10 px-4 rounded-xl bg-rose-500/10 text-rose-500 border border-rose-500/20 font-black hover:bg-rose-500 hover:text-white transition-all shadow-lg shadow-rose-900/10 cursor-pointer gap-2 active:scale-95"
           >
-            Cerrar Caja
+            <LogOut className="w-4 h-4" />
+            <span>Cerrar Caja</span>
           </Button>
         </div>
 
@@ -464,7 +517,7 @@ const CashierPage = () => {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-slate-700/50">
+              {/* <div className="pt-6 border-t border-slate-700/50">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-slate-400">
                     Balance Neto
@@ -481,7 +534,7 @@ const CashierPage = () => {
                     {formatPricePEN(session.movimientos_manuales.neto)}
                   </span>
                 </div>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
         </div>

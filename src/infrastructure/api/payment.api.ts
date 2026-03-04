@@ -20,8 +20,8 @@ class PaymentApi implements PaymentRepository {
       ...(dto.clienteId && { clienteId: dto.clienteId }),
       ...(dto.notes && { notes: dto.notes }),
     };
-    const { data } = await http.post<CreatePaymentRes>(this.baseUrl, payload);
-    return data;
+    const res = await http.post<CreatePaymentRes>(this.baseUrl, payload);
+    return res.data;
   }
 
   async getTicket(paymentId: string): Promise<GetTicketRes> {

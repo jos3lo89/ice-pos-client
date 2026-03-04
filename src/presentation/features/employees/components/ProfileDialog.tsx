@@ -14,7 +14,6 @@ import {
   BadgeCheck,
   Clock,
   Mail,
-  Smartphone,
   CheckCircle2,
   XCircle,
   Calendar,
@@ -169,21 +168,6 @@ const ProfileDialog = ({ open, onOpenChange }: ProfileDialogProps) => {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="p-4 pt-0">
-              <div className="p-3 rounded-xl bg-cyan-500/5 border border-cyan-500/15 flex items-start gap-3">
-                <div className="p-1.5 rounded-lg bg-cyan-500/10">
-                  <Smartphone className="w-3.5 h-3.5 text-cyan-400" />
-                </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Para modificar tus datos, contacta a un{" "}
-                  <span className="text-cyan-400 font-medium">
-                    administrador
-                  </span>
-                  .
-                </p>
               </div>
             </div>
           </>

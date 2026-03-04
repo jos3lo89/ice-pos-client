@@ -21,6 +21,6 @@ export interface OrderRepository {
   deleteOrder(orderId: string): Promise<DeleteOrderRes>;
   sendComand(dto: SendComandT): Promise<void>;
   cancelOrderItem(dto: { orderId: string; itemId: string }): Promise<void>;
-  cancelOrder(orderId: string): Promise<void>;
+  cancelOrder(dto: { orderId: string; reason: string }): Promise<void>;
   getOrderDetails(orderId: string): Promise<OrderDetailToPayRes>;
 }

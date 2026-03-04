@@ -70,8 +70,10 @@ class OrderApi implements OrderRepository {
   }
 
   // cancelar orden
-  async cancelOrder(orderId: string) {
-    const { data } = await http.patch(`${this.baseUrl}/${orderId}/cancel`);
+  async cancelOrder(dto: { orderId: string; reason: string }) {
+    const { data } = await http.patch(`${this.baseUrl}/${dto.orderId}/cancel`, {
+      reason: dto.reason,
+    });
     return data;
   }
 
