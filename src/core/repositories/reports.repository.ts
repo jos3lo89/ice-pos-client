@@ -2,6 +2,8 @@ import type {
   RankingProductsQuery,
   RankingProductsResponse,
   ReportResponse,
+  VentasPorDiaQuery,
+  VentasPorDiaResponse,
 } from "../entities/reports.entity";
 
 export interface ReportsRepository {
@@ -9,4 +11,5 @@ export interface ReportsRepository {
   getRankingProducts(
     query: RankingProductsQuery,
   ): Promise<RankingProductsResponse>;
+  getVentasPorDia(query: VentasPorDiaQuery): Promise<VentasPorDiaResponse>;
 }

@@ -101,3 +101,52 @@ export interface Ranking {
   total_recaudado: number;
   numero_ordenes: number;
 }
+
+// ventas por dia
+// query
+export interface VentasPorDiaQuery {
+  fecha: string;
+}
+
+// response
+export interface VentasPorDiaResponse {
+  fecha: string;
+  resumen: ResumenVentasPorDia;
+  comparativa_ayer: ComparativaAyer;
+  ventas_por_metodo: VentasPorMetodo;
+  ventas_por_tipo_orden: VentasPorTipoOrden[];
+  movimientos_manuales: MovimientosManuales;
+}
+
+export interface ResumenVentasPorDia {
+  total_ventas: number;
+  total_ordenes: number;
+  ordenes_completadas: number;
+  ordenes_canceladas: number;
+  ordenes_pendientes: number;
+  ticket_promedio: number;
+}
+
+export interface ComparativaAyer {
+  total_ventas_ayer: number;
+  variacion_porcentaje: number;
+}
+
+export interface VentasPorMetodo {
+  efectivo: number;
+  yape: number;
+  plin: number;
+  tarjeta: number;
+}
+
+export interface VentasPorTipoOrden {
+  tipo: "en_local" | "para_llevar";
+  cantidad: number;
+  total: number;
+}
+
+export interface MovimientosManuales {
+  ingresos: number;
+  egresos: number;
+  gastos: number;
+}

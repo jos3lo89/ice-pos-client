@@ -3,6 +3,8 @@ import type {
   RankingProductsQuery,
   RankingProductsResponse,
   ReportResponse,
+  VentasPorDiaQuery,
+  VentasPorDiaResponse,
 } from "@/core/entities/reports.entity";
 import type { ReportsRepository } from "@/core/repositories/reports.repository";
 import type { AxiosInstance } from "axios";
@@ -22,6 +24,16 @@ class ReportsApi implements ReportsRepository {
   ): Promise<RankingProductsResponse> {
     const { data } = await this.api.get<RankingProductsResponse>(
       `${this.baseUrl}/productos/ranking`,
+      { params: query },
+    );
+    return data;
+  }
+
+  async getVentasPorDia(
+    query: VentasPorDiaQuery,
+  ): Promise<VentasPorDiaResponse> {
+    const { data } = await this.api.get<VentasPorDiaResponse>(
+      `${this.baseUrl}/ventas/diario`,
       { params: query },
     );
     return data;

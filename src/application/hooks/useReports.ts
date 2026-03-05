@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { reportsApi } from "@/infrastructure/api/reports.api";
-import type { RankingProductsQuery } from "@/core/entities/reports.entity";
+import type {
+  RankingProductsQuery,
+  VentasPorDiaQuery,
+} from "@/core/entities/reports.entity";
 
 // reporte por sesion de caja
 export const useReportBySessionId = (sessionId: string) => {
@@ -15,5 +18,13 @@ export const useRankingProducts = (query: RankingProductsQuery) => {
   return useQuery({
     queryKey: ["ranking-products", query],
     queryFn: () => reportsApi.getRankingProducts(query),
+  });
+};
+
+// ventas por dia
+export const useVentasPorDia = (query: VentasPorDiaQuery) => {
+  return useQuery({
+    queryKey: ["ventas-por-dia", query],
+    queryFn: () => reportsApi.getVentasPorDia(query),
   });
 };
