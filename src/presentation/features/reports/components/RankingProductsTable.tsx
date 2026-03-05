@@ -23,12 +23,19 @@ import {
   TrendingUp,
   Package,
   Tag,
+  Loader2,
+  Download,
+  ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import RankingProductsPdf from "../pdf/RankingProductsPdf";
+import { Button } from "@/presentation/components/ui/button";
+import { formatPricePEN } from "@/utils/format-price";
 
 registerLocale("es", es);
 
@@ -56,6 +63,16 @@ const RankingProductsTable = () => {
   });
 
   const ranking = rankingData?.ranking ?? [];
+
+  const handleOpenInNewTab = async () => {
+    if (!rankingData) return;
+    const blob = await pdf(RankingProductsPdf({ data: rankingData })).toBlob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    URL.revokeObjectURL(url);
+  };
+
+  const pdfFileName = `ranking-productos-${fechaInicio}-${fechaFin}.pdf`;
 
   return (
     <div className="space-y-3 animate-in fade-in duration-700">
@@ -150,6 +167,47 @@ const RankingProductsTable = () => {
                   </p>
                 </div>
               </div>
+              <div>
+                {rankingData && ranking.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <PDFDownloadLink
+                      document={<RankingProductsPdf data={rankingData} />}
+                      fileName={pdfFileName}
+                    >
+                      {({ loading: pdfLoading }) => (
+                        <Button
+                          disabled={pdfLoading}
+                          size="sm"
+                          className="h-9 px-4 rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95 gap-2 cursor-pointer disabled:opacity-60"
+                        >
+                          {pdfLoading ? (
+                            <>
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                              Generando...
+                            </>
+                          ) : (
+                            <>
+                              <Download className="w-3.5 h-3.5" />
+                              Descargar PDF
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </PDFDownloadLink>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleOpenInNewTab}
+                      className="h-9 px-3 rounded-xl border-slate-700 bg-slate-800/50 text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all active:scale-95 gap-2"
+                      title="Abrir en nueva pestaña"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline text-xs">Ver PDF</span>
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </CardHeader>
 
@@ -170,9 +228,9 @@ const RankingProductsTable = () => {
                     <TableHead className="text-[10px] font-black text-slate-500 py-6 text-center">
                       Cantidad
                     </TableHead>
-                    {/* <TableHead className="text-[10px] font-black text-slate-500 py-6 text-right">
+                    <TableHead className="text-[10px] font-black text-slate-500 py-6 text-right">
                       Recaudado
-                    </TableHead> */}
+                    </TableHead>
                     {/* <TableHead className="text-[10px] font-black text-slate-500 py-6 text-right pr-8">
                       Órdenes
                     </TableHead> */}
@@ -226,14 +284,14 @@ const RankingProductsTable = () => {
                             </span>
                           </div>
                         </TableCell>
-                        {/* <TableCell className="py-6 text-right">
+                        <TableCell className="py-6 text-right">
                           <div className="flex flex-col items-end">
                             <span className="text-white font-black font-mono">
                               {formatPricePEN(item.total_recaudado)}
                             </span>
                             <div className="h-0.5 w-8 bg-emerald-500/20 rounded-full mt-1 group-hover:w-full transition-all duration-700" />
                           </div>
-                        </TableCell> */}
+                        </TableCell>
                         {/* <TableCell className="py-6 text-right pr-8">
                           <div className="flex items-center justify-end gap-2 text-slate-500 group-hover:text-slate-300">
                             <span className="text-xs font-bold">
