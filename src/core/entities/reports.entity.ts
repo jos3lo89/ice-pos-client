@@ -1,3 +1,4 @@
+// Reporte por sesion
 export interface ReportResponse {
   sesion: Sesion;
   cajero: Cajero;
@@ -73,4 +74,30 @@ export interface Totales {
   total_egresos: number;
   total_neto: number;
   cantidad_pagos: number;
+}
+
+// Reporte de ranking de productos
+
+// query
+export interface RankingProductsQuery {
+  fecha_inicio: string;
+  fecha_fin: string;
+}
+
+// responde
+export interface RankingProductsResponse {
+  fecha_inicio: string;
+  fecha_fin: string;
+  total_productos: number;
+  ranking: Ranking[];
+}
+
+export interface Ranking {
+  posicion: number;
+  producto_id: string;
+  nombre: string;
+  categoria: string;
+  cantidad_vendida: number;
+  total_recaudado: number;
+  numero_ordenes: number;
 }

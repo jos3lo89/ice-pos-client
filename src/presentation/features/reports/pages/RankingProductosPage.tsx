@@ -1,7 +1,9 @@
+import RankingProductsTable from "../components/RankingProductsTable";
+
 const RankingProductosPage = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-white">Ranking de productos</h1>
+    <div className="space-y-2">
+      <RankingProductsTable />
     </div>
   );
 };
