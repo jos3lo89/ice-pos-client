@@ -150,3 +150,50 @@ export interface MovimientosManuales {
   egresos: number;
   gastos: number;
 }
+
+// ventas por semana
+// query
+export interface VentasPorSemanaQuery {
+  semana: string;
+}
+
+// response
+export interface VentasPorSemanaResponse {
+  semana: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  resumen: {
+    total_ventas: number;
+    total_ordenes: number;
+    ordenes_completadas: number;
+    ordenes_canceladas: number;
+    ticket_promedio: number;
+  };
+
+  comparativa_semana_anterior: {
+    total_ventas_anterior: number;
+    variacion_porcentaje: number | null;
+  };
+
+  ventas_por_metodo: {
+    efectivo: number;
+    yape: number;
+    plin: number;
+    tarjeta: number;
+  };
+
+  mejor_dia: {
+    nombre: string;
+    total: number;
+  };
+
+  desglose_por_dia: {
+    dia: string;
+    fecha: string;
+    total_ventas: number;
+    total_ordenes: number;
+    ordenes_completadas: number;
+    ordenes_canceladas: number;
+    ticket_promedio: number;
+  }[];
+}

@@ -5,6 +5,8 @@ import type {
   ReportResponse,
   VentasPorDiaQuery,
   VentasPorDiaResponse,
+  VentasPorSemanaQuery,
+  VentasPorSemanaResponse,
 } from "@/core/entities/reports.entity";
 import type { ReportsRepository } from "@/core/repositories/reports.repository";
 import type { AxiosInstance } from "axios";
@@ -34,6 +36,18 @@ class ReportsApi implements ReportsRepository {
   ): Promise<VentasPorDiaResponse> {
     const { data } = await this.api.get<VentasPorDiaResponse>(
       `${this.baseUrl}/ventas/diario`,
+      { params: query },
+    );
+    return data;
+  }
+
+  async getVentasPorSemana(
+    query: VentasPorSemanaQuery,
+  ): Promise<VentasPorSemanaResponse> {
+    console.log(query);
+
+    const { data } = await this.api.get<VentasPorSemanaResponse>(
+      `${this.baseUrl}/ventas/semanal`,
       { params: query },
     );
     return data;

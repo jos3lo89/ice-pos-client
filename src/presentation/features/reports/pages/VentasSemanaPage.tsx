@@ -1,7 +1,9 @@
+import WeeklySalesReport from "../components/WeeklySalesReport";
+
 const VentasSemanaPage = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-white">Ventas por semana</h1>
+    <div className="space-y-4">
+      <WeeklySalesReport />
     </div>
   );
 };
