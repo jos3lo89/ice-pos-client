@@ -106,6 +106,22 @@ export const routes = createBrowserRouter([
         path: "/reportes/historial-sesiones",
         element: <HistorialSesionesPage />,
       },
+      {
+        path: "/reportes/historial-sesiones/:sessionId/ordenes",
+        element: <CashSessionOrdersPage />,
+      },
+      {
+        path: "/reportes/historial-sesiones/:sessionId/reporte",
+        element: <CashSessionReportPage />,
+      },
+      {
+        path: "/reportes/historial-sesiones/:sessionId/pagos",
+        element: <SessionPaymentsPage />,
+      },
+      {
+        path: "/orden/detalles/:orderId",
+        element: <ChargePage />,
+      },
     ],
   },
   {
@@ -152,6 +168,7 @@ export const routes = createBrowserRouter([
         path: "/punto-venta/cobrar/:orderId",
         element: <ChargePage />,
       },
+
       {
         path: "/pagos/:sessionId",
         element: <SessionPaymentsPage />,

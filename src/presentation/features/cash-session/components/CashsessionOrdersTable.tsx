@@ -46,6 +46,7 @@ import { cn } from "@/lib/utils";
 import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/application/stores/auth.store";
 
 type Props = {
   sessionId: string;
@@ -56,6 +57,7 @@ const CashsessionOrdersTable = ({ sessionId }: Props) => {
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   const { data, isLoading, isError, refetch } = useCashSessionOrders({
     sessionId,
@@ -304,9 +306,15 @@ const CashsessionOrdersTable = ({ sessionId }: Props) => {
                           <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
 
                           <DropdownMenuItem
-                            onClick={() =>
-                              navigate(`/punto-venta/cobrar/${order.id}`)
-                            }
+                            onClick={() => {
+                              const userRol = user?.rol;
+                              const redirectUrl =
+                                userRol === "cajero"
+                                  ? `/punto-venta/cobrar/${order.id}`
+                                  : `/orden/detalles/${order.id}`;
+
+                              navigate(redirectUrl);
+                            }}
                             className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-semibold"
                           >
                             <ExternalLink className="w-4 h-4" />

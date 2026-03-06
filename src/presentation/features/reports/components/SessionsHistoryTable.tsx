@@ -24,10 +24,12 @@ import {
   User,
   CheckCircle2,
   XCircle,
-  Eye,
   Users,
   Search,
   ShoppingCart,
+  MoreVertical,
+  Receipt,
+  FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -44,6 +46,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/presentation/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/presentation/components/ui/dropdown-menu";
 
 registerLocale("es", es);
 
@@ -379,16 +389,63 @@ const SessionsHistoryTable = () => {
                       </div>
                     </TableCell>
                     <TableCell className="px-6 py-4 text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          navigate(`/reportes/sesion/${sesion.id}`)
-                        }
-                        className="h-9 w-9 p-0 hover:bg-indigo-500/20 hover:text-indigo-200 text-slate-500 border border-white/5 hover:border-indigo-500/30 rounded-xl transition-all active:scale-95 bg-white/5 shadow-inner"
-                      >
-                        <Eye className="w-4.5 h-4.5" />
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 text-slate-400 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all focus-visible:ring-cyan-500 shadow-sm"
+                          >
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                          align="end"
+                          className="bg-[#1e293b] border-slate-700 text-slate-200 w-64 shadow-2xl p-1.5 rounded-xl border backdrop-blur-md"
+                        >
+                          <DropdownMenuLabel className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em] px-3 py-2">
+                            Acciones de Sesión
+                          </DropdownMenuLabel>
+                          <DropdownMenuSeparator className="bg-slate-700/50 mx-1" />
+
+                          <DropdownMenuItem
+                            onClick={() =>
+                              navigate(
+                                `/reportes/historial-sesiones/${sesion.id}/pagos`,
+                              )
+                            }
+                            className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-semibold"
+                          >
+                            <Receipt className="w-4 h-4" />
+                            <span>Ver historial de pagos</span>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem
+                            onClick={() =>
+                              navigate(
+                                `/reportes/historial-sesiones/${sesion.id}/ordenes`,
+                              )
+                            }
+                            className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-blue-500/10 hover:text-blue-400 focus:bg-blue-500/10 focus:text-blue-400 gap-3 transition-colors text-sm font-semibold"
+                          >
+                            <History className="w-4 h-4" />
+                            <span>Historial de órdenes</span>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem
+                            onClick={() =>
+                              navigate(
+                                `/reportes/historial-sesiones/${sesion.id}/reporte`,
+                              )
+                            }
+                            className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-yellow-500/10 hover:text-yellow-400 focus:bg-yellow-500/10 focus:text-yellow-400 gap-3 transition-colors text-sm font-semibold"
+                          >
+                            <FileText className="w-4 h-4" />
+                            <span>Reporte de la sesión</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}
