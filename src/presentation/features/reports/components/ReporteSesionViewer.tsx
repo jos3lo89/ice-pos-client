@@ -1,7 +1,7 @@
 import { PDFViewer, PDFDownloadLink, pdf } from "@react-pdf/renderer";
 import { useReportBySessionId } from "@/application/hooks/useReports";
 import { formatDateTime } from "@/utils/format-date-time";
-import ReporteSesionPDF from "./ReporteSesionPdf";
+import ReporteSesionPDF from "../pdf/ReporteSesionPdf";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import { Button } from "@/presentation/components/ui/button";
@@ -47,6 +47,7 @@ const ReporteSesionViewer = ({ sesionId }: Props) => {
     const blob = await pdf(<ReporteSesionPDF data={data} />).toBlob();
     const url = URL.createObjectURL(blob);
     window.open(url, "_blank");
+    URL.revokeObjectURL(url);
   };
 
   return (

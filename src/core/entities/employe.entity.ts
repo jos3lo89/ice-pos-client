@@ -77,3 +77,9 @@ export interface CreateUserT {
   rol: UserRole;
   telefono: string;
 }
+
+// get users con rol solo cajeros
+export interface GetCajerosRes {
+  id: string;
+  nombre_completo: string;
+}

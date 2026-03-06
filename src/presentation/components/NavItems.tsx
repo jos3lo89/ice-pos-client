@@ -13,7 +13,8 @@ import {
   Wallet,
   History,
   ArrowRightLeft,
-  Database,
+  Trophy,
+  CalendarDays,
 } from "lucide-react";
 
 export interface NavItem {
@@ -124,6 +125,28 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
+
+      {
+        label: "Reportes",
+        icon: ArrowRightLeft,
+        children: [
+          {
+            to: "/reportes/ranking-productos",
+            icon: Trophy,
+            label: "Ranking de productos",
+          },
+          {
+            to: "/reportes/ventas",
+            icon: CalendarDays,
+            label: "Reporte de Ventas",
+          },
+          {
+            to: "/reportes/historial-sesiones",
+            icon: History,
+            label: "Historial de sesiones",
+          },
+        ],
+      },
     ],
   },
   {
@@ -151,17 +174,17 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
-      {
-        label: "Reportes",
-        icon: ArrowRightLeft,
-        children: [
-          {
-            to: "#",
-            icon: Database,
-            label: "Reportes",
-          },
-        ],
-      },
+      // {
+      //   label: "Reportes",
+      //   icon: ArrowRightLeft,
+      //   children: [
+      //     {
+      //       to: "#",
+      //       icon: Database,
+      //       label: "Reportes",
+      //     },
+      //   ],
+      // },
     ],
   },
 ];

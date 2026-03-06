@@ -32,142 +32,124 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-900 text-slate-100 overflow-hidden">
-      <div className="absolute -top-32 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-      <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl" />
-      <div className="absolute inset-0 bg-linear-to-b from-slate-900 via-slate-900 to-slate-800" />
+    <div className="relative min-h-screen bg-[#070b14] flex items-center justify-center p-4 overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px] animate-bounce duration-10000" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.03)_0%,transparent_70%)]" />
+      </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl items-center px-4 py-10">
-        <div className="grid w-full items-center gap-8 md:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-linear-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
-                <UtensilsCrossed
-                  className="w-7 h-7 text-white"
-                  aria-hidden="true"
-                />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Ice POS</p>
-                <p className="text-lg font-semibold text-white">
-                  Gestion Restaurante
-                </p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Accede a tu panel con control total
-              </h1>
-              <p className="text-sm text-gray-300 sm:text-base">
-                Monitorea ventas, mesas y pedidos en una interfaz clara y
-                rapida. Todo lo esencial, en un solo lugar.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
-                <p className="text-xs uppercase text-gray-400">Estado</p>
-                <p className="mt-2 text-sm text-gray-300">
-                  Sistema seguro y listo
-                </p>
-              </div>
-              <div className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
-                <p className="text-xs uppercase text-gray-400">Acceso</p>
-                <p className="mt-2 text-sm text-gray-300">
-                  Roles y permisos activos
-                </p>
-              </div>
+      <div className="relative z-10 w-full max-w-[420px] animate-in fade-in zoom-in-95 duration-700">
+        {/* Brand Header */}
+        <div className="flex flex-col items-center mb-10 space-y-4">
+          <div className="relative group">
+            <div className="absolute -inset-4 bg-linear-to-r from-emerald-500 to-cyan-500 rounded-2xl opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-500" />
+            <div className="relative w-16 h-16 bg-slate-900 border border-white/10 rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-linear-to-tr from-emerald-500/20 via-transparent to-cyan-500/20" />
+              <UtensilsCrossed className="w-8 h-8 text-emerald-400 relative z-10" />
             </div>
           </div>
+          <div className="text-center space-y-1">
+            <h1 className="text-3xl font-black text-white tracking-tighter">
+              Ice{" "}
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-teal-400">
+                Mankora
+              </span>
+            </h1>
+          </div>
+        </div>
 
-          <Card className="w-full border-slate-700 bg-slate-800/70 shadow-xl">
-            <CardHeader className="space-y-2 pb-4">
-              <CardTitle className="text-2xl font-bold text-white">
-                Bienvenido
-              </CardTitle>
-              <CardDescription className="text-gray-400">
-                Ingresa tus credenciales para acceder al sistema
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="space-y-2">
+        <Card className="border-white/5 bg-slate-900/40 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-emerald-500/50 via-cyan-500/50 to-emerald-500/50" />
+
+          <CardHeader className="space-y-1 pt-2 pb-2 text-center">
+            <CardTitle className="text-xl font-bold text-white tracking-tight">
+              Bienvenido de nuevo
+            </CardTitle>
+            <CardDescription className="text-slate-400 text-sm">
+              Ingresa tus credenciales para continuar
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="px-8 pb-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
                   <label
                     htmlFor="userName"
-                    className="text-sm font-medium leading-none text-gray-300"
+                    className="text-xs font-bold text-slate-400 uppercase tracking-wider"
                   >
                     Usuario
                   </label>
-                  <Input
-                    id="userName"
-                    type="text"
-                    autoComplete="username"
-                    spellCheck={false}
-                    placeholder="Ej. admin…"
-                    className="border-slate-700 bg-slate-900/60 text-slate-100 placeholder:text-gray-500 focus-visible:ring-cyan-500/40"
-                    {...register("userName")}
-                  />
-                  {errors.userName && (
-                    <p
-                      className="text-sm font-medium text-red-400"
-                      aria-live="polite"
-                    >
-                      {errors.userName.message}
-                    </p>
-                  )}
                 </div>
-
-                <div className="space-y-2">
-                  <label
-                    htmlFor="password"
-                    className="text-sm font-medium leading-none text-gray-300"
-                  >
-                    Contrasena
-                  </label>
-                  <Input
-                    id="password"
-                    type="password"
-                    autoComplete="current-password"
-                    placeholder="*******"
-                    className="border-slate-700 bg-slate-900/60 text-slate-100 placeholder:text-gray-500 focus-visible:ring-cyan-500/40"
-                    {...register("password")}
-                  />
-                  {errors.password && (
-                    <p
-                      className="text-sm font-medium text-red-400"
-                      aria-live="polite"
-                    >
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-
-                {errors.root && (
-                  <p
-                    className="text-sm font-medium text-red-400 text-center"
-                    aria-live="polite"
-                  >
-                    {errors.root.message}
+                <Input
+                  id="userName"
+                  type="text"
+                  autoComplete="username"
+                  spellCheck={false}
+                  placeholder="ID de usuario..."
+                  className="h-12 border-white/10 bg-white/5 text-slate-100 placeholder:text-slate-600 focus-visible:ring-emerald-500/30 focus-visible:border-emerald-500/50 transition-all rounded-lg"
+                  {...register("userName")}
+                />
+                {errors.userName && (
+                  <p className="text-[10px] font-bold text-rose-500 uppercase tracking-tight animate-in slide-in-from-top-1">
+                    {errors.userName.message}
                   </p>
                 )}
+              </div>
 
-                <Button
-                  disabled={isPending}
-                  type="submit"
-                  className="w-full bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg transition-colors hover:from-cyan-400 hover:to-blue-600 active:scale-[0.98]"
-                >
-                  {isPending ? (
-                    <div className="flex items-center gap-2">
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                      <span>Ingresando…</span>
-                    </div>
-                  ) : (
-                    "Iniciar Sesion"
-                  )}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label
+                    htmlFor="password"
+                    className="text-xs font-bold text-slate-400 uppercase tracking-wider"
+                  >
+                    Contraseña
+                  </label>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  className="h-12 border-white/10 bg-white/5 text-slate-100 placeholder:text-slate-600 focus-visible:ring-emerald-500/30 focus-visible:border-emerald-500/50 transition-all rounded-lg"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-[10px] font-bold text-rose-500 uppercase tracking-tight animate-in slide-in-from-top-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {errors.root && (
+                <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg">
+                  <p className="text-xs font-medium text-rose-400 text-center">
+                    {errors.root.message}
+                  </p>
+                </div>
+              )}
+
+              <Button
+                disabled={isPending}
+                type="submit"
+                className="w-full h-12 bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black shadow-lg shadow-emerald-500/10 transition-all active:scale-[0.98] rounded-lg mt-2 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                {isPending ? (
+                  <div className="flex items-center justify-center gap-3 relative z-10">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    <span className="text-sm">Verificando...</span>
+                  </div>
+                ) : (
+                  <span className="relative z-10 text-sm">
+                    Entrar al Sistema
+                  </span>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

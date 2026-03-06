@@ -46,6 +46,7 @@ import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import Pagination from "@/presentation/components/Pagination";
 import { TicketVentaDialog } from "@/routes/lazyImports";
+import { useAuthStore } from "@/application/stores/auth.store";
 
 interface SessionPaymentsTableProps {
   sessionId: string;
@@ -66,6 +67,8 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
     setLimit(Number(value));
     setPage(1);
   };
+
+  const { user } = useAuthStore();
 
   const { data, isLoading, isError, error, refetch } = useSessionPayments({
     sessionId,
@@ -337,9 +340,13 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
 
                                 <DropdownMenuItem
                                   onClick={() => {
-                                    navigate(
-                                      `/punto-venta/cobrar/${pago.ordenes.id}`,
-                                    );
+                                    const userRol = user?.rol;
+                                    const redirectUrl =
+                                      userRol === "cajero"
+                                        ? `/punto-venta/cobrar/${pago.ordenes.id}`
+                                        : `/orden/detalles/${pago.ordenes.id}`;
+
+                                    navigate(redirectUrl);
                                   }}
                                   className="cursor-pointer rounded-lg px-3 py-2.5 hover:bg-cyan-500/10 hover:text-cyan-400 focus:bg-cyan-500/10 focus:text-cyan-400 gap-3 transition-colors text-sm font-medium"
                                 >

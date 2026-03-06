@@ -33,7 +33,10 @@ export const useCreateUser = () => {
     },
     onError: (error) => {
       toast.error("Error al crear usuario", {
-        description: getErrorMessage(error, "Error desconocido al crear usuario"),
+        description: getErrorMessage(
+          error,
+          "Error desconocido al crear usuario",
+        ),
         id: "create-user",
       });
     },
@@ -56,7 +59,10 @@ export const useUserChangeState = () => {
     },
     onError: (error) => {
       toast.error("Error al cambiar el estado", {
-        description: getErrorMessage(error, "Error desconocido al cambiar el estado"),
+        description: getErrorMessage(
+          error,
+          "Error desconocido al cambiar el estado",
+        ),
         id: "change-user-state",
       });
     },
@@ -68,5 +74,14 @@ export const useGetProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: () => employeApi.getProfile(),
+  });
+};
+
+// get cashier users
+
+export const useCashierUsers = () => {
+  return useQuery({
+    queryKey: ["cashier", "users"],
+    queryFn: () => employeApi.getCashierUsers(),
   });
 };
