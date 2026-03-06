@@ -3,6 +3,7 @@ import type {
   CreateUserRes,
   CreateUserT,
   GetAllUsersRes,
+  GetCajerosRes,
   GetProfileRes,
   UserChangeStateRes,
 } from "../entities/employe.entity";
@@ -16,4 +17,5 @@ export interface EmployeRepository {
   createUser(values: CreateUserT): Promise<CreateUserRes>;
   changeUserState(values: ChangeUserStateReq): Promise<UserChangeStateRes>;
   getProfile(): Promise<GetProfileRes>;
+  getCashierUsers(): Promise<GetCajerosRes[]>;
 }

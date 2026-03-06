@@ -5,6 +5,7 @@ import type {
   CreateUserRes,
   CreateUserT,
   GetAllUsersRes,
+  GetCajerosRes,
   GetProfileRes,
   UserChangeStateRes,
 } from "@/core/entities/employe.entity";
@@ -40,6 +41,11 @@ class EmployeApi implements EmployeRepository {
 
   async getProfile(): Promise<GetProfileRes> {
     const { data } = await http.get(`${this.baseUrl}/profile`);
+    return data;
+  }
+
+  async getCashierUsers(): Promise<GetCajerosRes[]> {
+    const { data } = await http.get<GetCajerosRes[]>(`${this.baseUrl}/cajeros`);
     return data;
   }
 }

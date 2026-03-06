@@ -266,28 +266,44 @@ export interface DesglosePorDiaMes {
 export interface HistorialSesionesQuery {
   fecha_inicio: string;
   fecha_fin: string;
+  page: number;
+  limit: number;
+  cajero_id: string | null;
 }
 
 // response
 export interface HistorialSesionesResponse {
-  fecha_inicio: string;
-  fecha_fin: string;
-  total_sesiones: number;
-  sesiones: Sesione[];
-}
+  fecha: {
+    fecha_inicio: string;
+    fecha_fin: string;
+  };
 
-export interface Sesione {
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    lastPage: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+    nextPage: number | null;
+    prevPage: number | null;
+  };
+
+  total_sesiones: number;
+  sesiones: SesionesHistorial[];
+}
+export interface SesionesHistorial {
   id: string;
   cajero_nombre: string;
   cajero_usuario: string;
-  estado: "abierta" | "cerrada";
+  estado: string;
   fecha_apertura: string;
-  fecha_cierre: string | null;
+  fecha_cierre?: string;
   saldo_apertura: number;
   saldo_esperado: number;
-  saldo_real: number | null;
-  diferencia: number | null;
-  esta_cuadrada: boolean | null;
+  saldo_real?: number;
+  diferencia?: number;
+  esta_cuadrada?: boolean;
   total_ventas: number;
   total_ordenes: number;
 }
