@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { reportsApi } from "@/infrastructure/api/reports.api";
 import type {
+  HistorialSesionesQuery,
   RankingProductsQuery,
   VentasPorDiaQuery,
+  VentasPorMesQuery,
   VentasPorSemanaQuery,
 } from "@/core/entities/reports.entity";
 
@@ -35,5 +37,21 @@ export const useVentasPorSemana = (query: VentasPorSemanaQuery) => {
   return useQuery({
     queryKey: ["ventas-por-semana", query],
     queryFn: () => reportsApi.getVentasPorSemana(query),
+  });
+};
+
+// ventas por mes
+export const useVentasPorMes = (query: VentasPorMesQuery) => {
+  return useQuery({
+    queryKey: ["ventas-por-mes", query],
+    queryFn: () => reportsApi.getVentasPorMes(query),
+  });
+};
+
+// historial de sesiones
+export const useHistorialSesiones = (query: HistorialSesionesQuery) => {
+  return useQuery({
+    queryKey: ["historial-sesiones", query],
+    queryFn: () => reportsApi.getHistorialSesiones(query),
   });
 };

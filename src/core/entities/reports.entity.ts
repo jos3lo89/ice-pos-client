@@ -88,7 +88,15 @@ export interface RankingProductsQuery {
 export interface RankingProductsResponse {
   fecha_inicio: string;
   fecha_fin: string;
-  total_productos: number;
+  meta: {
+    total: number;
+    page: number;
+    lastPage: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+    nextPage: number | null;
+    prevPage: number | null;
+  };
   ranking: Ranking[];
 }
 
@@ -98,54 +106,50 @@ export interface Ranking {
   nombre: string;
   categoria: string;
   cantidad_vendida: number;
-  total_recaudado: number;
   numero_ordenes: number;
 }
 
 // ventas por dia
 // query
 export interface VentasPorDiaQuery {
-  fecha: string;
+  fecha_inicio: string;
+  fecha_fin: string;
 }
 
 // response
 export interface VentasPorDiaResponse {
-  fecha: string;
-  resumen: ResumenVentasPorDia;
-  comparativa_ayer: ComparativaAyer;
-  ventas_por_metodo: VentasPorMetodo;
-  ventas_por_tipo_orden: VentasPorTipoOrden[];
-  movimientos_manuales: MovimientosManuales;
+  fecha: {
+    inicio: string;
+    fin: string;
+  };
+  resumen: ResumenDia;
+  ventas_por_metodo: VentasPorMetodoDia;
+  ventas_por_tipo_orden: VentasPorTipoOrdenDia[];
+  movimientos_manuales: MovimientosManualesDia;
 }
 
-export interface ResumenVentasPorDia {
+export interface ResumenDia {
   total_ventas: number;
   total_ordenes: number;
   ordenes_completadas: number;
   ordenes_canceladas: number;
   ordenes_pendientes: number;
-  ticket_promedio: number;
 }
 
-export interface ComparativaAyer {
-  total_ventas_ayer: number;
-  variacion_porcentaje: number;
-}
-
-export interface VentasPorMetodo {
+export interface VentasPorMetodoDia {
   efectivo: number;
   yape: number;
   plin: number;
   tarjeta: number;
 }
 
-export interface VentasPorTipoOrden {
+export interface VentasPorTipoOrdenDia {
   tipo: "en_local" | "para_llevar";
   cantidad: number;
   total: number;
 }
 
-export interface MovimientosManuales {
+export interface MovimientosManualesDia {
   ingresos: number;
   egresos: number;
   gastos: number;
@@ -196,4 +200,94 @@ export interface VentasPorSemanaResponse {
     ordenes_canceladas: number;
     ticket_promedio: number;
   }[];
+}
+
+// ventas por mes
+// queyr
+export interface VentasPorMesQuery {
+  mes: string;
+}
+// reponse
+export interface VentasPorMesResponse {
+  mes: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  resumen: ResumenVentasPorMes;
+  comparativa_mes_anterior: ComparativaMesAnterior;
+  ventas_por_metodo: VentasPorMetodoMes;
+  mejor_dia: MejorDiaMes;
+  desglose_por_semana: DesglosePorSemanaMes[];
+  desglose_por_dia: DesglosePorDiaMes[];
+}
+
+export interface ResumenVentasPorMes {
+  total_ventas: number;
+  total_ordenes: number;
+  ordenes_completadas: number;
+  ordenes_canceladas: number;
+  ticket_promedio: number;
+}
+
+export interface ComparativaMesAnterior {
+  total_ventas_anterior: number;
+  variacion_porcentaje: number | null;
+}
+
+export interface VentasPorMetodoMes {
+  efectivo: number;
+  yape: number;
+  plin: number;
+  tarjeta: number;
+}
+
+export interface MejorDiaMes {
+  dia: number;
+  fecha: string;
+  total: number;
+}
+
+export interface DesglosePorSemanaMes {
+  semana: number;
+  total_ventas: number;
+  total_ordenes: number;
+  ordenes_completadas: number;
+}
+
+export interface DesglosePorDiaMes {
+  dia: number;
+  fecha: string;
+  total_ventas: number;
+  total_ordenes: number;
+  ordenes_completadas: number;
+}
+
+// historial de sesiones
+// query
+export interface HistorialSesionesQuery {
+  fecha_inicio: string;
+  fecha_fin: string;
+}
+
+// response
+export interface HistorialSesionesResponse {
+  fecha_inicio: string;
+  fecha_fin: string;
+  total_sesiones: number;
+  sesiones: Sesione[];
+}
+
+export interface Sesione {
+  id: string;
+  cajero_nombre: string;
+  cajero_usuario: string;
+  estado: "abierta" | "cerrada";
+  fecha_apertura: string;
+  fecha_cierre: string | null;
+  saldo_apertura: number;
+  saldo_esperado: number;
+  saldo_real: number | null;
+  diferencia: number | null;
+  esta_cuadrada: boolean | null;
+  total_ventas: number;
+  total_ordenes: number;
 }

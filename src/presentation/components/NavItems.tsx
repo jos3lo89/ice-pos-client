@@ -15,8 +15,6 @@ import {
   ArrowRightLeft,
   Trophy,
   CalendarDays,
-  CalendarRange,
-  CalendarCheck,
 } from "lucide-react";
 
 export interface NavItem {
@@ -138,19 +136,9 @@ export const allNavItems: NavGroup[] = [
             label: "Ranking de productos",
           },
           {
-            to: "/reportes/ventas-dia",
+            to: "/reportes/ventas",
             icon: CalendarDays,
-            label: "Ventas por día",
-          },
-          {
-            to: "/reportes/ventas-semana",
-            icon: CalendarRange,
-            label: "Ventas por semana",
-          },
-          {
-            to: "/reportes/ventas-mes",
-            icon: CalendarCheck,
-            label: "Ventas por mes",
+            label: "Reporte de Ventas",
           },
           {
             to: "/reportes/historial-sesiones",

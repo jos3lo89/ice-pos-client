@@ -1,7 +1,9 @@
+import SessionsHistoryTable from "../components/SessionsHistoryTable";
+
 const HistorialSesionesPage = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-white">Historial de sesiones</h1>
+    <div className="space-y-4">
+      <SessionsHistoryTable />
     </div>
   );
 };

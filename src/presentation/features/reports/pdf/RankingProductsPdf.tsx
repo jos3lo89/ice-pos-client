@@ -4,7 +4,6 @@ import {
   rankingProductsStyles as styles,
   RANKING_PRODUCTS_COLORS as COLORS,
 } from "../styles/ranking-products";
-import { formatPricePEN } from "@/utils/format-price";
 import { formatDateTime } from "@/utils/format-date-time";
 
 // const formatDateLabel = (iso: string) => {
@@ -53,10 +52,6 @@ const RankingProductsPdf = ({ data }: Props) => {
     (acc, r) => acc + r.cantidad_vendida,
     0,
   );
-  const totalRecaudado = data.ranking.reduce(
-    (acc, r) => acc + r.total_recaudado,
-    0,
-  );
 
   const now = new Date();
   const generadoEn = formatDateTime(now);
@@ -67,14 +62,10 @@ const RankingProductsPdf = ({ data }: Props) => {
       subject="Reporte de Ranking de Productos"
     >
       <Page size="A4" style={styles.page}>
-        {/* ── Header ── */}
         <View style={styles.header}>
           <View style={styles.headerTop}>
             <View>
               <Text style={styles.reportTitle}>Ranking de Productos</Text>
-              <Text style={styles.reportSubtitle}>
-                Análisis de ventas por producto · Ice Mankora
-              </Text>
             </View>
             <View style={styles.headerMeta}>
               <Text style={styles.headerMetaText}>Generado: {generadoEn}</Text>
@@ -82,7 +73,6 @@ const RankingProductsPdf = ({ data }: Props) => {
           </View>
         </View>
 
-        {/* ── Info de fechas ── */}
         <View style={styles.infoRow}>
           <View style={styles.infoCard}>
             <Text style={styles.infoCardLabel}>Período Inicio</Text>
@@ -98,12 +88,8 @@ const RankingProductsPdf = ({ data }: Props) => {
           </View>
           <View style={styles.infoCard}>
             <Text style={styles.infoCardLabel}>Productos Analizados</Text>
-            <Text style={styles.infoCardValue}>{data.total_productos}</Text>
+            <Text style={styles.infoCardValue}>{data.meta.total}</Text>
           </View>
-        </View>
-
-        {/* ── Stats resumen ── */}
-        <View style={styles.statsRow}>
           <View
             style={[
               styles.statCard,
@@ -113,45 +99,13 @@ const RankingProductsPdf = ({ data }: Props) => {
             <Text style={styles.statLabel}>Total Unidades Vendidas</Text>
             <Text style={styles.statValue}>{totalVendido}</Text>
           </View>
-          <View
-            style={[
-              styles.statCard,
-              { borderLeftWidth: 3, borderLeftColor: COLORS.success },
-            ]}
-          >
-            <Text style={[styles.statLabel, { color: COLORS.success }]}>
-              Total Recaudado
-            </Text>
-            <Text style={[styles.statValue, { color: COLORS.success }]}>
-              {formatPricePEN(totalRecaudado)}
-            </Text>
-          </View>
-          {data.ranking.length > 0 && (
-            <View
-              style={[
-                styles.statCard,
-                { borderLeftWidth: 3, borderLeftColor: COLORS.gold },
-              ]}
-            >
-              <Text style={[styles.statLabel, { color: "#92400e" }]}>
-                Producto Líder
-              </Text>
-              <Text
-                style={[styles.statValue, { color: "#92400e", fontSize: 9 }]}
-              >
-                {data.ranking[0].nombre}
-              </Text>
-            </View>
-          )}
         </View>
 
-        {/* ── Tabla de ranking ── */}
         <View style={{ marginBottom: 14 }}>
           <Text style={styles.sectionTitle}>
             Ranking Detallado ({data.ranking.length} productos)
           </Text>
           <View style={styles.table}>
-            {/* Cabecera */}
             <View style={styles.tableHeader}>
               <Text style={[styles.tableHeaderCell, styles.colPos]}>#</Text>
               <Text style={[styles.tableHeaderCell, styles.colNombre]}>
@@ -162,9 +116,6 @@ const RankingProductsPdf = ({ data }: Props) => {
               </Text>
               <Text style={[styles.tableHeaderCell, styles.colCantidad]}>
                 Cant.
-              </Text>
-              <Text style={[styles.tableHeaderCell, styles.colRecaudado]}>
-                Recaudado
               </Text>
             </View>
 
@@ -216,17 +167,6 @@ const RankingProductsPdf = ({ data }: Props) => {
                   >
                     {item.cantidad_vendida}
                   </Text>
-
-                  {/* Recaudado */}
-                  <Text
-                    style={[
-                      styles.tableCellBold,
-                      styles.colRecaudado,
-                      { color: COLORS.success },
-                    ]}
-                  >
-                    {formatPricePEN(item.total_recaudado)}
-                  </Text>
                 </View>
               );
             })}
@@ -247,7 +187,7 @@ const RankingProductsPdf = ({ data }: Props) => {
                 TOTAL
               </Text>
               <Text style={[styles.tableCellMuted, styles.colCategoria]}>
-                {data.total_productos} productos
+                {data.meta.total} productos
               </Text>
               <Text
                 style={[
@@ -258,32 +198,8 @@ const RankingProductsPdf = ({ data }: Props) => {
               >
                 {totalVendido}
               </Text>
-              <Text
-                style={[
-                  styles.tableCellBold,
-                  styles.colRecaudado,
-                  { color: COLORS.success, fontSize: 9 },
-                ]}
-              >
-                {formatPricePEN(totalRecaudado)}
-              </Text>
             </View>
           </View>
-        </View>
-
-        {/* ── Footer ── */}
-        <View style={styles.footer} fixed>
-          <Text style={styles.footerText}>
-            Ice Mankora · Ranking de Productos ·{" "}
-            {formatDateTime(data.fecha_inicio, "date")} —{" "}
-            {formatDateTime(data.fecha_fin, "date")}
-          </Text>
-          <Text
-            style={styles.footerText}
-            render={({ pageNumber, totalPages }) =>
-              `Página ${pageNumber} de ${totalPages}`
-            }
-          />
         </View>
       </Page>
     </Document>

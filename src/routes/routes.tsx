@@ -25,10 +25,8 @@ import {
   CashSessionOrdersPage,
   CashSessionReportPage,
   RankingProductosPage,
-  VentasDiaPage,
-  VentasSemanaPage,
-  VentasMesPage,
   HistorialSesionesPage,
+  ReportSalesPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -100,17 +98,10 @@ export const routes = createBrowserRouter([
         element: <RankingProductosPage />,
       },
       {
-        path: "/reportes/ventas-dia",
-        element: <VentasDiaPage />,
+        path: "/reportes/ventas",
+        element: <ReportSalesPage />,
       },
-      {
-        path: "/reportes/ventas-semana",
-        element: <VentasSemanaPage />,
-      },
-      {
-        path: "/reportes/ventas-mes",
-        element: <VentasMesPage />,
-      },
+
       {
         path: "/reportes/historial-sesiones",
         element: <HistorialSesionesPage />,

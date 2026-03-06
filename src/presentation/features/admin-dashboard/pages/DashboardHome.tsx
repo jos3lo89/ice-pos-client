@@ -20,7 +20,7 @@ const DashboardHome = () => {
       color: "emerald",
     },
     {
-      to: "/reportes/ventas-dia",
+      to: "/reportes/ventas",
       title: "Ventas por Día",
       description: "Seguimiento detallado de ingresos diarios",
       icon: CalendarDays,

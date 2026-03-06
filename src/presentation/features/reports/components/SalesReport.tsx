@@ -10,8 +10,6 @@ import {
 } from "@/presentation/components/ui/card";
 import {
   Calendar as CalendarIcon,
-  TrendingUp,
-  TrendingDown,
   ShoppingCart,
   Wallet,
   CreditCard,
@@ -22,34 +20,51 @@ import {
   ArrowRight,
   PlusCircle,
   MinusCircle,
-  ReceiptText,
+  Download,
+  ExternalLink,
+  Loader2,
 } from "lucide-react";
 import { formatPricePEN } from "@/utils/format-price";
 import { cn } from "@/lib/utils";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import dayjs from "dayjs";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import DailySalesPdf from "../pdf/SalesPdf";
+import { Button } from "@/presentation/components/ui/button";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 registerLocale("es", es);
 
-const DailySalesReport = () => {
-  const today = new Date();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(today);
+// const SalesReport = () => {
+//   return (
+//     <div>SalesReport</div>
+//   )
+// }
+// export default SalesReport
 
-  const fechaString = selectedDate
-    ? dayjs(selectedDate).format("YYYY-MM-DD")
+const SalesReport = () => {
+  const today = new Date();
+  const [startDate, setStartDate] = useState<Date | null>(today);
+  const [endDate, setEndDate] = useState<Date | null>(today);
+
+  const fechaInicioStr = startDate
+    ? dayjs(startDate).format("YYYY-MM-DD")
+    : dayjs(today).format("YYYY-MM-DD");
+  const fechaFinStr = endDate
+    ? dayjs(endDate).format("YYYY-MM-DD")
     : dayjs(today).format("YYYY-MM-DD");
 
   const { data, isLoading, isError, refetch, isFetching } = useVentasPorDia({
-    fecha: fechaString,
+    fecha_inicio: fechaInicioStr,
+    fecha_fin: fechaFinStr,
   });
 
   if (isLoading) {
     return (
       <div className="h-96 flex items-center justify-center">
-        <LoadingState message="Generando reporte diario..." />
+        <LoadingState message="Generando reporte operativo..." />
       </div>
     );
   }
@@ -58,8 +73,8 @@ const DailySalesReport = () => {
     return (
       <div className="h-96 flex items-center justify-center">
         <ErrorState
-          title="Error en reporte diario"
-          message="No se pudo obtener la información de ventas para la fecha seleccionada."
+          title="Error en reporte operativo"
+          message="No se pudo obtener la información de ventas para el rango seleccionado."
           onRetry={refetch}
         />
       </div>
@@ -68,50 +83,129 @@ const DailySalesReport = () => {
 
   const {
     resumen,
-    comparativa_ayer,
     ventas_por_metodo,
     ventas_por_tipo_orden,
     movimientos_manuales,
   } = data!;
 
-  const isPositive = comparativa_ayer.variacion_porcentaje >= 0;
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    setEndDate(date);
+  };
+
+  const handleOpenInNewTab = async () => {
+    if (!data) return;
+    const blob = await pdf(<DailySalesPdf data={data} />).toBlob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    URL.revokeObjectURL(url);
+  };
+
+  const pdfFileName = `reporte-operativo-${fechaInicioStr}-a-${fechaFinStr}.pdf`;
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
       {/* Date Selector Header */}
-      <div className="bg-slate-900/40 backdrop-blur-md border border-white/5 p-4 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-slate-900/40 backdrop-blur-md border border-white/5 p-4 rounded-2xl shadow-xl flex flex-col xl:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
             <LayoutDashboard className="w-6 h-6 text-indigo-400" />
           </div>
           <div>
             <h2 className="text-xl font-black text-white tracking-tight">
-              Ventas por Día
+              Reporte Operativo
             </h2>
-            <p className="text-slate-400 text-[10px] uppercase font-bold tracking-widest">
-              Resumen operativo detallado
+            <p className="text-slate-400 text-[10px] uppercase font-bold tracking-widest leading-none">
+              Resumen de Ventas y Caja
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-400 z-10 pointer-events-none" />
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date: Date | null) => setSelectedDate(date)}
-              maxDate={today}
-              locale="es"
-              dateFormat="dd 'de' MMMM, yyyy"
-              portalId="root"
-              popperClassName="z-[9999]"
-              popperPlacement="bottom-end"
-              className="w-[240px] bg-slate-950/60 border border-white/10 rounded-xl px-10 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all cursor-pointer shadow-inner"
-            />
+        <div className="flex flex-col md:flex-row items-center gap-4 flex-1 justify-end w-full">
+          <div className="flex flex-col sm:flex-row items-center gap-2 bg-slate-950/40 p-1.5 rounded-2xl border border-white/5 w-full md:w-auto">
+            <div className="relative w-full sm:w-[190px]">
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-emerald-400 z-10 pointer-events-none" />
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                maxDate={today}
+                locale="es"
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Inicio"
+                portalId="root"
+                popperClassName="z-[9999]"
+                popperPlacement="bottom-start"
+                className="w-full bg-transparent border-none px-9 py-2 text-xs text-slate-200 focus:outline-none cursor-pointer scheme-dark"
+              />
+            </div>
+            <div className="h-px w-4 bg-slate-800 hidden sm:block" />
+            <div className="relative w-full sm:w-[190px]">
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-cyan-400 z-10 pointer-events-none" />
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                // minDate={startDate}
+                maxDate={today}
+                locale="es"
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Fin"
+                portalId="root"
+                popperClassName="z-[9999]"
+                popperPlacement="bottom-start"
+                className="w-full bg-transparent border-none px-9 py-2 text-xs text-slate-200 focus:outline-none cursor-pointer scheme-dark"
+              />
+            </div>
           </div>
-          {isFetching && (
-            <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse ml-2" />
-          )}
+
+          <div className="flex items-center gap-2">
+            {isFetching && (
+              <Loader2 className="w-4 h-4 text-indigo-500 animate-spin mr-2" />
+            )}
+            {data && (
+              <div className="flex items-center gap-2">
+                <PDFDownloadLink
+                  document={<DailySalesPdf data={data} />}
+                  fileName={pdfFileName}
+                >
+                  {({ loading: pdfLoading }) => (
+                    <Button
+                      disabled={pdfLoading}
+                      size="sm"
+                      className="h-10 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-95 gap-2 cursor-pointer disabled:opacity-60"
+                    >
+                      {pdfLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4" />
+                      )}
+                      <span className="hidden sm:inline text-xs uppercase tracking-tighter">
+                        PDF
+                      </span>
+                    </Button>
+                  )}
+                </PDFDownloadLink>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleOpenInNewTab}
+                  className="h-10 px-3 rounded-xl border-white/10 bg-white/5 text-slate-300 font-bold hover:bg-white/10 hover:text-white transition-all active:scale-95 gap-2"
+                  title="Ver PDF"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -121,30 +215,19 @@ const DailySalesReport = () => {
           <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/30" />
           <CardContent className="p-6">
             <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest mb-1">
-              Ingresos Totales
+              Ingresos por Ventas
             </p>
             <div className="flex items-end justify-between">
               <h3 className="text-2xl font-black text-white">
                 {formatPricePEN(resumen.total_ventas)}
               </h3>
-              <div
-                className={cn(
-                  "flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-lg",
-                  isPositive
-                    ? "bg-emerald-500/10 text-emerald-400"
-                    : "bg-rose-500/10 text-rose-400",
-                )}
-              >
-                {isPositive ? (
-                  <TrendingUp className="w-3 h-3" />
-                ) : (
-                  <TrendingDown className="w-3 h-3" />
-                )}
-                {Math.abs(comparativa_ayer.variacion_porcentaje)}%
-              </div>
+              {/* <div className="bg-emerald-500/10 text-emerald-400 flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-lg">
+                <TrendingUp className="w-3 h-3" />
+                Ventas OK
+              </div> */}
             </div>
             <p className="text-[10px] text-slate-500 mt-2">
-              vs. ayer: {formatPricePEN(comparativa_ayer.total_ventas_ayer)}
+              Total recaudado de órdenes cerradas
             </p>
           </CardContent>
         </Card>
@@ -153,7 +236,7 @@ const DailySalesReport = () => {
           <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/30" />
           <CardContent className="p-6">
             <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest mb-1">
-              Órdenes Totales
+              Registro de Órdenes
             </p>
             <div className="flex items-end justify-between">
               <h3 className="text-2xl font-black text-white">
@@ -168,27 +251,35 @@ const DailySalesReport = () => {
               <span className="text-[8px] font-bold text-slate-500 uppercase">
                 /
               </span>
+              <span className="text-[8px] font-bold text-amber-400 uppercase">
+                {resumen.ordenes_pendientes} PEND
+              </span>
+              <span className="text-[8px] font-bold text-slate-500 uppercase">
+                /
+              </span>
               <span className="text-[8px] font-bold text-rose-400 uppercase">
-                {resumen.ordenes_canceladas} CANCEL
+                {resumen.ordenes_canceladas} CANC
               </span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="bg-slate-900/40 backdrop-blur-xl border-white/5 overflow-hidden relative group">
-          <div className="absolute top-0 left-0 w-full h-1 bg-amber-500/30" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/30" />
           <CardContent className="p-6">
             <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest mb-1">
-              Ticket Promedio
+              Balance en Caja
             </p>
-            <div className="flex items-end justify-between">
-              <h3 className="text-2xl font-black text-white">
-                {formatPricePEN(resumen.ticket_promedio)}
-              </h3>
-              <ReceiptText className="w-5 h-5 text-amber-400 opacity-30" />
-            </div>
+            <h3 className="text-2xl font-black text-white">
+              {formatPricePEN(
+                resumen.total_ventas +
+                  movimientos_manuales.ingresos -
+                  movimientos_manuales.egresos -
+                  movimientos_manuales.gastos,
+              )}
+            </h3>
             <p className="text-[10px] text-slate-500 mt-2">
-              Promedio por cliente hoy
+              Efectivo + Digital + Movimientos
             </p>
           </CardContent>
         </Card>
@@ -343,6 +434,55 @@ const DailySalesReport = () => {
           </div>
         </CardContent>
       </Card>
+      <style>{`
+        .react-datepicker {
+          background-color: #0f172a !important;
+          border-color: rgba(255,255,255,0.1) !important;
+          color: #e2e8f0 !important;
+          font-family: inherit !important;
+          border-radius: 1rem !important;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+        }
+        .react-datepicker__header {
+          background-color: #1e293b !important;
+          border-bottom-color: rgba(255,255,255,0.05) !important;
+          border-top-left-radius: 1rem !important;
+          border-top-right-radius: 1rem !important;
+          padding-top: 15px !important;
+        }
+        .react-datepicker__current-month, 
+        .react-datepicker__day-name, 
+        .react-datepicker-time__header {
+          color: #94a3b8 !important;
+          font-weight: 900 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.1em !important;
+          font-size: 0.7rem !important;
+        }
+        .react-datepicker__day {
+          color: #e2e8f0 !important;
+          border-radius: 0.5rem !important;
+          transition: all 0.2s !important;
+        }
+        .react-datepicker__day:hover {
+          background-color: rgba(16, 185, 129, 0.2) !important;
+          color: #34d399 !important;
+        }
+        .react-datepicker__day--selected, 
+        .react-datepicker__day--in-range {
+          background-color: #10b981 !important;
+          color: white !important;
+          font-weight: 800 !important;
+        }
+        .react-datepicker__day--keyboard-selected {
+          background-color: rgba(16, 185, 129, 0.5) !important;
+        }
+        .react-datepicker__day--disabled {
+          color: #334155 !important;
+        }
+        .react-datepicker__navigation--next { border-left-color: #94a3b8 !important; }
+        .react-datepicker__navigation--previous { border-right-color: #94a3b8 !important; }
+      `}</style>
     </div>
   );
 };
@@ -432,4 +572,4 @@ const ManualMovementItem = ({
   </div>
 );
 
-export default DailySalesReport;
+export default SalesReport;

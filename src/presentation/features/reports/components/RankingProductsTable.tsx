@@ -35,12 +35,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import RankingProductsPdf from "../pdf/RankingProductsPdf";
 import { Button } from "@/presentation/components/ui/button";
-import { formatPricePEN } from "@/utils/format-price";
 
 registerLocale("es", es);
 
 const RankingProductsTable = () => {
   const today = new Date();
+
   const [startDate, setStartDate] = useState<Date | null>(today);
   const [endDate, setEndDate] = useState<Date | null>(today);
 
@@ -63,6 +63,14 @@ const RankingProductsTable = () => {
   });
 
   const ranking = rankingData?.ranking ?? [];
+
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    setEndDate(date);
+  };
 
   const handleOpenInNewTab = async () => {
     if (!rankingData) return;
@@ -87,10 +95,10 @@ const RankingProductsTable = () => {
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400 z-10 pointer-events-none" />
               <DatePicker
                 selected={startDate}
-                onChange={(date: Date | null) => setStartDate(date)}
+                onChange={handleStartDateChange}
                 selectsStart
-                startDate={startDate ?? undefined}
-                endDate={endDate ?? undefined}
+                startDate={startDate}
+                endDate={endDate}
                 maxDate={today}
                 locale="es"
                 dateFormat="dd 'de' MMMM, yyyy"
@@ -106,11 +114,10 @@ const RankingProductsTable = () => {
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-400 z-10 pointer-events-none" />
               <DatePicker
                 selected={endDate}
-                onChange={(date: Date | null) => setEndDate(date)}
+                onChange={handleEndDateChange}
                 selectsEnd
-                startDate={startDate ?? undefined}
-                endDate={endDate ?? undefined}
-                minDate={startDate ?? undefined}
+                startDate={startDate}
+                endDate={endDate}
                 maxDate={today}
                 locale="es"
                 dateFormat="dd 'de' MMMM, yyyy"
@@ -163,7 +170,7 @@ const RankingProductsTable = () => {
                     Ranking de Productos
                   </CardTitle>
                   <p className="text-slate-400 text-xs uppercase tracking-widest font-bold font-mono">
-                    {ranking.length} productos analizados
+                    {rankingData?.meta.total || 0} productos analizados
                   </p>
                 </div>
               </div>
@@ -228,17 +235,11 @@ const RankingProductsTable = () => {
                     <TableHead className="text-[10px] font-black text-slate-500 py-6 text-center">
                       Cantidad
                     </TableHead>
-                    <TableHead className="text-[10px] font-black text-slate-500 py-6 text-right">
-                      Recaudado
-                    </TableHead>
-                    {/* <TableHead className="text-[10px] font-black text-slate-500 py-6 text-right pr-8">
-                      Órdenes
-                    </TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {ranking.length > 0 ? (
-                    ranking.map((item, index) => (
+                    ranking.map((item) => (
                       <TableRow
                         key={item.producto_id}
                         className="border-white/5 hover:bg-white/5 transition-colors duration-300 group cursor-default"
@@ -247,15 +248,17 @@ const RankingProductsTable = () => {
                           <div
                             className={cn(
                               "w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs transition-all duration-500",
-                              index === 0 &&
+                              item.posicion === 1 &&
                                 "bg-yellow-500/20 text-yellow-400 scale-110 shadow-[0_0_15px_rgba(234,179,8,0.2)]",
-                              index === 1 && "bg-slate-400/20 text-slate-300",
-                              index === 2 && "bg-orange-600/20 text-orange-400",
-                              index > 2 &&
+                              item.posicion === 2 &&
+                                "bg-slate-400/20 text-slate-300",
+                              item.posicion === 3 &&
+                                "bg-orange-600/20 text-orange-400",
+                              item.posicion > 3 &&
                                 "bg-slate-800 text-slate-500 group-hover:bg-emerald-500/10 group-hover:text-emerald-400",
                             )}
                           >
-                            {index + 1}
+                            {item.posicion}
                           </div>
                         </TableCell>
                         <TableCell className="py-6">
@@ -284,27 +287,11 @@ const RankingProductsTable = () => {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell className="py-6 text-right">
-                          <div className="flex flex-col items-end">
-                            <span className="text-white font-black font-mono">
-                              {formatPricePEN(item.total_recaudado)}
-                            </span>
-                            <div className="h-0.5 w-8 bg-emerald-500/20 rounded-full mt-1 group-hover:w-full transition-all duration-700" />
-                          </div>
-                        </TableCell>
-                        {/* <TableCell className="py-6 text-right pr-8">
-                          <div className="flex items-center justify-end gap-2 text-slate-500 group-hover:text-slate-300">
-                            <span className="text-xs font-bold">
-                              {item.numero_ordenes}
-                            </span>
-                            <ShoppingCart className="w-3.5 h-3.5" />
-                          </div>
-                        </TableCell> */}
                       </TableRow>
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={6} className="h-64 text-center">
+                      <TableCell colSpan={4} className="h-64 text-center">
                         <div className="flex flex-col items-center justify-center gap-4 text-slate-500">
                           <div className="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center border border-white/5">
                             <TrendingUp className="w-8 h-8 opacity-20" />

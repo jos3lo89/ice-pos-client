@@ -1,10 +1,14 @@
 import http from "@/config/axios";
 import type {
+  HistorialSesionesQuery,
+  HistorialSesionesResponse,
   RankingProductsQuery,
   RankingProductsResponse,
   ReportResponse,
   VentasPorDiaQuery,
   VentasPorDiaResponse,
+  VentasPorMesQuery,
+  VentasPorMesResponse,
   VentasPorSemanaQuery,
   VentasPorSemanaResponse,
 } from "@/core/entities/reports.entity";
@@ -44,10 +48,28 @@ class ReportsApi implements ReportsRepository {
   async getVentasPorSemana(
     query: VentasPorSemanaQuery,
   ): Promise<VentasPorSemanaResponse> {
-    console.log(query);
-
     const { data } = await this.api.get<VentasPorSemanaResponse>(
       `${this.baseUrl}/ventas/semanal`,
+      { params: query },
+    );
+    return data;
+  }
+
+  async getVentasPorMes(
+    query: VentasPorMesQuery,
+  ): Promise<VentasPorMesResponse> {
+    const { data } = await this.api.get<VentasPorMesResponse>(
+      `${this.baseUrl}/ventas/mensual`,
+      { params: query },
+    );
+    return data;
+  }
+
+  async getHistorialSesiones(
+    query: HistorialSesionesQuery,
+  ): Promise<HistorialSesionesResponse> {
+    const { data } = await this.api.get<HistorialSesionesResponse>(
+      `${this.baseUrl}/sesiones`,
       { params: query },
     );
     return data;
