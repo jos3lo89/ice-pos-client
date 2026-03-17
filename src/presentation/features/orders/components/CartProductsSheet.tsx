@@ -13,7 +13,6 @@ import {
   ShoppingCart,
   Trash2,
   UtensilsCrossed,
-  X,
   Clock,
   ChefHat,
   CheckCircle2,
@@ -29,7 +28,6 @@ import type {
   OrderItemStatus,
 } from "@/core/entities/current-order.entity";
 import {
-  useCancelOrderItem,
   useDeleteOrderItem,
   useSendComand,
 } from "@/application/hooks/useOrder";
@@ -84,7 +82,7 @@ const CartProductsSheet = ({
   const { orderId } = useParams();
   const deleteOrderItem = useDeleteOrderItem();
   const sendComand = useSendComand();
-  const cancelOrderItem = useCancelOrderItem();
+  // const cancelOrderItem = useCancelOrderItem();
 
   const isSendable = items.some((item) => item.estado === "pendiente");
 
@@ -101,10 +99,10 @@ const CartProductsSheet = ({
     sendComand.mutate({ orderId, itemsId });
   };
 
-  const handleCancelOrderItem = (itemId: string) => {
-    if (!orderId) return;
-    cancelOrderItem.mutate({ orderId, itemId });
-  };
+  // const handleCancelOrderItem = (itemId: string) => {
+  //   if (!orderId) return;
+  //   cancelOrderItem.mutate({ orderId, itemId });
+  // };
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -294,36 +292,22 @@ const CartProductsSheet = ({
                             )}
                           </div>
 
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={cn(
-                              "h-10 w-10 rounded-xl shrink-0 transition-all duration-300",
-                              item.estado === "pendiente"
-                                ? "text-slate-500 hover:text-red-400 hover:bg-red-400/10"
-                                : item.estado === "cancelado"
-                                  ? "text-slate-700 opacity-20 cursor-not-allowed"
-                                  : "text-slate-500 hover:text-orange-400 hover:bg-orange-400/10",
-                            )}
-                            disabled={
-                              deleteOrderItem.isPending ||
-                              cancelOrderItem.isPending ||
-                              item.estado === "cancelado"
-                            }
-                            onClick={() => {
-                              if (item.estado === "pendiente") {
+                          {item.estado === "pendiente" && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={cn(
+                                "h-10 w-10 rounded-xl shrink-0 transition-all duration-300",
+                                "text-slate-500 hover:text-red-400 hover:bg-red-400/10",
+                              )}
+                              disabled={deleteOrderItem.isPending}
+                              onClick={() => {
                                 handleDeleteOrderItem(item.id);
-                              } else {
-                                handleCancelOrderItem(item.id);
-                              }
-                            }}
-                          >
-                            {item.estado === "pendiente" ? (
+                              }}
+                            >
                               <Trash2 className="w-5 h-5" />
-                            ) : (
-                              <X className="w-5 h-5" />
-                            )}
-                          </Button>
+                            </Button>
+                          )}
                         </div>
 
                         <div className="flex items-center justify-between">

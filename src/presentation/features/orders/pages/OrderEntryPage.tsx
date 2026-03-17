@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Trash2 } from "lucide-react";
 import { Button } from "@/presentation/components/ui/button";
 import { Badge } from "@/presentation/components/ui/badge";
 
@@ -13,7 +13,6 @@ import CartProductsSheet from "../components/CartProductsSheet";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import OrderComplete from "../components/OrderComplete";
 import {
-  useCancelOrder,
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/application/hooks/useOrder";
@@ -30,7 +29,7 @@ const OrderEntryPage = () => {
 
   const currentOrder = useGetCurrentOrderById(orderId!);
   const deleteOrder = useDeleteOrder();
-  const cancelOrder = useCancelOrder();
+  // const cancelOrder = useCancelOrder();
 
   if (currentOrder.isLoading) {
     return <LoadingState message="Cargando orden" />;
@@ -110,7 +109,7 @@ const OrderEntryPage = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          {currentOrderData.estado === "pendiente" ? (
+          {currentOrderData.estado === "pendiente" && (
             <ConfirmDialog
               onConfirm={handleDeleteOrder}
               title="Eliminar orden"
@@ -125,16 +124,6 @@ const OrderEntryPage = () => {
                 <Trash2 className="w-5 h-5 transition-transform group-hover:scale-110" />
               </Button>
             </ConfirmDialog>
-          ) : (
-            <Button
-              variant="outline"
-              size="icon"
-              className="relative bg-orange-500/10 border-orange-500/20 hover:bg-orange-500 hover:border-orange-500 text-orange-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-orange-500/5 group"
-              disabled={cancelOrder.isPending}
-              onClick={() => setIsCancelOrderDialogOpen(true)}
-            >
-              <X className="w-5 h-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
-            </Button>
           )}
 
           <Button

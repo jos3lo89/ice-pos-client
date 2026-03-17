@@ -8,13 +8,20 @@ import {
 } from "@/presentation/components/ui/tabs";
 import { Card, CardContent } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
-import { LayoutGrid, Wallet, HandCoins, ArrowRight } from "lucide-react";
+import {
+  LayoutGrid,
+  Wallet,
+  HandCoins,
+  ArrowRight,
+  RefreshCcw,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/presentation/features/orders/utils/status-config";
 import type { Mesa } from "@/core/entities/floors.entity";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useFloorsWithTables } from "@/application/hooks/useFloor";
+import { Button } from "@/presentation/components/ui/button";
 
 const PointOfSalePage = () => {
   const navigate = useNavigate();
@@ -71,6 +78,40 @@ const PointOfSalePage = () => {
       <Tabs defaultValue={floors[0].id} className="w-full">
         <div className="bg-[#0f172a]/90 backdrop-blur-md pb-2 border-b border-slate-700/30">
           <div className="flex items-center justify-center gap-2">
+            <div className="relative group">
+              <Button
+                onClick={() => floorsQuery.refetch()}
+                variant="ghost"
+                size="icon"
+                disabled={floorsQuery.isRefetching}
+                className={cn(
+                  "h-11 w-11 rounded-2xl transition-all duration-500",
+                  "bg-slate-800/40 border border-slate-700/50 text-slate-400 backdrop-blur-md",
+                  "hover:bg-slate-800/60 hover:text-emerald-400 hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)]",
+                  "shadow-2xl shadow-black/20",
+                  floorsQuery.isRefetching &&
+                    "border-emerald-500/50 text-emerald-500",
+                )}
+                title="Actualizar mesas"
+              >
+                <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-500 rounded-2xl" />
+                <RefreshCcw
+                  className={cn(
+                    "w-5 h-5 relative z-10 transition-all duration-500",
+                    floorsQuery.isRefetching
+                      ? "animate-spin text-emerald-500"
+                      : "group-hover:rotate-180 text-slate-400 group-hover:text-emerald-400",
+                  )}
+                />
+
+                {floorsQuery.isRefetching && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3 z-20">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                )}
+              </Button>
+            </div>
             <TabsList className="bg-slate-800/30 border border-slate-700/50 p-1 rounded-2xl inline-flex w-auto overflow-x-auto no-scrollbar">
               {floors.map((floor) => (
                 <TabsTrigger
