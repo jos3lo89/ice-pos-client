@@ -168,7 +168,10 @@ export const routes = createBrowserRouter([
         path: "/punto-venta/cobrar/:orderId",
         element: <ChargePage />,
       },
-
+      {
+        path: "/punto-venta/agregar/:orderId",
+        element: <OrderEntryPage />,
+      },
       {
         path: "/pagos/:sessionId",
         element: <SessionPaymentsPage />,

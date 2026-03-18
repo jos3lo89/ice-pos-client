@@ -23,7 +23,9 @@ export const useCreateOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al crear la orden"), { id: "create-order" });
+      toast.error(getErrorMessage(error, "Error al crear la orden"), {
+        id: "create-order",
+      });
     },
   });
 };
@@ -45,9 +47,13 @@ export const useAddProductToOrder = () => {
         id: "add-product-to-order",
       });
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al agregar el producto a la orden"), { id: "add-product-to-order" });
+      toast.error(
+        getErrorMessage(error, "Error al agregar el producto a la orden"),
+        { id: "add-product-to-order" },
+      );
     },
   });
 };
@@ -80,7 +86,10 @@ export const useDeleteOrderItem = () => {
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al eliminar el producto de la orden"), { id: "delete-order-item" });
+      toast.error(
+        getErrorMessage(error, "Error al eliminar el producto de la orden"),
+        { id: "delete-order-item" },
+      );
     },
   });
 };
@@ -101,7 +110,9 @@ export const useDeleteOrder = () => {
       // queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al eliminar la orden"), { id: "delete-order" });
+      toast.error(getErrorMessage(error, "Error al eliminar la orden"), {
+        id: "delete-order",
+      });
     },
   });
 };
@@ -119,9 +130,12 @@ export const useSendComand = () => {
     onSuccess: () => {
       toast.success("Comanda enviada correctamente", { id: "send-comand" });
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al enviar la comanda"), { id: "send-comand" });
+      toast.error(getErrorMessage(error, "Error al enviar la comanda"), {
+        id: "send-comand",
+      });
     },
   });
 };
@@ -147,7 +161,10 @@ export const useCancelOrderItem = () => {
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al cancelar el producto de la orden"), { id: "cancel-order-item" });
+      toast.error(
+        getErrorMessage(error, "Error al cancelar el producto de la orden"),
+        { id: "cancel-order-item" },
+      );
     },
   });
 };
@@ -170,7 +187,9 @@ export const useCancelOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Error al cancelar la orden"), { id: "cancel-order" });
+      toast.error(getErrorMessage(error, "Error al cancelar la orden"), {
+        id: "cancel-order",
+      });
     },
   });
 };

@@ -16,12 +16,15 @@ import {
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/application/hooks/useOrder";
+import { useAuthStore } from "@/application/stores/auth.store";
 import OrderCanceled from "../components/OrderCanceled";
 import CancelOrderDialog from "../components/CancelOrderDialog";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const returnPath = user?.rol === "cajero" ? "/punto-venta" : "/mesas";
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -66,7 +69,7 @@ const OrderEntryPage = () => {
   const handleDeleteOrder = () => {
     deleteOrder.mutate(currentOrderData.id, {
       onSuccess: () => {
-        navigate("/mesas");
+        navigate(returnPath);
       },
     });
   };
@@ -93,7 +96,7 @@ const OrderEntryPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate("/mesas")}
+            onClick={() => navigate(returnPath)}
             className="rounded-full hover:bg-slate-800 text-slate-400"
           >
             <ArrowLeft className="w-5 h-5" />

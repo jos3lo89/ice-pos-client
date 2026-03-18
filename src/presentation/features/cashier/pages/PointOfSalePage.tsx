@@ -8,24 +8,23 @@ import {
 } from "@/presentation/components/ui/tabs";
 import { Card, CardContent } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
-import {
-  LayoutGrid,
-  Wallet,
-  HandCoins,
-  ArrowRight,
-  RefreshCcw,
-} from "lucide-react";
+import { LayoutGrid, Wallet, HandCoins, RefreshCcw, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { statusConfig } from "@/presentation/features/orders/utils/status-config";
 import type { Mesa } from "@/core/entities/floors.entity";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { useFloorsWithTables } from "@/application/hooks/useFloor";
 import { Button } from "@/presentation/components/ui/button";
+import { formatPricePEN } from "@/utils/format-price";
+import { useState } from "react";
+import CreateOrderDialog from "@/presentation/features/orders/components/CreateOrderDialog";
 
 const PointOfSalePage = () => {
   const navigate = useNavigate();
   const floorsQuery = useFloorsWithTables();
+
+  const [openCreateOrderDialog, setOpenCreateOrderDialog] = useState(false);
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 
   if (floorsQuery.isLoading) {
     return <LoadingState message="Cargando salones y mesas..." />;
@@ -59,17 +58,11 @@ const PointOfSalePage = () => {
   }
 
   const handleTableClick = (table: Mesa) => {
-    if (table.estado === "ocupada" && table.orden_actual) {
+    if (table.estado === "disponible") {
+      setSelectedTableId(table.id);
+      setOpenCreateOrderDialog(true);
+    } else if (table.estado === "ocupada" && table.orden_actual) {
       navigate(`/punto-venta/cobrar/${table.orden_actual.id}`);
-    } else {
-      console.log(
-        `Click en mesa: ${table.numero_mesa} (Estado: ${table.estado})`,
-      );
-      if (table.estado === "disponible") {
-        toast.info(
-          `Mesa ${table.numero_mesa} está disponible para nuevas órdenes.`,
-        );
-      }
     }
   };
 
@@ -188,22 +181,46 @@ const PointOfSalePage = () => {
 
                       {isOcupada && table.orden_actual && (
                         <div className="mt-2 pt-4 border-t border-slate-700/50 w-full">
-                          <div className="flex flex-col items-center gap-1.5">
+                          <div className="flex flex-col items-center gap-2">
                             <div className="flex items-center gap-2 text-orange-400">
                               <Wallet className="w-3.5 h-3.5" />
                               <span className="text-xs font-black tracking-tight">
-                                S/{" "}
-                                {parseFloat(table.orden_actual.total).toFixed(
-                                  2,
-                                )}
+                                {formatPricePEN(table.orden_actual.total)}
                               </span>
                             </div>
-                            <div className="flex items-center gap-1 py-1.5 px-3 bg-orange-500/10 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-all w-full justify-center">
-                              <HandCoins className="w-3 h-3" />
-                              <span className="text-[10px] font-bold">
-                                COBRAR
-                              </span>
-                              <ArrowRight className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity ml-1" />
+                            <div className="grid grid-cols-1 gap-2 w-full mt-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-white rounded-lg transition-all flex items-center justify-center p-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(
+                                    `/punto-venta/agregar/${table.orden_actual!.id}`,
+                                  );
+                                }}
+                              >
+                                <Plus className="w-3.5 h-3.5 mr-1" />
+                                <span className="text-[10px] font-bold">
+                                  AGREGAR
+                                </span>
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white rounded-lg transition-all flex items-center justify-center p-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(
+                                    `/punto-venta/cobrar/${table.orden_actual!.id}`,
+                                  );
+                                }}
+                              >
+                                <HandCoins className="w-3.5 h-3.5 mr-1" />
+                                <span className="text-[10px] font-bold">
+                                  COBRAR
+                                </span>
+                              </Button>
                             </div>
                           </div>
                         </div>
@@ -216,6 +233,13 @@ const PointOfSalePage = () => {
           </TabsContent>
         ))}
       </Tabs>
+      {selectedTableId && openCreateOrderDialog && (
+        <CreateOrderDialog
+          open={openCreateOrderDialog}
+          onOpenChange={setOpenCreateOrderDialog}
+          tableId={selectedTableId}
+        />
+      )}
     </div>
   );
 };

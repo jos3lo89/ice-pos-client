@@ -90,7 +90,8 @@ export const PaymentDialog = ({
   }, [defaultClient, form]);
 
   const method = form.watch("method");
-  const montoRecibido = form.watch("montoRecibido") || 0;
+  const rawMonto = form.watch("montoRecibido");
+  const montoRecibido = typeof rawMonto === "number" ? rawMonto : (parseFloat(String(rawMonto)) || 0);
 
   const changeAmount = useMemo(() => {
     if (method !== "efectivo") return 0;
@@ -101,7 +102,7 @@ export const PaymentDialog = ({
     const payload = {
       ...values,
       // Clean up optional fields based on method
-      montoRecibido: values.method === "efectivo" ? values.montoRecibido : null,
+      montoRecibido: values.method === "efectivo" ? Number(values.montoRecibido || 0) : null,
       transactionId:
         values.method !== "efectivo" && values.transactionId?.trim()
           ? values.transactionId
@@ -249,64 +250,90 @@ export const PaymentDialog = ({
                 </div>
 
                 {/* Dynamic Inputs Based on Method */}
-                <div className="grid grid-cols-1 animate-in fade-in duration-500">
-                  {method === "efectivo" ? (
-                    <FormField
-                      control={form.control}
-                      name="montoRecibido"
-                      render={({ field }) => (
-                        <FormItem className="space-y-2">
-                          <FormLabel className="text-xs font-bold flex items-center gap-2 text-emerald-400">
-                            Monto Recibido (S/)
-                          </FormLabel>
-                          <FormControl>
-                            <div className="relative group">
-                              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-emerald-500 transition-colors">
-                                S/
-                              </span>
-                              <Input
-                                placeholder="0.00"
-                                type="number"
-                                step="0.10"
-                                className="pl-10 h-12 bg-slate-900/50 border-slate-700/50 rounded-xl text-lg font-black text-white focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder:text-slate-700"
-                                {...field}
-                                value={field.value ?? ""}
-                                onChange={(e) => {
-                                  const value = parseFloat(e.target.value);
-                                  field.onChange(isNaN(value) ? "" : value);
-                                }}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-[10px] font-medium text-red-400" />
-                        </FormItem>
-                      )}
-                    />
-                  ) : (
-                    <FormField
-                      control={form.control}
-                      name="transactionId"
-                      render={({ field }) => (
-                        <FormItem className="space-y-2">
-                          <FormLabel className="text-xs font-bold text-slate-400 flex items-center gap-2">
-                            Número de Transacción / Identificador (Opcional)
-                          </FormLabel>
-                          <FormControl>
-                            <div className="relative group">
-                              <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 w-4 h-4 group-focus-within:text-blue-500 transition-colors" />
-                              <Input
-                                placeholder="Ej: 987654..."
-                                className="pl-10 h-12 bg-slate-900/50 border-slate-700/50 rounded-xl text-base font-bold text-white focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-700"
-                                {...field}
-                                value={field.value || ""}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-[10px] font-medium text-red-400" />
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in duration-500">
+                  <FormField
+                    control={form.control}
+                    name="montoRecibido"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel
+                          className={cn(
+                            "text-xs font-bold flex items-center gap-2",
+                            method === "efectivo" ? "text-emerald-400" : "text-slate-500",
+                          )}
+                        >
+                          Monto Recibido (S/)
+                        </FormLabel>
+                        <FormControl>
+                          <div className="relative group">
+                            <span 
+                              className={cn(
+                                "absolute left-4 top-1/2 -translate-y-1/2 font-bold transition-colors",
+                                method === "efectivo" ? "text-slate-500 group-focus-within:text-emerald-500" : "text-slate-600/50"
+                              )}
+                            >
+                              S/
+                            </span>
+                            <Input
+                              placeholder="0.00"
+                              type="number"
+                              step="0.10"
+                              disabled={method !== "efectivo"}
+                              className={cn(
+                                "pl-10 h-12 bg-slate-900/50 border-slate-700/50 rounded-xl text-lg font-black text-white focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder:text-slate-700",
+                                method !== "efectivo" && "opacity-50 cursor-not-allowed bg-slate-900/20 border-slate-800 text-slate-500"
+                              )}
+                              {...field}
+                              value={field.value ?? ""}
+                              onChange={(e) => {
+                                const value = parseFloat(e.target.value);
+                                field.onChange(isNaN(value) ? "" : value);
+                              }}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage className="text-[10px] font-medium text-red-400" />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="transactionId"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel 
+                          className={cn(
+                            "text-xs font-bold flex items-center gap-2",
+                            method !== "efectivo" ? "text-slate-300" : "text-slate-500"
+                          )}
+                        >
+                          N° de Operación (Opcional)
+                        </FormLabel>
+                        <FormControl>
+                          <div className="relative group">
+                            <Smartphone 
+                              className={cn(
+                                "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors",
+                                method !== "efectivo" ? "text-slate-600 group-focus-within:text-blue-500" : "text-slate-600/50"
+                              )} 
+                            />
+                            <Input
+                              placeholder="Ej: 987654..."
+                              disabled={method === "efectivo"}
+                              className={cn(
+                                "pl-10 h-12 bg-slate-900/50 border-slate-700/50 rounded-xl text-base font-bold text-white focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-700",
+                                method === "efectivo" && "opacity-50 cursor-not-allowed bg-slate-900/20 border-slate-800 text-slate-500"
+                              )}
+                              {...field}
+                              value={field.value || ""}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage className="text-[10px] font-medium text-red-400" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
                 {/* Receipt Types */}
