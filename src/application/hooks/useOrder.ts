@@ -48,6 +48,7 @@ export const useAddProductToOrder = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
+      queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
     },
     onError: (error) => {
       toast.error(
