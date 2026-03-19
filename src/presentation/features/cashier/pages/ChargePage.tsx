@@ -168,12 +168,23 @@ const ChargePage = () => {
               </span>
             </div>
           ) : (
-            <Button
-              onClick={() => setIsCancelOrderDialogOpen(true)}
-              className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
-            >
-              Cancelar Pedido
-            </Button>
+            <>
+              <Button
+                onClick={() => {
+                  console.log("pre cuenta");
+                }}
+                className="h-10 px-4 rounded-lg bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 font-bold hover:bg-yellow-500 hover:text-white transition-all shadow-lg shadow-yellow-500/10 cursor-pointer"
+              >
+                Pre cuenta
+              </Button>
+
+              <Button
+                onClick={() => setIsCancelOrderDialogOpen(true)}
+                className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+              >
+                Cancelar Pedido
+              </Button>
+            </>
           )}
         </div>
       </header>
