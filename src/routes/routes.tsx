@@ -27,6 +27,7 @@ import {
   RankingProductosPage,
   HistorialSesionesPage,
   ReportSalesPage,
+  PrinterPage,
 } from "./lazyImports";
 import AuthLayout from "@/layouts/AuthLayout";
 import AuthGuard from "@/guards/AuthGuard";
@@ -121,6 +122,10 @@ export const routes = createBrowserRouter([
       {
         path: "/orden/detalles/:orderId",
         element: <ChargePage />,
+      },
+      {
+        path: "/configuraciones/impresora",
+        element: <PrinterPage />,
       },
     ],
   },

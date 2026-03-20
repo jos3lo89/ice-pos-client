@@ -109,3 +109,7 @@ export const PreCuentaDialog = lazy(
 export const ReportSalesPage = lazy(
   () => import("@/presentation/features/reports/pages/ReportsalesPage"),
 );
+
+export const PrinterPage = lazy(
+  () => import("@/presentation/features/printers/page/PrinterPage"),
+);
