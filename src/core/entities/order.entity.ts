@@ -126,4 +126,5 @@ export interface AddProductToOrderI {
   variant_id?: string;
   modifier_ids?: string[];
   notes?: string;
+  separado: boolean;
 }

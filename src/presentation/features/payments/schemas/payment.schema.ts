@@ -5,10 +5,7 @@ export const paymentSchema = z
     orderId: z.string(),
     method: z.enum(["efectivo", "tarjeta", "yape", "plin"]),
     tipoDocumento: z.enum(["ticket", "boleta", "factura"]),
-    montoRecibido: z
-      .number("El monto debe ser un número")
-      .nullable()
-      .optional(),
+    montoRecibido: z.union([z.number(), z.string()]).nullable().optional(),
     transactionId: z.string().nullable().optional(),
     clienteId: z.string().optional(),
     notes: z
@@ -25,16 +22,13 @@ export const paymentSchema = z
   .refine(
     (data) => {
       if (data.method === "efectivo") {
-        return (
-          data.montoRecibido !== undefined &&
-          data.montoRecibido !== null &&
-          data.montoRecibido > 0
-        );
+        const monto = Number(data.montoRecibido);
+        return !isNaN(monto) && monto > 0;
       }
       return true;
     },
     {
-      message: "El monto recibido es requerido para pagos en efectivo",
+      message: "Requerido mayor a 0",
       path: ["montoRecibido"],
     },
   );

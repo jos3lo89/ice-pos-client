@@ -9,8 +9,9 @@ import {
 } from "@/presentation/components/ui/tabs";
 import { Card, CardContent } from "@/presentation/components/ui/card";
 import { Badge } from "@/presentation/components/ui/badge";
-import { Utensils } from "lucide-react";
+import { Utensils, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/presentation/components/ui/button";
 import { statusConfig } from "../utils/status-config";
 import type { Mesa } from "@/core/entities/floors.entity";
 import { useState } from "react";
@@ -69,17 +70,53 @@ const FloorWithTablesPage = () => {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20 px-2">
       <Tabs defaultValue={floors[0].id} className="w-full">
         <div className="sticky top-0 z-20 bg-[#0f172a]/80 backdrop-blur-md pb-4 pt-2 -mx-4 px-4 lg:-mx-8 lg:px-8 overflow-x-auto scrollbar-none">
-          <TabsList className="bg-slate-800/50 border border-slate-700/50 p-1 rounded-2xl inline-flex w-auto min-w-full lg:min-w-0">
-            {floors.map((floor) => (
-              <TabsTrigger
-                key={floor.id}
-                value={floor.id}
-                className="rounded-xl px-6 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all whitespace-nowrap"
+          <div className="flex items-center gap-2">
+            <div className="relative group shrink-0">
+              <Button
+                onClick={() => floorsQuery.refetch()}
+                variant="ghost"
+                size="icon"
+                disabled={floorsQuery.isRefetching}
+                className={cn(
+                  "h-11 w-11 rounded-2xl transition-all duration-500",
+                  "bg-slate-800/40 border border-slate-700/50 text-slate-400 backdrop-blur-md",
+                  "hover:bg-slate-800/60 hover:text-cyan-400 hover:border-cyan-500/30 hover:shadow-[0_0_20px_-5px_rgba(6,182,212,0.3)]",
+                  "shadow-2xl shadow-black/20",
+                  floorsQuery.isRefetching &&
+                    "border-cyan-500/50 text-cyan-500",
+                )}
+                title="Actualizar mesas"
               >
-                {floor.nombre}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+                <div className="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/5 transition-colors duration-500 rounded-2xl" />
+                <RefreshCcw
+                  className={cn(
+                    "w-5 h-5 relative z-10 transition-all duration-500",
+                    floorsQuery.isRefetching
+                      ? "animate-spin text-cyan-500"
+                      : "group-hover:rotate-180 text-slate-400 group-hover:text-cyan-400",
+                  )}
+                />
+
+                {floorsQuery.isRefetching && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3 z-20">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                  </span>
+                )}
+              </Button>
+            </div>
+            <TabsList className="bg-slate-800/50 border border-slate-700/50 p-1 rounded-2xl inline-flex w-auto min-w-full lg:min-w-0">
+              {floors.map((floor) => (
+                <TabsTrigger
+                  key={floor.id}
+                  value={floor.id}
+                  className="rounded-xl px-6 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all whitespace-nowrap"
+                >
+                  {floor.nombre}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
         </div>
 
         {floors.map((floor) => (

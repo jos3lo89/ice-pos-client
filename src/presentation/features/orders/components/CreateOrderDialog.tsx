@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { ClipboardList, Loader2, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCreateOrder } from "@/application/hooks/useOrder";
+import { useAuthStore } from "@/application/stores/auth.store";
 
 type Props = {
   tableId: string;
@@ -23,6 +24,7 @@ type Props = {
 const CreateOrderDialog = ({ tableId, open, onOpenChange }: Props) => {
   const createOrder = useCreateOrder();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   const { register, handleSubmit } = useForm<{
     notes: string;
@@ -41,7 +43,11 @@ const CreateOrderDialog = ({ tableId, open, onOpenChange }: Props) => {
       {
         onSuccess: (data) => {
           onOpenChange(false);
-          navigate(`/agregar-item/${data.id}`);
+          if (user?.rol === "cajero") {
+            navigate(`/punto-venta/agregar/${data.id}`);
+          } else {
+            navigate(`/agregar-item/${data.id}`);
+          }
         },
       },
     );

@@ -15,6 +15,8 @@ import {
   ArrowRightLeft,
   Trophy,
   CalendarDays,
+  Settings,
+  Printer,
 } from "lucide-react";
 
 export interface NavItem {
@@ -125,7 +127,6 @@ export const allNavItems: NavGroup[] = [
           },
         ],
       },
-
       {
         label: "Reportes",
         icon: ArrowRightLeft,
@@ -144,6 +145,18 @@ export const allNavItems: NavGroup[] = [
             to: "/reportes/historial-sesiones",
             icon: History,
             label: "Historial de sesiones",
+          },
+        ],
+      },
+
+      {
+        label: "Configuración",
+        icon: Settings,
+        children: [
+          {
+            to: "/configuraciones/impresora",
+            icon: Printer,
+            label: "Impresora",
           },
         ],
       },

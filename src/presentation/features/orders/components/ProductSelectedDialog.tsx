@@ -30,6 +30,7 @@ const ProductSelectedDialog = ({ product, onClose, isOpen }: Props) => {
   >(undefined);
   const [selectedModifierIds, setSelectedModifierIds] = useState<string[]>([]);
   const [productQuantity, setProductQuantity] = useState(1);
+  const [isSeparated, setIsSeparated] = useState(false);
 
   const { orderId } = useParams();
 
@@ -80,6 +81,7 @@ const ProductSelectedDialog = ({ product, onClose, isOpen }: Props) => {
           modifier_ids: selectedModifierIds,
           notes: productNotes,
           variant_id: selectedVariantId,
+          separado: productQuantity >= 2 ? isSeparated : false,
         },
       },
       {
@@ -198,6 +200,37 @@ const ProductSelectedDialog = ({ product, onClose, isOpen }: Props) => {
                 </Button>
               </div>
             </div>
+
+            {productQuantity >= 2 && (
+              <div className="space-y-3 animate-in fade-in duration-300">
+                <h4 className="text-xs font-black uppercase tracking-widest text-cyan-500">
+                  Separación de pago
+                </h4>
+                <button
+                  type="button"
+                  onClick={() => setIsSeparated(!isSeparated)}
+                  className={cn(
+                    "w-full flex items-center justify-between p-4 rounded-2xl border transition-all",
+                    isSeparated
+                      ? "bg-cyan-500/10 border-cyan-500 text-white"
+                      : "bg-slate-800/50 border-slate-800 text-slate-400 hover:bg-slate-800",
+                  )}
+                >
+                  <div className="flex flex-col items-start gap-1 text-left pr-4">
+                    <span className="font-bold">Pedidos Separados</span>
+                    <span className="text-xs text-slate-400">
+                      Divide este producto en items individuales para pagar por
+                      separado en caja.
+                    </span>
+                  </div>
+                  {isSeparated ? (
+                    <Check className="w-5 h-5 text-cyan-400 shrink-0" />
+                  ) : (
+                    <div className="w-5 h-5 rounded-full border border-slate-600 shrink-0" />
+                  )}
+                </button>
+              </div>
+            )}
 
             <div className="space-y-3">
               <h4 className="text-xs font-black uppercase tracking-widest text-cyan-500">

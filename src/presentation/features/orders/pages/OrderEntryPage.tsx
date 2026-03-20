@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Trash2 } from "lucide-react";
 import { Button } from "@/presentation/components/ui/button";
 import { Badge } from "@/presentation/components/ui/badge";
 
@@ -13,16 +13,18 @@ import CartProductsSheet from "../components/CartProductsSheet";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import OrderComplete from "../components/OrderComplete";
 import {
-  useCancelOrder,
   useDeleteOrder,
   useGetCurrentOrderById,
 } from "@/application/hooks/useOrder";
+import { useAuthStore } from "@/application/stores/auth.store";
 import OrderCanceled from "../components/OrderCanceled";
 import CancelOrderDialog from "../components/CancelOrderDialog";
 
 const OrderEntryPage = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const returnPath = user?.rol === "cajero" ? "/punto-venta" : "/mesas";
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -30,7 +32,7 @@ const OrderEntryPage = () => {
 
   const currentOrder = useGetCurrentOrderById(orderId!);
   const deleteOrder = useDeleteOrder();
-  const cancelOrder = useCancelOrder();
+  // const cancelOrder = useCancelOrder();
 
   if (currentOrder.isLoading) {
     return <LoadingState message="Cargando orden" />;
@@ -67,7 +69,7 @@ const OrderEntryPage = () => {
   const handleDeleteOrder = () => {
     deleteOrder.mutate(currentOrderData.id, {
       onSuccess: () => {
-        navigate("/mesas");
+        navigate(returnPath);
       },
     });
   };
@@ -94,7 +96,7 @@ const OrderEntryPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate("/mesas")}
+            onClick={() => navigate(returnPath)}
             className="rounded-full hover:bg-slate-800 text-slate-400"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -110,7 +112,7 @@ const OrderEntryPage = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          {currentOrderData.estado === "pendiente" ? (
+          {currentOrderData.estado === "pendiente" && (
             <ConfirmDialog
               onConfirm={handleDeleteOrder}
               title="Eliminar orden"
@@ -125,16 +127,6 @@ const OrderEntryPage = () => {
                 <Trash2 className="w-5 h-5 transition-transform group-hover:scale-110" />
               </Button>
             </ConfirmDialog>
-          ) : (
-            <Button
-              variant="outline"
-              size="icon"
-              className="relative bg-orange-500/10 border-orange-500/20 hover:bg-orange-500 hover:border-orange-500 text-orange-400 hover:text-white rounded-2xl gap-2 h-11 px-4 transition-all duration-300 shadow-lg shadow-orange-500/5 group"
-              disabled={cancelOrder.isPending}
-              onClick={() => setIsCancelOrderDialogOpen(true)}
-            >
-              <X className="w-5 h-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
-            </Button>
           )}
 
           <Button

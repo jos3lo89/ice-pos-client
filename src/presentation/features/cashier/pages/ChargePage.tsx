@@ -40,7 +40,7 @@ import {
 import { toast } from "sonner";
 import ConfirmDialog from "@/presentation/components/ConfirmDialog";
 import CancelOrderDialog from "@/presentation/features/orders/components/CancelOrderDialog";
-import { TicketVentaDialog } from "@/routes/lazyImports";
+import { TicketVentaDialog, PreCuentaDialog } from "@/routes/lazyImports";
 
 const ChargePage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -59,6 +59,7 @@ const ChargePage = () => {
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
   const [isCancelOrderDialogOpen, setIsCancelOrderDialogOpen] = useState(false);
+  const [isPreCuentaDialogOpen, setIsPreCuentaDialogOpen] = useState(false);
   const [paymentId, setPaymentId] = useState<string>("");
 
   const toggleItemSelection = (itemId: string, maxQty: number) => {
@@ -168,12 +169,21 @@ const ChargePage = () => {
               </span>
             </div>
           ) : (
-            <Button
-              onClick={() => setIsCancelOrderDialogOpen(true)}
-              className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
-            >
-              Cancelar Pedido
-            </Button>
+            <>
+              <Button
+                onClick={() => setIsPreCuentaDialogOpen(true)}
+                className="h-10 px-4 rounded-lg bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 font-bold hover:bg-yellow-500 hover:text-white transition-all shadow-lg shadow-yellow-500/10 cursor-pointer"
+              >
+                Pre cuenta
+              </Button>
+
+              <Button
+                onClick={() => setIsCancelOrderDialogOpen(true)}
+                className="h-10 px-4 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/10 cursor-pointer"
+              >
+                Cancelar Pedido
+              </Button>
+            </>
           )}
         </div>
       </header>
@@ -581,6 +591,16 @@ const ChargePage = () => {
             isTicketDialogOpen={isTicketDialogOpen}
             setIsTicketDialogOpen={setIsTicketDialogOpen}
             paymentId={paymentId}
+          />
+        </Suspense>
+      )}
+
+      {isPreCuentaDialogOpen && (
+        <Suspense fallback={null}>
+          <PreCuentaDialog
+            isOpen={isPreCuentaDialogOpen}
+            onOpenChange={setIsPreCuentaDialogOpen}
+            orderId={orderId!}
           />
         </Suspense>
       )}

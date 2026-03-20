@@ -102,6 +102,14 @@ export const TicketVentaDialog = lazy(
   () => import("@/presentation/features/payments/components/TicketVentaDialog"),
 );
 
+export const PreCuentaDialog = lazy(
+  () => import("@/presentation/features/payments/components/PreCuentaDialog"),
+);
+
 export const ReportSalesPage = lazy(
   () => import("@/presentation/features/reports/pages/ReportsalesPage"),
+);
+
+export const PrinterPage = lazy(
+  () => import("@/presentation/features/printers/page/PrinterPage"),
 );
