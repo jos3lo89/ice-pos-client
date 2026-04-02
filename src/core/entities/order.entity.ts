@@ -115,7 +115,8 @@ export interface SendComandRes {
 
 // crear orden request
 export interface CreateOrderI {
-  table_id: string;
+  table_id?: string;
+  tipo_orden?: "en_local" | "para_llevar" | "delivery";
   notes?: string;
 }
 
@@ -127,4 +128,28 @@ export interface AddProductToOrderI {
   modifier_ids?: string[];
   notes?: string;
   separado: boolean;
+}
+
+// ordenes para llevar
+
+export interface OrderTakeAwayRes {
+  id: string;
+  numero_orden: string;
+  numero_diario: number;
+  mesa_id: string | null;
+  mesero_id: string;
+  estado: "pendiente" | "preparando" | "listo" | "cancelado";
+  tipo_orden: "para_llevar";
+  motivo_cancelacion: string | null;
+  notas: string | null;
+  total: string;
+  monto_pagado: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  fecha_completado: string | null;
+  sesion_caja_id: string;
+  usuarios: {
+    id: string;
+    nombre_completo: string;
+  };
 }

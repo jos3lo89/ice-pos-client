@@ -4,6 +4,7 @@ import { allNavItems, type NavItem } from "@/presentation/components/NavItems";
 import { useAuthStore } from "@/application/stores/auth.store";
 import { cn } from "@/lib/utils";
 import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
+import CreateTakeawayOrderDialog from "@/presentation/features/orders/components/CreateTakeawayOrderDialog";
 import {
   ChevronDown,
   ChevronRight,
@@ -16,6 +17,7 @@ import {
   Wallet,
   TrendingUp,
   Smartphone,
+  ShoppingBag,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
@@ -29,6 +31,7 @@ const CashierLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
+  const [isTakeawayDialogOpen, setIsTakeawayDialogOpen] = useState(false);
 
   const location = useLocation();
   const { user } = useAuthStore();
@@ -251,6 +254,34 @@ const CashierLayout = () => {
               isMobile={sidebarOpen}
             />
           ))}
+
+          {/* Botón de Orden para Llevar */}
+          <button
+            onClick={() => {
+              if (sidebarOpen) setSidebarOpen(false);
+              setIsTakeawayDialogOpen(true);
+            }}
+            className={cn(
+              "w-full group relative flex items-center h-11 rounded-xl transition-all duration-300 overflow-hidden",
+              "text-gray-400 hover:text-white hover:bg-slate-700/50",
+              sidebarCollapsed && !sidebarOpen ? "justify-center" : "text-left"
+            )}
+            title={sidebarCollapsed && !sidebarOpen ? "Para Llevar" : undefined}
+          >
+            <div
+              className={cn(
+                "shrink-0 flex items-center justify-center",
+                sidebarCollapsed && !sidebarOpen ? "w-11 h-11" : "w-10 h-10",
+              )}
+            >
+              <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </div>
+            {(!sidebarCollapsed || sidebarOpen) && (
+              <span className="font-semibold text-sm tracking-tight transition-all duration-300 whitespace-nowrap ml-2">
+                Crear P. Llevar
+              </span>
+            )}
+          </button>
         </nav>
 
         {/* Sidebar Footer */}
@@ -430,6 +461,10 @@ const CashierLayout = () => {
       <ProfileDialog
         open={profileDialogOpen}
         onOpenChange={setProfileDialogOpen}
+      />
+      <CreateTakeawayOrderDialog
+        open={isTakeawayDialogOpen}
+        onOpenChange={setIsTakeawayDialogOpen}
       />
     </div>
   );

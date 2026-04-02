@@ -21,6 +21,9 @@ export const useCreateOrder = () => {
     onSuccess: () => {
       toast.success("Orden creada correctamente", { id: "create-order" });
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["active-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "take-away"] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error, "Error al crear la orden"), {
@@ -108,6 +111,9 @@ export const useDeleteOrder = () => {
     onSuccess: () => {
       toast.success("Orden eliminada correctamente", { id: "delete-order" });
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["active-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "take-away"] });
       // queryClient.invalidateQueries({ queryKey: ["current", "order"] });
     },
     onError: (error) => {
@@ -186,6 +192,9 @@ export const useCancelOrder = () => {
       queryClient.invalidateQueries({ queryKey: ["current", "order"] });
       queryClient.invalidateQueries({ queryKey: ["floors", "with-tables"] });
       queryClient.invalidateQueries({ queryKey: ["order", "details"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["active-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["order", "take-away"] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error, "Error al cancelar la orden"), {
@@ -201,5 +210,13 @@ export const useGetOrderDetails = (orderId: string) => {
     queryKey: ["order", "details", orderId],
     queryFn: () => orderApi.getOrderDetails(orderId),
     enabled: !!orderId,
+  });
+};
+
+// traer ordenes para llevar
+export const useGetOrderTakeAway = () => {
+  return useQuery({
+    queryKey: ["order", "take-away"],
+    queryFn: () => orderApi.getOrderTakeAway(),
   });
 };

@@ -2,6 +2,7 @@ import type { UserRole } from "@/core/entities/employe.entity";
 import {
   LayoutDashboard,
   ShoppingCart,
+  ShoppingBag,
   Tags,
   UserRoundCogIcon,
   type LucideIcon,
@@ -175,6 +176,11 @@ export const allNavItems: NavGroup[] = [
         to: "/punto-venta",
         icon: ShoppingCart,
         label: "Cobrar",
+      },
+      {
+        to: "/punto-venta/ordenes-para-llevar",
+        icon: ShoppingBag,
+        label: "Lista Para Llevar",
       },
       {
         label: "Historial",

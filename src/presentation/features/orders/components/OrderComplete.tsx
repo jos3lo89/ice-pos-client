@@ -8,8 +8,9 @@ import type { CurrentOrderRes } from "@/core/entities/current-order.entity";
 
 type Props = {
   currentOrderData: CurrentOrderRes;
+  returnPath: string;
 };
-const OrderComplete = ({ currentOrderData }: Props) => {
+const OrderComplete = ({ currentOrderData, returnPath }: Props) => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -56,7 +57,9 @@ const OrderComplete = ({ currentOrderData }: Props) => {
                   variant="outline"
                   className="bg-cyan-500/10 text-cyan-400 border-cyan-500/20 font-black uppercase text-[10px] px-3"
                 >
-                  Atendido en Local
+                  {currentOrderData.tipo_orden === "para_llevar"
+                    ? "Para Llevar"
+                    : "Atendido en Local"}
                 </Badge>
                 <p className="text-[10px] text-slate-500 font-medium flex items-center gap-1.5 uppercase tracking-wide">
                   <Calendar className="w-3 h-3" />
@@ -132,10 +135,10 @@ const OrderComplete = ({ currentOrderData }: Props) => {
 
         <div className="grid grid-cols-1 gap-4">
           <Button
-            onClick={() => navigate("/mesas")}
+            onClick={() => navigate(returnPath)}
             className="h-16 rounded-3xl bg-linear-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-black text-lg transition-all shadow-xl shadow-cyan-500/20 active:scale-95 group"
           >
-            Volver a Mesas
+            Volver
             <ArrowLeft className="w-5 h-5 ml-2 transition-transform group-hover:-translate-x-1" />
           </Button>
         </div>

@@ -8,6 +8,7 @@ import type {
   CreateOrderRes,
   DeleteOrderItemRes,
   DeleteOrderRes,
+  OrderTakeAwayRes,
   SendComandT,
 } from "@/core/entities/order.entity";
 import type { OrderRepository } from "@/core/repositories/order.repository";
@@ -81,6 +82,13 @@ class OrderApi implements OrderRepository {
   async getOrderDetails(orderId: string) {
     const { data } = await http.get<OrderDetailToPayRes>(
       `${this.baseUrl}/${orderId}/detail`,
+    );
+    return data;
+  }
+
+  async getOrderTakeAway() {
+    const { data } = await http.get<OrderTakeAwayRes[]>(
+      `${this.baseUrl}/takeout-order-list`,
     );
     return data;
   }

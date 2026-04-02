@@ -30,7 +30,9 @@ import type {
 import {
   useDeleteOrderItem,
   useSendComand,
+  useCancelOrderItem,
 } from "@/application/hooks/useOrder";
+import { useAuthStore } from "@/application/stores/auth.store";
 
 type Props = {
   isCartOpen: boolean;
@@ -82,7 +84,8 @@ const CartProductsSheet = ({
   const { orderId } = useParams();
   const deleteOrderItem = useDeleteOrderItem();
   const sendComand = useSendComand();
-  // const cancelOrderItem = useCancelOrderItem();
+  const cancelOrderItem = useCancelOrderItem();
+  const { user } = useAuthStore();
 
   const isSendable = items.some((item) => item.estado === "pendiente");
 
@@ -99,10 +102,10 @@ const CartProductsSheet = ({
     sendComand.mutate({ orderId, itemsId });
   };
 
-  // const handleCancelOrderItem = (itemId: string) => {
-  //   if (!orderId) return;
-  //   cancelOrderItem.mutate({ orderId, itemId });
-  // };
+  const handleCancelOrderItem = (itemId: string) => {
+    if (!orderId) return;
+    cancelOrderItem.mutate({ orderId, itemId });
+  };
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -306,6 +309,24 @@ const CartProductsSheet = ({
                               }}
                             >
                               <Trash2 className="w-5 h-5" />
+                            </Button>
+                          )}
+
+                          {item.estado !== "pendiente" && item.estado !== "cancelado" && user?.rol === "cajero" && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={cn(
+                                "h-10 w-10 rounded-xl shrink-0 transition-all duration-300",
+                                "text-slate-500 hover:text-red-400 hover:bg-red-400/10",
+                              )}
+                              disabled={cancelOrderItem.isPending}
+                              onClick={() => {
+                                handleCancelOrderItem(item.id);
+                              }}
+                              title="Cancelar Producto"
+                            >
+                              <Ban className="w-5 h-5" />
                             </Button>
                           )}
                         </div>

@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/application/stores/auth.store";
 import ProfileDialog from "@/presentation/features/employees/components/ProfileDialog";
+import CreateTakeawayOrderDialog from "@/presentation/features/orders/components/CreateTakeawayOrderDialog";
 import {
   Menu,
   Utensils,
   LogOut,
   LayoutDashboard,
   ChevronRight,
+  ShoppingBag,
 } from "lucide-react";
 import { Button } from "@/presentation/components/ui/button";
 import {
@@ -28,6 +30,7 @@ const ServerLayout = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
+  const [isTakeawayDialogOpen, setIsTakeawayDialogOpen] = useState(false);
   const logout = useLogout();
 
   if (!user) {
@@ -39,7 +42,10 @@ const ServerLayout = () => {
     setIsOpen(false);
   };
 
-  const navItems = [{ label: "Mesas y Salones", to: "/mesas", icon: Utensils }];
+  const navItems = [
+    { label: "Mesas y Salones", to: "/mesas", icon: Utensils },
+    { label: "Lista Para Llevar", to: "/mesas/ordenes-para-llevar", icon: ShoppingBag }
+  ];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -108,6 +114,24 @@ const ServerLayout = () => {
                     )}
                   </Link>
                 ))}
+
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsTakeawayDialogOpen(true);
+                  }}
+                  className={cn(
+                    "w-full flex items-center justify-between p-4 rounded-2xl transition-all group",
+                    "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 text-left cursor-pointer"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <ShoppingBag className="w-5 h-5 text-slate-500" />
+                    <span className="font-bold text-sm tracking-tight text-white">
+                      Crear P. Llevar
+                    </span>
+                  </div>
+                </button>
               </div>
 
               <div className="p-4 border-t border-slate-800 space-y-4">
@@ -174,6 +198,10 @@ const ServerLayout = () => {
       <ProfileDialog
         open={profileDialogOpen}
         onOpenChange={setProfileDialogOpen}
+      />
+      <CreateTakeawayOrderDialog
+        open={isTakeawayDialogOpen}
+        onOpenChange={setIsTakeawayDialogOpen}
       />
     </div>
   );

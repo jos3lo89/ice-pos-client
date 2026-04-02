@@ -257,7 +257,9 @@ const SessionPaymentsTable = ({ sessionId }: SessionPaymentsTableProps) => {
                                   {pago.ordenes.numero_orden}
                                 </span>
                                 <span className="text-[10px] text-slate-500 uppercase font-bold">
-                                  Mesa {pago.ordenes.mesa_historial.numero_mesa}
+                                  {pago.ordenes.mesa_historial?.numero_mesa
+                                    ? `Mesa ${pago.ordenes.mesa_historial.numero_mesa}`
+                                    : "Para Llevar"}
                                 </span>
                               </div>
                             ) : (

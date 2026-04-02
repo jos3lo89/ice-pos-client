@@ -24,6 +24,7 @@ import {
   CashSessionHistoryPage,
   CashSessionOrdersPage,
   CashSessionReportPage,
+  TakeawayOrdersPage,
   RankingProductosPage,
   HistorialSesionesPage,
   ReportSalesPage,
@@ -145,6 +146,10 @@ export const routes = createBrowserRouter([
         element: <FloorWithTablesPage />,
       },
       {
+        path: "/mesas/ordenes-para-llevar",
+        element: <TakeawayOrdersPage />,
+      },
+      {
         path: "/agregar-item/:orderId",
         element: <OrderEntryPage />,
       },
@@ -168,6 +173,10 @@ export const routes = createBrowserRouter([
       {
         path: "/punto-venta",
         element: <PointOfSalePage />,
+      },
+      {
+        path: "/punto-venta/ordenes-para-llevar",
+        element: <TakeawayOrdersPage />,
       },
       {
         path: "/punto-venta/cobrar/:orderId",

@@ -8,13 +8,10 @@ import {
 } from "@/presentation/components/ui/table";
 import {
   CheckCircle2,
-  MoreVertical,
-  Plus,
   Search,
   XCircle,
   Table as TableIcon,
   Layers,
-  Settings2,
   History,
 } from "lucide-react";
 import Pagination from "@/presentation/components/Pagination";
@@ -23,18 +20,10 @@ import { Input } from "@/presentation/components/ui/input";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu";
+
 import { useForm } from "react-hook-form";
 import { useTableList } from "@/application/hooks/useTable";
 import type { TableStatusT } from "@/core/entities/table.entity";
-import { Badge } from "@/presentation/components/ui/badge";
 
 const TablesTable = () => {
   const [page, setPage] = useState(1);
@@ -166,12 +155,12 @@ const TablesTable = () => {
                 <TableHead className="text-slate-300 font-bold text-center">
                   Estado
                 </TableHead>
-                <TableHead className="text-slate-300 font-bold text-center">
+                {/* <TableHead className="text-slate-300 font-bold text-center">
                   Pedido Actual
-                </TableHead>
-                <TableHead className="text-right text-slate-300 font-bold pr-6">
+                </TableHead> */}
+                {/* <TableHead className="text-right text-slate-300 font-bold pr-6">
                   Acciones
-                </TableHead>
+                </TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -205,7 +194,7 @@ const TablesTable = () => {
                     <TableCell className="text-center">
                       {getStatusBadge(table.estado)}
                     </TableCell>
-                    <TableCell className="text-center">
+                    {/* <TableCell className="text-center">
                       {table.orden_actual_id ? (
                         <Badge
                           variant="outline"
@@ -218,8 +207,8 @@ const TablesTable = () => {
                           N/A
                         </span>
                       )}
-                    </TableCell>
-                    <TableCell className="text-right pr-6">
+                    </TableCell> */}
+                    {/* <TableCell className="text-right pr-6">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
@@ -257,7 +246,7 @@ const TablesTable = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))
               ) : (
