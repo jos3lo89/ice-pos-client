@@ -8,8 +8,8 @@ export interface PaymentSession {
   id: string;
   numero_pago: string;
   monto: string;
-  monto_recibido: string;
-  vuelto: string;
+  monto_recibido?: string;
+  vuelto?: string;
   metodo: "efectivo" | "tarjeta" | "yape" | "plin";
   tipo_documento: "ticket" | "boleta" | "factura";
   fecha_creacion: string;
@@ -32,7 +32,7 @@ export interface Ordenes {
   monto_pagado: string;
   fecha_creacion: string;
   fecha_completado: string;
-  mesa_historial: MesaHistorial;
+  mesa_historial?: MesaHistorial;
   usuarios: Usuarios;
   _count: Count;
 }

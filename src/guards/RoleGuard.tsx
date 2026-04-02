@@ -13,6 +13,8 @@ const RoleGuard = ({ allowedRoles, children }: props) => {
   }
 
   if (!allowedRoles.includes(user.rol)) {
+    console.log("rol no coincide wadafa");
+
     const redirectPath = roleBasedRedirection(user.rol);
     return <Navigate to={redirectPath} replace />;
   }

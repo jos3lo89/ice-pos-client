@@ -9,11 +9,8 @@ import {
 import { Badge } from "@/presentation/components/ui/badge";
 import {
   CheckCircle2,
-  MoreVertical,
-  Plus,
   Search,
   XCircle,
-  Layers,
   Building,
   Hash,
   ArrowRight,
@@ -24,14 +21,6 @@ import { Input } from "@/presentation/components/ui/input";
 import LoadingState from "@/presentation/components/LoadingState";
 import ErrorState from "@/presentation/components/ErrorState";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useFloors } from "@/application/hooks/useFloor";
@@ -141,9 +130,9 @@ const FloorsTable = () => {
                 <TableHead className="text-slate-300 font-bold text-center">
                   Estado
                 </TableHead>
-                <TableHead className="text-right text-slate-300 font-bold pr-6">
+                {/* <TableHead className="text-right text-slate-300 font-bold pr-6">
                   Acciones
-                </TableHead>
+                </TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -191,7 +180,7 @@ const FloorsTable = () => {
                         </div>
                       )}
                     </TableCell>
-                    <TableCell className="text-right pr-6">
+                    {/* <TableCell className="text-right pr-6">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
@@ -229,7 +218,7 @@ const FloorsTable = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))
               ) : (

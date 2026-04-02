@@ -7,6 +7,7 @@ import type {
   CreateOrderRes,
   DeleteOrderItemRes,
   DeleteOrderRes,
+  OrderTakeAwayRes,
   SendComandT,
 } from "../entities/order.entity";
 
@@ -23,4 +24,5 @@ export interface OrderRepository {
   cancelOrderItem(dto: { orderId: string; itemId: string }): Promise<void>;
   cancelOrder(dto: { orderId: string; reason: string }): Promise<void>;
   getOrderDetails(orderId: string): Promise<OrderDetailToPayRes>;
+  getOrderTakeAway(): Promise<OrderTakeAwayRes[]>;
 }
